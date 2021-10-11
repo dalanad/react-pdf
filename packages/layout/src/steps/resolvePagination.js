@@ -232,6 +232,65 @@ const resolvePageIndices = fontStore => (page, pageNumber, pages) => {
   return resolveDynamicPage(props, page, fontStore);
 };
 
+/**
+ * Applies the dynamic inside/outside margins based on page parity.
+ * Before this process, marginInside is applied to left side, and marginOutside is applied to right side
+ * This process swaps the values for odd page indexes (hence even page numbers)
+ * @param {Object} page Page
+ * @param {number} pageIndex Page index
+ */
+const applyInsideOutsideMargins = (page, pageIndex) => {
+  if (pageIndex % 2 === 0) {
+    return page;
+  }
+
+  const shiftNodeHorizontally = (node, shiftX) => {
+    // if the node has no box (hence no positioning), return the original
+    if (!node.box) {
+      return node;
+    }
+
+    // if the node has specified a marginInside / a marginOutside, add it
+    let additionalShiftX = 0;
+    if (node.style) {
+      if (node.style.marginInside) {
+        additionalShiftX -= node.style.marginInside;
+      }
+
+      if (node.style.marginOutside) {
+        additionalShiftX += node.style.marginOutside;
+      }
+    }
+
+    const effectiveShiftX = shiftX + additionalShiftX;
+    const shiftedNode = {
+      ...node,
+      box: {
+        ...node.box,
+        left: node.box.left + effectiveShiftX,
+        right: node.box.right - effectiveShiftX,
+        marginLeft: node.box.marginLeft + effectiveShiftX,
+        marginRight: node.box.marginRight - effectiveShiftX,
+      },
+    };
+
+    if (node.children) {
+      shiftedNode.children = node.children.map(child =>
+        shiftNodeHorizontally(child, 0),
+      );
+    }
+
+    return shiftedNode;
+  };
+
+  return {
+    ...page,
+    children: (page.children || []).map(child =>
+      shiftNodeHorizontally(child, 0),
+    ),
+  };
+};
+
 const assocSubPageData = subpages => {
   return subpages.map((page, i) => ({
     ...page,
@@ -289,6 +348,8 @@ const resolvePagination = (doc, fontStore) => {
   pages = pages.map(
     R.compose(dissocSubPageData, resolvePageIndices(fontStore)),
   );
+
+  pages = pages.map(applyInsideOutsideMargins);
 
   return assingChildren(pages, doc);
 };
