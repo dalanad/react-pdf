@@ -16,7 +16,8 @@
     "prepublish": "lerna run build --ignore @react-pdf/yoga",
     "lint": "eslint packages",
     "test": "jest",
-    "examples": "lerna run start --scope @react-pdf/examples"
+    "examples": "lerna run start --scope @react-pdf/examples",
+    "lerna": "lerna"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
