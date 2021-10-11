@@ -4,6 +4,7 @@ import expandStyles from './expand';
 import flattenStyles from './flatten';
 import transformStyles from './transform';
 import resolveMediaQueries from './mediaQueries';
+import validateStyles from './validate';
 
 /**
  * Resolves styles
@@ -14,6 +15,7 @@ import resolveMediaQueries from './mediaQueries';
  */
 const resolveStyles = (container, style) =>
   R.compose(
+    validateStyles,
     transformStyles(container),
     expandStyles,
     resolveMediaQueries(container),
