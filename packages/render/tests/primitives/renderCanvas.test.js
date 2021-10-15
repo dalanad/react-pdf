@@ -1,4 +1,4 @@
-import * as P from '@react-pdf/primitives';
+import * as P from '@paladin-analytics/primitives';
 
 import createCTX from '../ctx';
 import renderCanvas from '../../src/primitives/renderCanvas';

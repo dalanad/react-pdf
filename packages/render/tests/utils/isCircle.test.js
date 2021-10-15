@@ -1,4 +1,4 @@
-import * as P from '@react-pdf/primitives';
+import * as P from '@paladin-analytics/primitives';
 import isCircle from '../../src/utils/isCircle';
 
 const ASSERTED_TYPE = P.Circle;

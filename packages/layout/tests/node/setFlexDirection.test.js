@@ -1,4 +1,4 @@
-import Yoga from '@react-pdf/yoga';
+import Yoga from '@paladin-analytics/yoga';
 
 import setFlexDirection from '../../src/node/setFlexDirection';
 

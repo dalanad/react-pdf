@@ -2,7 +2,7 @@
 
 import isUrl from 'is-url';
 import fetch from 'cross-fetch';
-import fontkit from '@react-pdf/fontkit';
+import fontkit from '@paladin-analytics/fontkit';
 
 const FONT_WEIGHTS = {
   thin: 100,

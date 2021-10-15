@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import unicode from '@react-pdf/unicode-properties';
+import unicode from '@paladin-analytics/unicode-properties';
 
 import empty from '../../attributedString/empty';
 

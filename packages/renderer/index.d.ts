@@ -8,7 +8,7 @@ import {
   SourceObject,
   HyphenationCallback,
   SVGPresentationAttributes,
-} from '@react-pdf/types';
+} from '@paladin-analytics/types';
 
 declare namespace ReactPDF {
   interface Styles {

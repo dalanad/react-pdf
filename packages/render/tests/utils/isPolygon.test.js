@@ -1,4 +1,4 @@
-import * as P from '@react-pdf/primitives';
+import * as P from '@paladin-analytics/primitives';
 import isPolygon from '../../src/utils/isPolygon';
 
 const ASSERTED_TYPE = P.Polygon;

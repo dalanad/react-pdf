@@ -1,4 +1,4 @@
-import * as P from '@react-pdf/primitives';
+import * as P from '@paladin-analytics/primitives';
 import isRadialGradient from '../../src/utils/isRadialGradient';
 
 const ASSERTED_TYPE = P.RadialGradient;

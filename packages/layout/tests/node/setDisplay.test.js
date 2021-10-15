@@ -1,4 +1,4 @@
-import Yoga from '@react-pdf/yoga';
+import Yoga from '@paladin-analytics/yoga';
 
 import setDisplay from '../../src/node/setDisplay';
 

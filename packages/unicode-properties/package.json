@@ -1,5 +1,5 @@
 {
-  "name": "@react-pdf/unicode-properties",
+  "name": "@paladin-analytics/unicode-properties",
   "version": "2.4.1",
   "license": "MIT",
   "description": "Provides fast access to unicode character properties",

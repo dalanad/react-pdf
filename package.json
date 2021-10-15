@@ -1,22 +1,22 @@
 {
   "private": true,
-  "name": "@react-pdf/root",
+  "name": "@paladin-analytics/root",
   "version": "2.0.0",
   "license": "MIT",
   "author": "Diego Muracciole <diegomuracciole@gmail.com>",
   "homepage": "https://github.com/diegomura/react-pdf#readme",
-  "repository": "git@github.com:diegomura/react-pdf.git",
+  "repository": "git@github.com:Paladin-Analytics/react-pdf.git",
   "workspaces": [
     "packages/*"
   ],
   "scripts": {
-    "build": "lerna run build --ignore @react-pdf/yoga",
+    "build": "lerna run build --ignore @paladin-analytics/yoga",
     "watch": "lerna run watch --parallel",
     "bootstrap": "lerna bootstrap",
-    "prepublish": "lerna run build --ignore @react-pdf/yoga",
+    "prepublish": "lerna run build --ignore @paladin-analytics/yoga",
     "lint": "eslint packages",
     "test": "jest",
-    "examples": "lerna run start --scope @react-pdf/examples",
+    "examples": "lerna run start --scope @paladin-analytics/examples",
     "lerna": "lerna"
   },
   "devDependencies": {
@@ -78,11 +78,6 @@
     "type": "opencollective",
     "url": "https://opencollective.com/react-pdf",
     "logo": "https://opencollective.com/opencollective/logo.txt"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "git add . && lint-staged"
-    }
   },
   "dependencies": {}
 }

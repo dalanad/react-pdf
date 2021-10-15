@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import * as P from '@react-pdf/primitives';
+import * as P from '@paladin-analytics/primitives';
 
 const isText = R.propEq('type', P.Text);
 

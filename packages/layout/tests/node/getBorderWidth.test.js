@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import Yoga from '@react-pdf/yoga';
+import Yoga from '@paladin-analytics/yoga';
 
 import getBorderWidth from '../../src/node/getBorderWidth';
 

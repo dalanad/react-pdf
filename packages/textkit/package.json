@@ -1,5 +1,5 @@
 {
-  "name": "@react-pdf/textkit",
+  "name": "@paladin-analytics/textkit",
   "license": "MIT",
   "version": "2.0.6",
   "description": "An advanced text layout framework",
@@ -18,7 +18,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.4.3",
-    "@react-pdf/unicode-properties": "^2.4.1",
+    "@paladin-analytics/unicode-properties": "^2.4.1",
     "hyphen": "^1.6.4",
     "ramda": "^0.26.1"
   }

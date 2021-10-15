@@ -1,6 +1,9 @@
 import * as R from 'ramda';
-import * as P from '@react-pdf/primitives';
-import { transformColor, processTransform } from '@react-pdf/stylesheet';
+import * as P from '@paladin-analytics/primitives';
+import {
+  transformColor,
+  processTransform,
+} from '@paladin-analytics/stylesheet';
 
 import layoutText from '../svg/layoutText';
 import replaceDefs from '../svg/replaceDefs';

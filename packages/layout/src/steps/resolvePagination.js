@@ -2,7 +2,7 @@
 /* eslint-disable prefer-destructuring */
 
 import * as R from 'ramda';
-import * as P from '@react-pdf/primitives';
+import * as P from '@paladin-analytics/primitives';
 
 import isFixed from '../node/isFixed';
 import splitText from '../text/splitText';

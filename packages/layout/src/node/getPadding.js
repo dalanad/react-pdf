@@ -1,4 +1,4 @@
-import Yoga from '@react-pdf/yoga';
+import Yoga from '@paladin-analytics/yoga';
 
 const getComputedPadding = (node, edge) => {
   const yogaNode = node._yogaNode;

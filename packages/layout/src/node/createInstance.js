@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import { TextInstance } from '@react-pdf/primitives';
+import { TextInstance } from '@paladin-analytics/primitives';
 
 import castArray from '../utils/castArray';
 
