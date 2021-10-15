@@ -5,8 +5,9 @@ import AttributedString from '@react-pdf/textkit/lib/attributedString';
 import { embedEmojis } from './emoji';
 import ignoreChars from './ignoreChars';
 import transformText from './transformText';
+import processSmallCaps from './processSmallCaps';
 
-const PREPROCESSORS = [ignoreChars, embedEmojis];
+const PREPROCESSORS = [ignoreChars, embedEmojis, processSmallCaps];
 
 const isType = R.propEq('type');
 
@@ -94,7 +95,7 @@ const getFragments = (fontStore, instance, parentLink, level = 0) => {
       });
     } else if (isTextInstance(child)) {
       fragments.push({
-        string: transformText(child.value, textTransform),
+        string: transformText(child.value, textTransform || fontVariant),
         attributes,
       });
     } else if (child) {
