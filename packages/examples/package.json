@@ -1,6 +1,6 @@
 {
   "name": "@paladin-analytics/examples",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "license": "MIT",
   "private": true,
   "author": "Diego Muracciole <diegomuracciole@gmail.com>",
@@ -12,7 +12,7 @@
     "start": "parcel serve ./src/index.html -p 3000"
   },
   "dependencies": {
-    "@paladin-analytics/renderer": "^2.0.21",
+    "@paladin-analytics/renderer": "^2.0.22",
     "camelcase": "^6.2.0",
     "ramda": "^0.27.1"
   },
