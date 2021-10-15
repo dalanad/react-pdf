@@ -1,0 +1,62 @@
+import * as R from 'ramda';
+
+const getFontUnitsPerEm = R.path(['font', 'unitsPerEm']);
+const getFontDescent = R.path(['font', 'descent']);
+// const getFontXHeight = R.path(['font', 'xHeight']);
+const getFontAscent = R.path(['font', 'ascent']);
+// const getFontCapHeight = R.path(['font', 'capHeight']);
+
+const calculateSizeAndScale = run => {
+  const { attributes = {} } = run;
+  const {
+    fontSize: baseFontSize,
+    fontVariant,
+    scale: baseScale,
+    yOffset: baseYOffset,
+  } = attributes;
+  const fontUnitsPerEm = getFontUnitsPerEm(attributes);
+
+  let fontSize = baseFontSize;
+  let scale = baseScale;
+  let yOffset = baseYOffset;
+
+  if (['superscript', 'subscript'].includes(fontVariant)) {
+    fontSize = (baseFontSize * 75) / 100;
+  }
+
+  if (['small-caps'].includes(fontVariant)) {
+    fontSize = (baseFontSize * 75) / 100;
+  }
+
+  scale = fontSize / fontUnitsPerEm;
+  const fontAscent = getFontAscent(attributes);
+  const fontDescent = getFontDescent(attributes);
+
+  if (fontVariant === 'superscript') {
+    let _YOffset = (fontAscent * 50) / (100 * fontUnitsPerEm);
+    if (fontUnitsPerEm >= 2000) {
+      _YOffset = (fontAscent * 30) / (100 * fontUnitsPerEm);
+    }
+    yOffset += _YOffset;
+  }
+
+  if (fontVariant === 'subscript') {
+    yOffset += (fontDescent * 80) / (200 * fontUnitsPerEm);
+  }
+
+  return { ...run, attributes: { ...attributes, fontSize, scale, yOffset } };
+};
+
+/**
+ * Calculate font size and scale according to font varients
+ *
+ * @param  {Object}   layout engines
+ * @param  {Array}    attributed strings
+ * @return {Array}    attributed string with resolved font sizes and scales
+ */
+const resolveTextStyles = () => attributedString =>
+  R.evolve({
+    runs: R.map(calculateSizeAndScale),
+  })(attributedString);
+
+export default resolveTextStyles;

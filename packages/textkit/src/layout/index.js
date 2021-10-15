@@ -9,6 +9,7 @@ import splitParagraphs from './splitParagraphs';
 import finalizeFragments from './finalizeFragments';
 import resolveAttachments from './resolveAttachments';
 import applyDefaultStyles from './applyDefaultStyles';
+import resolveTextStyles from './resolveTextStyles'
 
 /**
  * A LayoutEngine is the main object that performs text layout.
@@ -29,6 +30,7 @@ const layoutEngine = (engines, attributedString, container, options = {}) => {
     resolveAttachments(engines, options),
     generateGlyphs(engines, options),
     wrapWords(engines, options),
+    resolveTextStyles(engines)
   );
 
   return R.compose(
