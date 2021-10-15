@@ -4,6 +4,7 @@
   "description": "A PDF generation library for Node.js",
   "main": "lib/pdfkit.cjs.js",
   "module": "lib/pdfkit.es.js",
+  "repository": "git@github.com:Paladin-Analytics/react-pdf.git",
   "browser": {
     "./lib/pdfkit.es.js": "./lib/pdfkit.browser.es.js",
     "./lib/pdfkit.cjs.js": "./lib/pdfkit.browser.cjs.js"

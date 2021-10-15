@@ -17,10 +17,7 @@
   "devDependencies": {
     "codepoints": "^1.2.0"
   },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/devongovett/unicode-properties.git"
-  },
+  "repository": "git@github.com:Paladin-Analytics/react-pdf.git",
   "files": [
     "lib"
   ]
