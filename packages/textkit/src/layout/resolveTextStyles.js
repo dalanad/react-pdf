@@ -5,6 +5,19 @@ const getFontDescent = R.path(['font', 'descent']);
 // const getFontXHeight = R.path(['font', 'xHeight']);
 const getFontAscent = R.path(['font', 'ascent']);
 // const getFontCapHeight = R.path(['font', 'capHeight']);
+const getAvailableFontFeatures = R.path(['availableFeatures']);
+const isFontFeatureExist = (font, feature) => {
+  const availableFontFeatures = getAvailableFontFeatures(font);
+  return availableFontFeatures.includes(feature);
+};
+const getFontFeatureTag = feature => {
+  switch (feature) {
+    case 'small-caps':
+      return 'smcp';
+    default:
+      return null;
+  }
+};
 
 const calculateSizeAndScale = run => {
   const { attributes = {} } = run;
@@ -13,6 +26,7 @@ const calculateSizeAndScale = run => {
     fontVariant,
     scale: baseScale,
     yOffset: baseYOffset,
+    font,
   } = attributes;
   const fontUnitsPerEm = getFontUnitsPerEm(attributes);
 
@@ -24,7 +38,10 @@ const calculateSizeAndScale = run => {
     fontSize = (baseFontSize * 75) / 100;
   }
 
-  if (['small-caps'].includes(fontVariant)) {
+  if (
+    ['small-caps'].includes(fontVariant) &&
+    !isFontFeatureExist(font, getFontFeatureTag(fontVariant))
+  ) {
     fontSize = (baseFontSize * 75) / 100;
   }
 

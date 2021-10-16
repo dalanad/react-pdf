@@ -18,8 +18,6 @@ const transformText = (text, transformation) => {
       return capitalize(text);
     case 'upperfirst':
       return upperFirst(text);
-    case 'small-caps':
-      return text.toUpperCase();
     default:
       return text;
   }

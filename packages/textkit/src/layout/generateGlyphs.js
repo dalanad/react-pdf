@@ -4,6 +4,40 @@ import scale from '../run/scale';
 import resolveGlyphIndices from '../indices/resolve';
 
 const getCharacterSpacing = R.pathOr(0, ['attributes', 'characterSpacing']);
+const getAvailableFontFeatures = R.pathOr(0, [
+  'attributes',
+  'font',
+  'availableFeatures',
+]);
+
+const isFontFeatureExist = (run, feature) => {
+  const availableFontFeatures = getAvailableFontFeatures(run);
+  return availableFontFeatures.includes(feature);
+};
+
+const getFontFeatureTag = fontVariant => {
+  switch (fontVariant) {
+    case 'small-caps':
+      return 'smcp';
+    default:
+      return null;
+  }
+};
+
+const getFontFeatures = (run, fontVariant) => {
+  const fontFeatureTag = getFontFeatureTag(fontVariant);
+  const ignoredFontVariants = ['superscript', 'subscript'];
+
+  if (
+    !fontFeatureTag ||
+    (fontFeatureTag && !isFontFeatureExist(run, fontFeatureTag)) ||
+    ignoredFontVariants.includes(fontVariant)
+  ) {
+    return [];
+  }
+
+  return [fontFeatureTag];
+};
 
 /**
  * Scale run positions
@@ -42,12 +76,13 @@ const scalePositions = (run, positions) => {
  */
 const layoutRun = string => run => {
   const { start, end, attributes = {} } = run;
-  const { font } = attributes;
+  const { font, fontVariant } = attributes;
 
   if (!font) return { ...run, glyphs: [], glyphIndices: [], positions: [] };
 
   const runString = string.slice(start, end);
-  const glyphRun = font.layout(runString);
+  const fontFeatures = getFontFeatures(run, fontVariant);
+  const glyphRun = font.layout(runString, fontFeatures);
   const positions = scalePositions(run, glyphRun.positions);
   const glyphIndices = resolveGlyphIndices(glyphRun.glyphs);
 

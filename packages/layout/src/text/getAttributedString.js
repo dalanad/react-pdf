@@ -95,7 +95,7 @@ const getFragments = (fontStore, instance, parentLink, level = 0) => {
       });
     } else if (isTextInstance(child)) {
       fragments.push({
-        string: transformText(child.value, textTransform || fontVariant),
+        string: transformText(child.value, textTransform),
         attributes,
       });
     } else if (child) {
