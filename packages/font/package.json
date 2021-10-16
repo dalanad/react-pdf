@@ -1,6 +1,6 @@
 {
   "name": "@paladin-analytics/rpdf-font",
-  "version": "2.0.16",
+  "version": "2.0.17",
   "license": "MIT",
   "author": "Diego Muracciole <diegomuracciole@gmail.com>",
   "homepage": "https://github.com/diegomura/react-pdf#readme",
@@ -15,12 +15,13 @@
     "watch": "rimraf ./lib && rollup -c -w"
   },
   "dependencies": {
-    "@paladin-analytics/rpdf-fontkit": "^2.0.9",
-    "@paladin-analytics/rpdf-types": "^2.0.9",
+    "@paladin-analytics/rpdf-fontkit": "^2.0.10",
+    "@paladin-analytics/rpdf-types": "^2.0.10",
     "cross-fetch": "^3.0.4",
     "is-url": "^1.2.4"
   },
   "files": [
     "lib"
-  ]
+  ],
+  "gitHead": "6e1a20c4a868ba803b78dd68c5cdae8fdabff932"
 }

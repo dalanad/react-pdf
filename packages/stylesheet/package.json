@@ -1,6 +1,6 @@
 {
   "name": "@paladin-analytics/rpdf-stylesheet",
-  "version": "2.0.15",
+  "version": "2.0.16",
   "license": "MIT",
   "author": "Diego Muracciole <diegomuracciole@gmail.com>",
   "homepage": "https://github.com/diegomura/react-pdf#readme",
@@ -12,7 +12,7 @@
     "watch": "rimraf ./lib && babel src --out-dir lib --watch"
   },
   "dependencies": {
-    "@paladin-analytics/rpdf-types": "^2.0.9",
+    "@paladin-analytics/rpdf-types": "^2.0.10",
     "color-string": "^1.5.3",
     "hsl-to-hex": "^1.0.0",
     "media-engine": "^1.0.3",
@@ -20,5 +20,6 @@
   },
   "files": [
     "lib"
-  ]
+  ],
+  "gitHead": "6e1a20c4a868ba803b78dd68c5cdae8fdabff932"
 }
