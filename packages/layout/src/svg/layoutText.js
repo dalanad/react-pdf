@@ -1,12 +1,12 @@
 import * as R from 'ramda';
-import * as P from '@paladin-analytics/primitives';
-import layoutEngine from '@paladin-analytics/textkit/lib/layout';
-import linebreaker from '@paladin-analytics/textkit/lib/engines/linebreaker';
-import AttributedString from '@paladin-analytics/textkit/lib/attributedString';
-import justification from '@paladin-analytics/textkit/lib/engines/justification';
-import scriptItemizer from '@paladin-analytics/textkit/lib/engines/scriptItemizer';
-import wordHyphenation from '@paladin-analytics/textkit/lib/engines/wordHyphenation';
-import decorationEngine from '@paladin-analytics/textkit/lib/engines/textDecoration';
+import * as P from '@paladin-analytics/rpdf-primitives';
+import layoutEngine from '@paladin-analytics/rpdf-textkit/lib/layout';
+import linebreaker from '@paladin-analytics/rpdf-textkit/lib/engines/linebreaker';
+import AttributedString from '@paladin-analytics/rpdf-textkit/lib/attributedString';
+import justification from '@paladin-analytics/rpdf-textkit/lib/engines/justification';
+import scriptItemizer from '@paladin-analytics/rpdf-textkit/lib/engines/scriptItemizer';
+import wordHyphenation from '@paladin-analytics/rpdf-textkit/lib/engines/wordHyphenation';
+import decorationEngine from '@paladin-analytics/rpdf-textkit/lib/engines/textDecoration';
 
 import transformText from '../text/transformText';
 import fontSubstitution from '../text/fontSubstitution';

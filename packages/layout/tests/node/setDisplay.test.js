@@ -1,4 +1,4 @@
-import Yoga from '@paladin-analytics/yoga';
+import Yoga from '@paladin-analytics/rpdf-yoga';
 
 import setDisplay from '../../src/node/setDisplay';
 

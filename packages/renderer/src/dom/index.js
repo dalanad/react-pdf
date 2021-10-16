@@ -1,4 +1,4 @@
-import * as primitives from '@paladin-analytics/primitives';
+import * as primitives from '@paladin-analytics/rpdf-primitives';
 
 import usePDF from './usePDF';
 import PDFViewer from './PDFViewer';
@@ -38,7 +38,7 @@ export * from './BlobProvider';
 
 export * from './PDFDownloadLink';
 
-export * from '@paladin-analytics/primitives';
+export * from '@paladin-analytics/rpdf-primitives';
 
 export default {
   pdf,

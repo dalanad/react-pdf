@@ -1,4 +1,4 @@
-import * as P from '@paladin-analytics/primitives';
+import * as P from '@paladin-analytics/rpdf-primitives';
 import isPolyline from '../../src/utils/isPolyline';
 
 const ASSERTED_TYPE = P.Polyline;

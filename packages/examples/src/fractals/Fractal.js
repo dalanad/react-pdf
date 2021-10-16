@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, StyleSheet } from '@paladin-analytics/renderer';
+import { Text, View, StyleSheet } from '@paladin-analytics/rpdf-renderer';
 
 const palette = [
   '#781c81',

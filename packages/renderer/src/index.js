@@ -1,8 +1,8 @@
 import BlobStream from 'blob-stream';
-import FontStore from '@paladin-analytics/font';
-import renderPDF from '@paladin-analytics/render';
-import PDFDocument from '@paladin-analytics/pdfkit';
-import layoutDocument from '@paladin-analytics/layout';
+import FontStore from '@paladin-analytics/rpdf-font';
+import renderPDF from '@paladin-analytics/rpdf-render';
+import PDFDocument from '@paladin-analytics/rpdf-pdfkit';
+import layoutDocument from '@paladin-analytics/rpdf-layout';
 
 import createRenderer from './renderer';
 import { version } from '../package.json';

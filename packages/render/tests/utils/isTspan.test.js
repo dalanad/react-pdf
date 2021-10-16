@@ -1,4 +1,4 @@
-import * as P from '@paladin-analytics/primitives';
+import * as P from '@paladin-analytics/rpdf-primitives';
 import isTspan from '../../src/utils/isTspan';
 
 const ASSERTED_TYPE = P.Tspan;

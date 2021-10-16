@@ -1,4 +1,4 @@
-import * as P from '@paladin-analytics/primitives';
+import * as P from '@paladin-analytics/rpdf-primitives';
 import isTextInstance from '../../src/utils/isTextInstance';
 
 const ASSERTED_TYPE = P.TextInstance;

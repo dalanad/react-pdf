@@ -2,20 +2,20 @@
   <img src="https://user-images.githubusercontent.com/5600341/27505816-c8bc37aa-587f-11e7-9a86-08a2d081a8b9.png" height="280px">
 </p>
 
-# @paladin-analytics/stylesheet
+# @paladin-analytics/rpdf-stylesheet
 
 > React-pdf styles engine
 
 ## How to install
 
 ```sh
-yarn add @paladin-analytics/stylesheet
+yarn add @paladin-analytics/rpdf-stylesheet
 ```
 
 ## How it works
 
 ```js
-const stylesheet = require('@paladin-analytics/stylesheet');
+const stylesheet = require('@paladin-analytics/rpdf-stylesheet');
 
 const container = {
   width: 400,

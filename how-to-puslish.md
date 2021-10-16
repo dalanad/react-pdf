@@ -28,4 +28,4 @@
       @paladin-analytics:registry=https://npm.pkg.github.com
       //npm.pkg.github.com/:\_authToken=<TOKEN>
 
-- Then install packages : `yarn add @paladin-analytics/renderer`
+- Then install packages : `yarn add @paladin-analytics/rpdf-renderer`

@@ -1,5 +1,5 @@
 /**
- * Resolves `src` to `@paladin-analytics/image` interface.
+ * Resolves `src` to `@paladin-analytics/rpdf-image` interface.
  *
  * Also it handles factories and async sources.
  *

@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import Yoga from '@paladin-analytics/yoga';
+import Yoga from '@paladin-analytics/rpdf-yoga';
 
 const getAspectRatio = viewbox => {
   if (!viewbox) return null;

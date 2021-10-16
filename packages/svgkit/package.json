@@ -1,5 +1,5 @@
 {
-  "name": "@paladin-analytics/svgkit",
+  "name": "@paladin-analytics/rpdf-svgkit",
   "license": "MIT",
   "version": "2.0.3",
   "repository": "git@github.com:Paladin-Analytics/react-pdf.git",
@@ -18,7 +18,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.4.3",
-    "@paladin-analytics/pdfkit": "^2.0.13",
+    "@paladin-analytics/rpdf-pdfkit": "^2.0.13",
     "ramda": "^0.26.1"
   }
 }

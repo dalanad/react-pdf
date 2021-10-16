@@ -1,4 +1,4 @@
-import unicode from '@paladin-analytics/unicode-properties';
+import unicode from '@paladin-analytics/rpdf-unicode-properties';
 
 /**
  * This class is used when GPOS does not define 'mark' or 'mkmk' features

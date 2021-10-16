@@ -1,9 +1,9 @@
 import * as R from 'ramda';
-import * as P from '@paladin-analytics/primitives';
+import * as P from '@paladin-analytics/rpdf-primitives';
 import {
   transformColor,
   processTransform,
-} from '@paladin-analytics/stylesheet';
+} from '@paladin-analytics/rpdf-stylesheet';
 
 import layoutText from '../svg/layoutText';
 import replaceDefs from '../svg/replaceDefs';

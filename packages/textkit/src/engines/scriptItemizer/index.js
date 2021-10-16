@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import unicode from '@paladin-analytics/unicode-properties';
+import unicode from '@paladin-analytics/rpdf-unicode-properties';
 
 import empty from '../../attributedString/empty';
 

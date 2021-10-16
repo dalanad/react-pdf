@@ -1,4 +1,4 @@
-import AttributedString from '@paladin-analytics/textkit/lib/attributedString';
+import AttributedString from '@paladin-analytics/rpdf-textkit/lib/attributedString';
 
 /**
  * Get lines width (if any)

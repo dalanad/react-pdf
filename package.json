@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@paladin-analytics/root",
+  "name": "@paladin-analytics/rpdf-root",
   "version": "2.0.0",
   "license": "MIT",
   "author": "Diego Muracciole <diegomuracciole@gmail.com>",
@@ -10,13 +10,13 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "lerna run build --ignore @paladin-analytics/yoga",
+    "build": "lerna run build --ignore @paladin-analytics/rpdf-yoga",
     "watch": "lerna run watch --parallel",
     "bootstrap": "lerna bootstrap",
-    "prepublish": "lerna run build --ignore @paladin-analytics/yoga",
+    "prepublish": "lerna run build --ignore @paladin-analytics/rpdf-yoga",
     "lint": "eslint packages",
     "test": "jest",
-    "examples": "lerna run start --scope @paladin-analytics/examples",
+    "examples": "lerna run start --scope @paladin-analytics/rpdf-examples",
     "lerna": "lerna"
   },
   "devDependencies": {

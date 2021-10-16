@@ -2,8 +2,8 @@
   <img src="https://user-images.githubusercontent.com/5600341/27505816-c8bc37aa-587f-11e7-9a86-08a2d081a8b9.png" height="280px">
   <p align="center">React renderer for creating PDF files on the browser and server<p>
   <p align="center">
-    <a href="https://www.npmjs.com/package/@paladin-analytics/renderer">
-      <img src="https://img.shields.io/npm/v/@paladin-analytics/renderer.svg" />
+    <a href="https://www.npmjs.com/package/@paladin-analytics/rpdf-renderer">
+      <img src="https://img.shields.io/npm/v/@paladin-analytics/rpdf-renderer.svg" />
     </a>
     <a href="https://travis-ci.org/diegomura/react-pdf">
       <img src="https://img.shields.io/travis/diegomura/react-pdf.svg" />
@@ -27,7 +27,7 @@ This package is used to _create_ PDFs using React. If you wish to _display_ exis
 ## How to install
 
 ```sh
-yarn add @paladin-analytics/renderer
+yarn add @paladin-analytics/rpdf-renderer
 ```
 
 ## How it works
@@ -40,7 +40,7 @@ import {
   Text,
   View,
   StyleSheet,
-} from '@paladin-analytics/renderer';
+} from '@paladin-analytics/rpdf-renderer';
 
 // Create styles
 const styles = StyleSheet.create({
@@ -75,7 +75,7 @@ const MyDocument = () => (
 ```jsx
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { PDFViewer } from '@paladin-analytics/renderer';
+import { PDFViewer } from '@paladin-analytics/rpdf-renderer';
 
 const App = () => (
   <PDFViewer>
@@ -90,7 +90,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 ```jsx
 import React from 'react';
-import ReactPDF from '@paladin-analytics/renderer';
+import ReactPDF from '@paladin-analytics/rpdf-renderer';
 
 ReactPDF.render(<MyDocument />, `${__dirname}/example.pdf`);
 ```
@@ -121,4 +121,4 @@ MIT © [Diego Muracciole](http://github.com/diegomura)
 
 ---
 
-![](https://img.shields.io/npm/dt/@paladin-analytics/renderer.svg?style=flat)
+![](https://img.shields.io/npm/dt/@paladin-analytics/rpdf-renderer.svg?style=flat)

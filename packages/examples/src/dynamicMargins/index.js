@@ -9,7 +9,7 @@ import {
   Link,
   Font,
   StyleSheet,
-} from '@paladin-analytics/renderer';
+} from '@paladin-analytics/rpdf-renderer';
 
 const styles = StyleSheet.create({
   title: {

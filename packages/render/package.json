@@ -1,5 +1,5 @@
 {
-  "name": "@paladin-analytics/render",
+  "name": "@paladin-analytics/rpdf-render",
   "version": "2.0.16",
   "license": "MIT",
   "author": "Diego Muracciole <diegomuracciole@gmail.com>",
@@ -12,9 +12,9 @@
     "watch": "rimraf ./lib && babel src --out-dir lib --watch"
   },
   "dependencies": {
-    "@paladin-analytics/primitives": "^2.0.2",
-    "@paladin-analytics/textkit": "^2.0.8",
-    "@paladin-analytics/types": "^2.0.8",
+    "@paladin-analytics/rpdf-primitives": "^2.0.2",
+    "@paladin-analytics/rpdf-textkit": "^2.0.8",
+    "@paladin-analytics/rpdf-types": "^2.0.8",
     "abs-svg-path": "^0.1.1",
     "color-string": "^1.5.3",
     "normalize-svg-path": "^1.1.0",

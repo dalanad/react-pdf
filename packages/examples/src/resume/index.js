@@ -7,7 +7,7 @@ import {
   Image,
   Document,
   StyleSheet,
-} from '@paladin-analytics/renderer';
+} from '@paladin-analytics/rpdf-renderer';
 
 import Header from './Header';
 import Skills from './Skills';

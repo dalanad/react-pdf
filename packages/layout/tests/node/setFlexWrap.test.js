@@ -1,4 +1,4 @@
-import Yoga from '@paladin-analytics/yoga';
+import Yoga from '@paladin-analytics/rpdf-yoga';
 
 import setFlexWrap from '../../src/node/setFlexWrap';
 

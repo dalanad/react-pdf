@@ -6,7 +6,7 @@ import {
   Circle,
   LinearGradient,
   RadialGradient,
-} from '@paladin-analytics/renderer';
+} from '@paladin-analytics/rpdf-renderer';
 
 const Svg4 = () => (
   <Svg viewBox="0 0 10 20" width="170">

@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
 
-import { PDFFont } from '@paladin-analytics/pdfkit';
+import { PDFFont } from '@paladin-analytics/rpdf-pdfkit';
 
 class StandardFont {
   constructor(src) {

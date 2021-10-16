@@ -1,5 +1,5 @@
 {
-  "name": "@paladin-analytics/png-js",
+  "name": "@paladin-analytics/rpdf-png-js",
   "description": "A PNG decoder in JS",
   "version": "2.0.4",
   "main": "lib/png-js.cjs.js",

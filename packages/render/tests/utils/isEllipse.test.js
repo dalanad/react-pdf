@@ -1,4 +1,4 @@
-import * as P from '@paladin-analytics/primitives';
+import * as P from '@paladin-analytics/rpdf-primitives';
 import isEllipse from '../../src/utils/isEllipse';
 
 const ASSERTED_TYPE = P.Ellipse;

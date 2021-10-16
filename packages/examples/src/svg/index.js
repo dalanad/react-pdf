@@ -4,7 +4,7 @@ import ReactPDF, {
   Page,
   Font,
   StyleSheet,
-} from '@paladin-analytics/renderer';
+} from '@paladin-analytics/rpdf-renderer';
 
 import Svg0 from './svg';
 import Svg1 from './Svg1';

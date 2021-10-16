@@ -1,4 +1,4 @@
-import Yoga from '@paladin-analytics/yoga';
+import Yoga from '@paladin-analytics/rpdf-yoga';
 
 /**
  * Set display attribute to node's Yoga instance

@@ -1,4 +1,4 @@
-import * as P from '@paladin-analytics/primitives';
+import * as P from '@paladin-analytics/rpdf-primitives';
 import isGroup from '../../src/utils/isGroup';
 
 const ASSERTED_TYPE = P.G;
