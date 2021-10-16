@@ -8,6 +8,7 @@ const getFontAscent = R.path(['font', 'ascent']);
 const getAvailableFontFeatures = R.path(['availableFeatures']);
 const isFontFeatureExist = (font, feature) => {
   const availableFontFeatures = getAvailableFontFeatures(font);
+  if (!availableFontFeatures) return false;
   return availableFontFeatures.includes(feature);
 };
 const getFontFeatureTag = feature => {

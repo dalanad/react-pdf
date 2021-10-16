@@ -4,6 +4,7 @@ const getAvailableFontFeatures = R.path(['availableFeatures']);
 
 const isFontFeatureExist = (font, feature) => {
   const availableFontFeatures = getAvailableFontFeatures(font);
+  if (!availableFontFeatures) return false;
   return availableFontFeatures.includes(feature);
 };
 
