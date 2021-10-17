@@ -1,10 +1,10 @@
 {
-  "name": "@react-pdf/layout",
-  "version": "2.0.20",
+  "name": "@paladin-analytics/rpdf-layout",
+  "version": "2.0.24",
   "license": "MIT",
   "author": "Diego Muracciole <diegomuracciole@gmail.com>",
   "homepage": "https://github.com/diegomura/react-pdf#readme",
-  "repository": "git@github.com:diegomura/react-pdf.git",
+  "repository": "git@github.com:Paladin-Analytics/react-pdf.git",
   "main": "lib/index.js",
   "scripts": {
     "test": "jest",
@@ -13,13 +13,13 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.6.2",
-    "@react-pdf/image": "^2.0.3",
-    "@react-pdf/pdfkit": "^2.0.11",
-    "@react-pdf/primitives": "^2.0.0",
-    "@react-pdf/stylesheet": "^2.0.12",
-    "@react-pdf/textkit": "^2.0.6",
-    "@react-pdf/types": "^2.0.6",
-    "@react-pdf/yoga": "^2.0.2",
+    "@paladin-analytics/rpdf-image": "^2.0.7",
+    "@paladin-analytics/rpdf-pdfkit": "^2.0.15",
+    "@paladin-analytics/rpdf-primitives": "^2.0.4",
+    "@paladin-analytics/rpdf-stylesheet": "^2.0.16",
+    "@paladin-analytics/rpdf-textkit": "^2.0.10",
+    "@paladin-analytics/rpdf-types": "^2.0.10",
+    "@paladin-analytics/rpdf-yoga": "^2.0.6",
     "cross-fetch": "^3.0.4",
     "emoji-regex": "^8.0.0",
     "queue": "^6.0.1",
@@ -30,5 +30,6 @@
   },
   "files": [
     "lib"
-  ]
+  ],
+  "gitHead": "6e1a20c4a868ba803b78dd68c5cdae8fdabff932"
 }

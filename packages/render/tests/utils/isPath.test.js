@@ -1,4 +1,4 @@
-import * as P from '@react-pdf/primitives';
+import * as P from '@paladin-analytics/rpdf-primitives';
 import isPath from '../../src/utils/isPath';
 
 const ASSERTED_TYPE = P.Path;

@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import * as P from '@react-pdf/primitives';
+import * as P from '@paladin-analytics/rpdf-primitives';
 
 import getDefs from './getDefs';
 
@@ -17,11 +17,7 @@ const replaceDef = defs =>
   R.compose(
     R.when(
       R.test(URL_REGEX),
-      R.compose(
-        R.prop(R.__, defs),
-        R.prop(1),
-        R.match(URL_REGEX),
-      ),
+      R.compose(R.prop(R.__, defs), R.prop(1), R.match(URL_REGEX)),
     ),
     R.defaultTo(''),
   );
@@ -42,9 +38,6 @@ const parseDefs = root => {
   return R.evolve({ children: R.map(parseNodeDefs(defs)) }, root);
 };
 
-const replaceDefs = R.compose(
-  detachDefs,
-  parseDefs,
-);
+const replaceDefs = R.compose(detachDefs, parseDefs);
 
 export default replaceDefs;

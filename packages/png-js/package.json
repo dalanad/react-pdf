@@ -1,9 +1,10 @@
 {
-  "name": "@react-pdf/png-js",
+  "name": "@paladin-analytics/rpdf-png-js",
   "description": "A PNG decoder in JS",
-  "version": "2.0.2",
+  "version": "2.0.6",
   "main": "lib/png-js.cjs.js",
   "module": "lib/png-js.es.js",
+  "repository": "git@github.com:Paladin-Analytics/react-pdf.git",
   "browser": {
     "./lib/png-js.es.js": "./lib/png-js.browser.es.js",
     "./lib/png-js.cjs.js": "./lib/png-js.browser.cjs.js"
@@ -19,5 +20,6 @@
   },
   "files": [
     "lib"
-  ]
+  ],
+  "gitHead": "6e1a20c4a868ba803b78dd68c5cdae8fdabff932"
 }

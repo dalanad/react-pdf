@@ -1,7 +1,8 @@
 {
-  "name": "@react-pdf/svgkit",
+  "name": "@paladin-analytics/rpdf-svgkit",
   "license": "MIT",
-  "version": "2.0.1",
+  "version": "2.0.5",
+  "repository": "git@github.com:Paladin-Analytics/react-pdf.git",
   "description": "A SVG generation library for Node.js and browser",
   "main": "./lib/index.js",
   "contributors": [
@@ -17,7 +18,8 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.4.3",
-    "@react-pdf/pdfkit": "^2.0.11",
+    "@paladin-analytics/rpdf-pdfkit": "^2.0.15",
     "ramda": "^0.26.1"
-  }
+  },
+  "gitHead": "6e1a20c4a868ba803b78dd68c5cdae8fdabff932"
 }

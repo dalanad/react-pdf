@@ -1,6 +1,6 @@
 import * as R from 'ramda';
-import * as P from '@react-pdf/primitives';
-import stylesheet from '@react-pdf/stylesheet';
+import * as P from '@paladin-analytics/rpdf-primitives';
+import stylesheet from '@paladin-analytics/rpdf-stylesheet';
 
 const isLink = R.propEq('type', P.Link);
 

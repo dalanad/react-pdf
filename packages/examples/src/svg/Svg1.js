@@ -1,5 +1,12 @@
 import React from 'react';
-import { Rect, Svg, G, Path, Text, Tspan } from '@react-pdf/renderer';
+import {
+  Rect,
+  Svg,
+  G,
+  Path,
+  Text,
+  Tspan,
+} from '@paladin-analytics/rpdf-renderer';
 
 const Svg1 = () => (
   <Svg width="400" viewBox="0 0 600 400">

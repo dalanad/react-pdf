@@ -1,5 +1,5 @@
 import React from 'react';
-import { Page, Document } from '@react-pdf/renderer';
+import { Page, Document } from '@paladin-analytics/rpdf-renderer';
 
 import Fractal from './Fractal';
 
