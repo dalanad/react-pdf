@@ -1,6 +1,6 @@
 import * as R from 'ramda';
-import runWidth from '@react-pdf/textkit/lib/run/advanceWidth';
-import lineWidth from '@react-pdf/textkit/lib/attributedString/advanceWidth';
+import runWidth from '@paladin-analytics/rpdf-textkit/lib/run/advanceWidth';
+import lineWidth from '@paladin-analytics/rpdf-textkit/lib/attributedString/advanceWidth';
 
 import renderGlyphs from './renderGlyphs';
 

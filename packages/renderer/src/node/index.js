@@ -1,4 +1,4 @@
-import * as primitives from '@react-pdf/primitives';
+import * as primitives from '@paladin-analytics/rpdf-primitives';
 
 import renderToFile from './renderToFile';
 import renderToStream from './renderToStream';
@@ -37,7 +37,7 @@ export * from './renderToStream';
 
 export * from './renderToString';
 
-export * from '@react-pdf/primitives';
+export * from '@paladin-analytics/rpdf-primitives';
 
 export default {
   pdf,

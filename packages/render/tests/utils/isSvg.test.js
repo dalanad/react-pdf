@@ -1,4 +1,4 @@
-import * as P from '@react-pdf/primitives';
+import * as P from '@paladin-analytics/rpdf-primitives';
 import isSvg from '../../src/utils/isSvg';
 
 const ASSERTED_TYPE = P.Svg;

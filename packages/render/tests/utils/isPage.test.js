@@ -1,4 +1,4 @@
-import * as P from '@react-pdf/primitives';
+import * as P from '@paladin-analytics/rpdf-primitives';
 import isPage from '../../src/utils/isPage';
 
 const ASSERTED_TYPE = P.Page;
