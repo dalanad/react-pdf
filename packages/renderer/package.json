@@ -1,11 +1,11 @@
 {
-  "name": "@react-pdf/renderer",
-  "version": "2.0.20",
+  "name": "@paladin-analytics/rpdf-renderer",
+  "version": "2.0.24",
   "license": "MIT",
   "types": "index.d.ts",
   "author": "Diego Muracciole <diegomuracciole@gmail.com>",
   "homepage": "https://github.com/diegomura/react-pdf#readme",
-  "repository": "git@github.com:diegomura/react-pdf.git",
+  "repository": "git@github.com:Paladin-Analytics/react-pdf.git",
   "main": "lib/react-pdf.cjs.js",
   "module": "lib/react-pdf.es.js",
   "browser": {
@@ -21,12 +21,12 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.6.2",
-    "@react-pdf/font": "^2.0.13",
-    "@react-pdf/layout": "^2.0.20",
-    "@react-pdf/pdfkit": "^2.0.11",
-    "@react-pdf/primitives": "^2.0.0",
-    "@react-pdf/render": "^2.0.14",
-    "@react-pdf/types": "^2.0.6",
+    "@paladin-analytics/rpdf-font": "^2.0.17",
+    "@paladin-analytics/rpdf-layout": "^2.0.24",
+    "@paladin-analytics/rpdf-pdfkit": "^2.0.15",
+    "@paladin-analytics/rpdf-primitives": "^2.0.4",
+    "@paladin-analytics/rpdf-render": "^2.0.18",
+    "@paladin-analytics/rpdf-types": "^2.0.10",
     "blob-stream": "^0.1.3",
     "queue": "^6.0.1",
     "ramda": "^0.26.1",
@@ -56,5 +56,6 @@
     "hooks": {
       "pre-commit": "git add . && lint-staged"
     }
-  }
+  },
+  "gitHead": "6e1a20c4a868ba803b78dd68c5cdae8fdabff932"
 }

@@ -2,7 +2,13 @@
 
 import React from 'react';
 
-import { Page, Document, Link, View, Image } from '@react-pdf/renderer';
+import {
+  Page,
+  Document,
+  Link,
+  View,
+  Image,
+} from '@paladin-analytics/rpdf-renderer';
 
 export default () => (
   <Document>

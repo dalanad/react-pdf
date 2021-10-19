@@ -1,4 +1,4 @@
-import * as P from '@react-pdf/primitives';
+import * as P from '@paladin-analytics/rpdf-primitives';
 import isImage from '../../src/utils/isImage';
 
 const ASSERTED_TYPE = P.Image;

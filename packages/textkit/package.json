@@ -1,8 +1,9 @@
 {
-  "name": "@react-pdf/textkit",
+  "name": "@paladin-analytics/rpdf-textkit",
   "license": "MIT",
-  "version": "2.0.6",
+  "version": "2.0.10",
   "description": "An advanced text layout framework",
+  "repository": "git@github.com:Paladin-Analytics/react-pdf.git",
   "main": "./lib/index.js",
   "contributors": [
     "Devon Govett <devongovett@gmail.com>",
@@ -18,8 +19,9 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.4.3",
-    "@react-pdf/unicode-properties": "^2.4.1",
+    "@paladin-analytics/rpdf-unicode-properties": "^2.4.5",
     "hyphen": "^1.6.4",
     "ramda": "^0.26.1"
-  }
+  },
+  "gitHead": "6e1a20c4a868ba803b78dd68c5cdae8fdabff932"
 }

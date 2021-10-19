@@ -1,10 +1,10 @@
 /* eslint-disable no-param-reassign */
 
 import * as R from 'ramda';
-import runHeight from '@react-pdf/textkit/lib/run/height';
-import runDescent from '@react-pdf/textkit/lib/run/descent';
-import advanceWidth from '@react-pdf/textkit/lib/run/advanceWidth';
-import ascent from '@react-pdf/textkit/lib/attributedString/ascent';
+import runHeight from '@paladin-analytics/rpdf-textkit/lib/run/height';
+import runDescent from '@paladin-analytics/rpdf-textkit/lib/run/descent';
+import advanceWidth from '@paladin-analytics/rpdf-textkit/lib/run/advanceWidth';
+import ascent from '@paladin-analytics/rpdf-textkit/lib/attributedString/ascent';
 
 import renderGlyphs from './renderGlyphs';
 import parseColor from '../utils/parseColor';

@@ -1,5 +1,11 @@
 import React from 'react';
-import { Document, Page, View, Text, StyleSheet } from '@react-pdf/renderer';
+import {
+  Document,
+  Page,
+  View,
+  Text,
+  StyleSheet,
+} from '@paladin-analytics/rpdf-renderer';
 
 const styles = StyleSheet.create({
   select: {
