@@ -85,7 +85,7 @@ const processSmallCaps = fragments => {
 
       processedFragments.push(...processedWordsFragments);
     } else {
-      processedFragments.push({ string: string.toUpperCase(), attributes });
+      processedFragments.push({ string, attributes });
     }
   });
   return processedFragments;
