@@ -7,7 +7,7 @@ import {
   Image,
   StyleSheet,
   View,
-} from '@react-pdf/renderer';
+} from '@paladin-analytics/rpdf-renderer';
 
 const styles = StyleSheet.create({
   body: {
