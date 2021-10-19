@@ -1,6 +1,7 @@
 import * as R from 'ramda';
 
 const getAvailableFontFeatures = R.path(['availableFeatures']);
+const hasCapitals = word => word.search(/[A-Z]/g) !== -1;
 
 const isFontFeatureExist = (font, feature) => {
   const availableFontFeatures = getAvailableFontFeatures(font);
@@ -26,22 +27,49 @@ const processSmallCaps = fragments => {
         processedFragments.push({ string, attributes });
         return;
       }
-
       const words = string.split(' ');
-
-      const wordsList = words
+      const processedWordsFragments = words
         .map(word => {
-          if (word.charAt(0).search(/[A-Z]/g) !== -1) {
-            return [
-              {
-                string: word.charAt(0).toUpperCase(),
-                attributes: { ...attributes, fontVariant: 'normal' },
-              },
-              {
-                string: `${word.substr(1, word.length - 1)} `.toUpperCase(),
+          const hasCaps = hasCapitals(word);
+          if (hasCaps) {
+            const chars = word.split('');
+
+            let tempStr = '';
+            const substrings = [];
+            chars.map(char => {
+              if (hasCapitals(char)) {
+                substrings.push(tempStr);
+                substrings.push(char);
+                tempStr = '';
+                return char;
+              }
+              tempStr += char;
+              return char;
+            });
+            substrings.push(tempStr);
+
+            const validatedSubstrings = substrings.filter(str => str !== '');
+
+            const wordFragments = validatedSubstrings.map((str, index) => {
+              const uppercaseStr = str.toUpperCase();
+              if (hasCapitals(str)) {
+                return {
+                  string:
+                    index === validatedSubstrings.length - 1
+                      ? `${uppercaseStr} `
+                      : uppercaseStr,
+                  attributes: { ...attributes, fontVariant: 'normal' },
+                };
+              }
+              return {
+                string:
+                  index === validatedSubstrings.length - 1
+                    ? `${uppercaseStr} `
+                    : uppercaseStr,
                 attributes,
-              },
-            ];
+              };
+            });
+            return [...wordFragments];
           }
           return [
             {
@@ -55,7 +83,7 @@ const processSmallCaps = fragments => {
           return acc;
         }, []);
 
-      processedFragments.push(...wordsList);
+      processedFragments.push(...processedWordsFragments);
     } else {
       processedFragments.push({ string: string.toUpperCase(), attributes });
     }
