@@ -93,6 +93,7 @@ export interface Style {
   textIndent?: any; // ?
   textOverflow?: 'ellipsis';
   textTransform?: 'capitalize' | 'lowercase' | 'uppercase';
+  fontVariant?: 'superscript' | 'subscript' | 'small-caps' | 'normal',
 
   // Sizing/positioning
 
