@@ -12,6 +12,7 @@ import Resume from './resume';
 import Fractals from './fractals';
 import PageWrap from './pageWrap';
 import DynamicMargins from './dynamicMargins';
+import TextWrap from './textWrap';
 
 const MOUNT_ELEMENT = document.getElementById('root');
 
@@ -24,10 +25,11 @@ const EXAMPLES = {
   pageWrap: PageWrap,
   fractals: Fractals,
   dynamicMargins: DynamicMargins,
+  textWrap: TextWrap,
 };
 
 const Viewer = () => {
-  const [example, setExample] = useState('pageWrap');
+  const [example, setExample] = useState('textWrap');
 
   console.log(example);
 
@@ -39,8 +41,6 @@ const Viewer = () => {
 
   return (
     <div className="wrapper">
-      <h2>Examples</h2>
-
       <ul>
         {Object.keys(EXAMPLES).map(value => (
           <li

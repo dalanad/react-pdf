@@ -25,18 +25,19 @@ const purgeAttachments = R.when(
  * @param  {Array} attributed strings
  * @return {Object} layout blocks
  */
-const layoutLines = (rect, lines, indent) => {
+const layoutLines = (rect, lines, widths, offsets) => {
   let currentY = rect.y;
 
   return R.addIndex(R.map)(
     R.compose(purgeAttachments, (line, i) => {
-      const lineIndent = i === 0 ? indent : 0;
       const style = R.pathOr({}, ['runs', 0, 'attributes'], line);
       const height = Math.max(stringHeight(line), style.lineHeight);
       const box = {
-        x: rect.x + lineIndent,
+        x:
+          rect.x +
+          (i < offsets.length ? offsets[i] : offsets[offsets.length - 1]),
         y: currentY,
-        width: rect.width - lineIndent,
+        width: i < widths.length ? widths[i] : widths[widths.length - 1],
         height,
       };
 
@@ -45,6 +46,52 @@ const layoutLines = (rect, lines, indent) => {
       return R.compose(R.assoc('box', box), R.omit(['syllables']))(line);
     }),
   )(lines);
+};
+
+const computeOffsetsAndWidths = (containerRect, maskRects, lineHeight) => {
+  const results = [];
+  let maskIndex = 0;
+  let lineIndex = 0;
+
+  while (maskIndex < maskRects.length) {
+    while (
+      (lineIndex + 1) * lineHeight + containerRect.y <
+      maskRects[maskIndex].y
+    ) {
+      results.push({ offset: 0, width: containerRect.width });
+      lineIndex += 1;
+    }
+    while (
+      maskRects[maskIndex].y + maskRects[maskIndex].height >=
+      lineIndex * lineHeight + containerRect.y
+    ) {
+      // colliding region with mask
+      const widthToRight = Math.min(
+        containerRect.width -
+          (maskRects[maskIndex].width -
+            (containerRect.x - maskRects[maskIndex].x)),
+      );
+      const widthToLeft = Math.min(
+        maskRects[maskIndex].x - containerRect.x,
+        containerRect.width,
+      );
+      if (widthToLeft >= widthToRight) {
+        results.push({ offset: 0, width: widthToLeft });
+      } else {
+        results.push({
+          offset: containerRect.width - widthToRight,
+          width: widthToRight,
+        });
+      }
+      lineIndex += 1;
+    }
+
+    maskIndex += 1;
+  }
+
+  results.push({ offset: 0, width: containerRect.width });
+
+  return results;
 };
 
 /**
@@ -58,11 +105,30 @@ const layoutLines = (rect, lines, indent) => {
  */
 const layoutParagraph = (engines, options) => (rect, paragraph) => {
   const indent = R.pathOr(0, ['runs', 0, 'attributes', 'indent'], paragraph);
-  const lines = engines.linebreaker(options)(paragraph, [
-    rect.width - indent,
-    rect.width,
-  ]);
-  const lineFragments = layoutLines(rect, lines, indent);
+
+  const lineHeight = stringHeight(paragraph);
+  const offsetsAndWidths = computeOffsetsAndWidths(
+    rect,
+    options.maskRects || [],
+    lineHeight,
+  );
+
+  const widths = offsetsAndWidths.map((item, index) => {
+    if (index === 0) {
+      return item.width - indent;
+    }
+    return item.width;
+  });
+
+  const offsets = offsetsAndWidths.map((item, index) => {
+    if (index === 0) {
+      return item.offset + indent;
+    }
+    return item.offset;
+  });
+
+  const lines = engines.linebreaker(options)(paragraph, widths);
+  const lineFragments = layoutLines(rect, lines, widths, offsets);
   return lineFragments;
 };
 
