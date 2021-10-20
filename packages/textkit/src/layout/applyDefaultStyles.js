@@ -44,6 +44,7 @@ const applyRunStyles = R.evolve({
     stroke: a.stroke || false,
     wordSpacing: a.wordSpacing || 0,
     yOffset: a.yOffset || 0,
+    fontVariant: a.fontVariant,
   }),
 });
 

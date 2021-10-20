@@ -2,7 +2,7 @@ import './index.css';
 
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { PDFViewer } from '@paladin-analytics/rpdf-renderer';
+import { PDFViewer, Font } from '@paladin-analytics/rpdf-renderer';
 
 import Svg from './svg';
 import GoTo from './goTo';
@@ -13,6 +13,12 @@ import Fractals from './fractals';
 import PageWrap from './pageWrap';
 import DynamicMargins from './dynamicMargins';
 import TextWrap from './textWrap';
+import TextEnhancements from './text-enhancements';
+import editorFonts from './text-enhancements/fonts';
+
+editorFonts.forEach(el => {
+  Font.register(el);
+});
 
 const MOUNT_ELEMENT = document.getElementById('root');
 
@@ -25,11 +31,14 @@ const EXAMPLES = {
   pageWrap: PageWrap,
   fractals: Fractals,
   dynamicMargins: DynamicMargins,
+  textEnhancements: TextEnhancements,
   textWrap: TextWrap,
 };
 
 const Viewer = () => {
-  const [example, setExample] = useState('textWrap');
+  const [example, setExample] = useState('text');
+  const [fontFamily, setFontFamily] = useState('Poppins');
+  const fontList = editorFonts.map(f => f.family);
 
   console.log(example);
 
@@ -54,8 +63,20 @@ const Viewer = () => {
         ))}
       </ul>
 
+      <div style={{ padding: 10 }}>
+        <select
+          value={fontFamily}
+          onChange={event => setFontFamily(event.currentTarget.value)}
+        >
+          {fontList.map(ff => (
+            // eslint-disable-next-line react/no-array-index-key
+            <option key={Math.random() * 1000}>{ff}</option>
+          ))}
+        </select>
+      </div>
+
       <PDFViewer style={{ flex: 1 }}>
-        <Document />
+        <Document fontFamily={fontFamily} />
       </PDFViewer>
     </div>
   );

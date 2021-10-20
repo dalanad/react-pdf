@@ -5,8 +5,9 @@ import AttributedString from '@paladin-analytics/rpdf-textkit/lib/attributedStri
 import { embedEmojis } from './emoji';
 import ignoreChars from './ignoreChars';
 import transformText from './transformText';
+import processSmallCaps from './processSmallCaps';
 
-const PREPROCESSORS = [ignoreChars, embedEmojis];
+const PREPROCESSORS = [ignoreChars, embedEmojis, processSmallCaps];
 
 const isType = R.propEq('type');
 
@@ -41,6 +42,7 @@ const getFragments = (fontStore, instance, parentLink, level = 0) => {
     letterSpacing,
     textIndent,
     opacity,
+    fontVariant = 'normal',
   } = instance.style;
 
   const opts = { fontFamily, fontWeight, fontStyle };
@@ -73,6 +75,7 @@ const getFragments = (fontStore, instance, parentLink, level = 0) => {
     underlineColor: textDecorationColor || color,
     link: parentLink || instance.props?.src || instance.props?.href,
     lineHeight: lineHeight ? lineHeight * fontSize : null,
+    fontVariant,
   };
 
   for (let i = 0; i < instance.children.length; i += 1) {
