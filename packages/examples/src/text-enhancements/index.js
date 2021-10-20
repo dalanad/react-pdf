@@ -82,8 +82,8 @@ export default ({ fontFamily }) => {
               </Text>
               <Text style={{fontSize:12,color:'green'}}>Small Caps</Text>
               <Text style={[styles.textSC, styles.text, { fontFamily: font.family }]}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Lorem ipsum dolor ameted, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt UteLaBore et dolore magna aliqua.
               </Text>
             </View>
           ))}
@@ -158,8 +158,8 @@ export default ({ fontFamily }) => {
               <Text style={styles.titleText}>Small Caps</Text>
             </View>
             <Text style={[styles.textSC, styles.text, { fontFamily }]}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              Lorem ipsum dolor ameted, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt UteLaBore et dolore magna aliqua.
             </Text> */}
           </View>
         </View>
