@@ -12,6 +12,7 @@ import Resume from './resume';
 import Fractals from './fractals';
 import PageWrap from './pageWrap';
 import DynamicMargins from './dynamicMargins';
+import TextWrap from './textWrap';
 import TextEnhancements from './text-enhancements';
 import editorFonts from './text-enhancements/fonts';
 
@@ -31,10 +32,11 @@ const EXAMPLES = {
   fractals: Fractals,
   dynamicMargins: DynamicMargins,
   textEnhancements: TextEnhancements,
+  textWrap: TextWrap,
 };
 
 const Viewer = () => {
-  const [example, setExample] = useState('textEnhancements');
+  const [example, setExample] = useState('text');
   const [fontFamily, setFontFamily] = useState('Poppins');
   const fontList = editorFonts.map(f => f.family);
 
@@ -48,8 +50,6 @@ const Viewer = () => {
 
   return (
     <div className="wrapper">
-      <h2>Examples</h2>
-
       <ul>
         {Object.keys(EXAMPLES).map(value => (
           <li

@@ -7,6 +7,7 @@ import getPadding from '../node/getPadding';
 import getPosition from '../node/getPosition';
 import getDimension from '../node/getDimension';
 import getBorderWidth from '../node/getBorderWidth';
+import getAbsolutePosition from '../node/getAbsolutePosition';
 import setDisplay from '../node/setDisplay';
 import setOverflow from '../node/setOverflow';
 import setFlexWrap from '../node/setFlexWrap';
@@ -56,6 +57,7 @@ import measureSvg from '../svg/measureSvg';
 import measureText from '../text/measureText';
 import measureImage from '../image/measureImage';
 import measureCanvas from '../canvas/measureCanvas';
+import measureSpaceFillingView from '../view/measureSpaceFillingView';
 
 const YOGA_NODE = '_yogaNode';
 const YOGA_CONFIG = Yoga.Config.create();
@@ -66,6 +68,7 @@ const isType = R.propEq('type');
 
 const isSvg = isType(P.Svg);
 const isText = isType(P.Text);
+const isView = isType(P.View);
 const isNote = isType(P.Note);
 const isPage = isType(P.Page);
 const isImage = isType(P.Image);
@@ -126,20 +129,19 @@ const setYogaValues = R.tap(node => {
 });
 
 /**
- * Inserts child into parent' yoga node
- *
- * @param {Object} parent
- * @param {Object} node
- * @param {Object} node
+ * Attaches a node to it's parent yoga node
+ * @param {Object} parentNode
  */
-const insertYogaNodes = parent =>
-  R.tap(child => parent.insertChild(child[YOGA_NODE], parent.getChildCount()));
+const attachYogNodeToParent = parentNode =>
+  R.tap(child => {
+    parentNode.insertChild(child[YOGA_NODE], parentNode.getChildCount());
+  });
 
 const setMeasureFunc = (page, fontStore) => node => {
   const yogaNode = node[YOGA_NODE];
 
   if (isText(node)) {
-    yogaNode.setMeasureFunc(measureText(page, node, fontStore));
+    yogaNode.setMeasureFunc(measureText(page, node, [], fontStore));
   }
 
   if (isImage(node)) {
@@ -170,36 +172,112 @@ const isLayoutElement = R.allPass([isNotText, isNotNote, isNotSvg]);
  * @param {Object} node
  * @returns {Object} node with appended yoga node
  */
-const createYogaNodes = (page, fontStore) => node => {
+const createYogaNodes = (
+  page,
+  fontStore,
+  parentNode,
+  rootNode,
+  masks,
+) => node => {
   const yogaNode = Yoga.Node.createWithConfig(YOGA_CONFIG);
 
   return R.compose(
-    setMeasureFunc(page, fontStore),
+    R.tap(element => {
+      // console.log('element type', element.type);
+      if (isText(element) && element.lines.length) {
+        const position = getAbsolutePosition(element);
+        const dimension = getDimension(element);
+        const maskRects = [];
+        // check for collision
+        masks.forEach(mask => {
+          if (
+            mask.absTop + mask.height > position.absTop &&
+            position.absTop + dimension.height >= mask.absTop
+          ) {
+            // there is a vertical collision
+            // check for horizontal collision
+            if (
+              mask.absLeft + mask.width >= position.absLeft &&
+              position.absLeft + dimension.width >= mask.absLeft
+            ) {
+              // console.error('There is a collision', mask, element);
+              maskRects.push({
+                y: mask.absTop - position.absTop,
+                x: mask.absLeft - position.absLeft,
+                width: mask.width,
+                height: mask.height,
+              });
+            }
+          }
+        });
+        if (maskRects.length && element.lines?.length) {
+          yogaNode.setMeasureFunc(
+            measureText(page, element, maskRects, fontStore),
+          );
+          yogaNode.markDirty();
+          rootNode.calculateLayout();
+        }
+      }
+
+      if (isView(element) && element.props?.fillPreviousWrapTextSpacing) {
+        const position = getAbsolutePosition(element);
+        const dimension = getDimension(element);
+        let fillNeeded = 0;
+        // check for collision
+        masks.forEach(mask => {
+          if (
+            mask.absTop + mask.height > position.absTop &&
+            position.absTop + dimension.height >= mask.absTop
+          ) {
+            // there is a vertical collision
+            fillNeeded = Math.max(
+              fillNeeded,
+              mask.absTop + mask.height - position.absTop,
+            );
+          }
+        });
+
+        if (fillNeeded) {
+          console.log('Fill needed', fillNeeded);
+          yogaNode.setMeasureFunc(measureSpaceFillingView(fillNeeded));
+          yogaNode.markDirty();
+          rootNode.calculateLayout();
+        }
+      }
+    }),
+    R.tap(element => {
+      if (rootNode) {
+        // if the element is a sub-element, re-calculate the layout after adding the yoga node
+        rootNode.calculateLayout();
+        if (element.props?.wrapTextAround) {
+          // calculate the absolute position and add it to masks
+          const position = getAbsolutePosition(element);
+          const dimension = getDimension(element);
+          masks.push({ ...position, ...dimension });
+        }
+      }
+    }),
     R.when(
       isLayoutElement,
       R.evolve({
         children: R.map(
           R.compose(
-            insertYogaNodes(yogaNode),
-            createYogaNodes(page, fontStore),
+            createYogaNodes(
+              page,
+              fontStore,
+              yogaNode,
+              rootNode || yogaNode,
+              masks,
+            ),
           ),
         ),
       }),
     ),
+    R.when(() => !!parentNode, attachYogNodeToParent(parentNode)),
+    setMeasureFunc(page, fontStore),
     setYogaValues,
     R.assoc(YOGA_NODE, yogaNode),
   )(node);
-};
-
-/**
- * Performs yoga calculation
- *
- * @param {Object} node
- * @returns {Object} node
- */
-const calculateLayout = page => {
-  page[YOGA_NODE].calculateLayout();
-  return page;
 };
 
 /**
@@ -248,6 +326,17 @@ const freeYogaNodes = node => {
 };
 
 /**
+ * Performs yoga calculation
+ *
+ * @param {Object} node
+ * @returns {Object} node
+ */
+const calculateLayout = page => {
+  page[YOGA_NODE].calculateLayout();
+  return page;
+};
+
+/**
  * Calculates page object layout using Yoga.
  * Takes node values from 'box' and 'style' attributes, and persist them back into 'box'
  * Destroy yoga values at the end.
@@ -260,11 +349,12 @@ export const resolvePageDimensions = (page, fontStore) =>
     R.isNil,
     R.always(null),
     R.compose(
+      R.tap(() => console.warn('Destroyed nodes')),
       destroyYogaNodes,
       freeYogaNodes,
       persistDimensions,
       calculateLayout,
-      createYogaNodes(page, fontStore),
+      createYogaNodes(page, fontStore, null, null, []),
     ),
   )(page);
 

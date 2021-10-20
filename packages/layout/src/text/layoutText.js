@@ -50,33 +50,36 @@ const getContainer = (width, height, node) => {
  * Get text layout options for specific text node
  *
  * @param {Object} node instance
+ * @param {Array} maskRects maskRects
  * @returns {Object} layout options
  */
-const getLayoutOptions = (fontStore, node) => ({
+const getLayoutOptions = (fontStore, node, maskRects) => ({
   hyphenationPenalty: node.props.hyphenationPenalty,
   shrinkWhitespaceFactor: { before: -0.5, after: -0.5 },
   hyphenationCallback:
     node.props.hyphenationCallback ||
     fontStore?.getHyphenationCallback() ||
     null,
+  maskRects,
 });
 
 /**
  * Get text lines for given node
  *
  * @param {Object} node
+ * @param {Array} maskRects
  * @param {Number} container width
  * @param {Number} container height
  * @param {Number} fontStore font store
  * @returns {Array} layout lines
  */
-const layoutText = (node, width, height, fontStore) => {
+const layoutText = (node, maskRects, width, height, fontStore) => {
   const attributedString = getAttributedString(fontStore, node);
   const container = getContainer(width, height, node);
-  const options = getLayoutOptions(fontStore, node);
+  const options = getLayoutOptions(fontStore, node, maskRects);
   const lines = engine(attributedString, container, options);
 
   return R.reduce(R.concat, [], lines);
 };
 
-export default R.curryN(4, layoutText);
+export default R.curryN(5, layoutText);

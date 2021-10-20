@@ -94,6 +94,23 @@ declare namespace ReactPDF {
      * @see https://react-pdf.org/advanced#debugging
      */
     debug?: boolean;
+
+    /**
+     * Wraps any text that collides with element's boundaries, around it.
+     */
+    wrapTextAround?: boolean;
+
+    /**
+     * Indicates the pagination algorithm that a view hosts a component that wraps text around it.
+     * This property is required in order to avoid content overflows
+     */
+    hasWrapTextAroundComponent?: boolean;
+
+    /**
+     * Fills in empty space (vertically) until the last 'wrap around text' component ends
+     */
+    fillPreviousWrapTextSpacing?: boolean;
+
     render?: (props: {
       pageNumber: number;
       subPageNumber: number;

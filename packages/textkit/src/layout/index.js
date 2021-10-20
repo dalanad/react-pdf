@@ -29,7 +29,7 @@ const layoutEngine = (engines, attributedString, container, options = {}) => {
     resolveYOffset(engines, options),
     resolveAttachments(engines, options),
     generateGlyphs(engines, options),
-    wrapWords(engines, options),
+    wrapWords(engines, options), // detects where the words can be broken from
     resolveTextStyles(engines)
   );
 
