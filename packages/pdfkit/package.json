@@ -1,6 +1,6 @@
 {
   "name": "@paladin-analytics/rpdf-pdfkit",
-  "version": "2.0.15",
+  "version": "2.0.16",
   "description": "A PDF generation library for Node.js",
   "main": "lib/pdfkit.cjs.js",
   "module": "lib/pdfkit.es.js",
@@ -24,8 +24,8 @@
     "lib"
   ],
   "dependencies": {
-    "@paladin-analytics/rpdf-fontkit": "^2.0.10",
-    "@paladin-analytics/rpdf-png-js": "^2.0.6",
+    "@paladin-analytics/rpdf-fontkit": "^2.0.11",
+    "@paladin-analytics/rpdf-png-js": "^2.0.7",
     "crypto-js": "^4.0.0"
   },
   "devDependencies": {
