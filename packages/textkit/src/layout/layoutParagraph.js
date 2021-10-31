@@ -113,14 +113,19 @@ const layoutParagraph = (engines, options) => (rect, paragraph) => {
     lineHeight,
   );
 
-  const widths = offsetsAndWidths.map((item, index) => {
+  // duplicating the last line width to avoid applying identations to all the lines
+  const extendedOffsetsAndWidths = [
+    ...offsetsAndWidths,
+    offsetsAndWidths[offsetsAndWidths.length - 1],
+  ];
+  const widths = extendedOffsetsAndWidths.map((item, index) => {
     if (index === 0) {
       return item.width - indent;
     }
     return item.width;
   });
 
-  const offsets = offsetsAndWidths.map((item, index) => {
+  const offsets = extendedOffsetsAndWidths.map((item, index) => {
     if (index === 0) {
       return item.offset + indent;
     }
