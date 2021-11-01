@@ -43,4 +43,4 @@ jobs:
         run: yarn bootstrap
 
       - name: publish
-        run: lerna publish
+        run: lerna version --conventional-commits --yes
