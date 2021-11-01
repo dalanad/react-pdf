@@ -8,8 +8,8 @@ on:
   #   types: [closed]
 
 jobs:
-  publish-gpr:
-    name: Publish to GPR
+  publish:
+    name: publish to github
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -43,4 +43,4 @@ jobs:
         run: yarn bootstrap
 
       - name: publish
-        run: lerna version --conventional-commits --yes
+        run: lerna publish --conventional-commits --yes
