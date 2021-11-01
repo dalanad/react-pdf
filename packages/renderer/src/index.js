@@ -8,7 +8,7 @@ import createRenderer from './renderer';
 import { version } from '../package.json';
 
 const fontStore = new FontStore();
-
+// PIPELINE TEST
 // We must keep a single renderer instance, otherwise React will complain
 let renderer;
 
