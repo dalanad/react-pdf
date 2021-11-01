@@ -6,7 +6,9 @@ on:
   #   branches:
   #     - main
   #   types: [closed]
-
+env:
+  BEFORE_SHA: ${{ github.event.before }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 jobs:
   publish:
     name: publish to github
@@ -21,11 +23,6 @@ jobs:
           node-version: 12
           registry-url: 'https://npm.pkg.github.com/'
 
-      - name: Ensure access
-        run: npm whoami --registry https://npm.pkg.github.com/
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Config git user
         run: |
           git config --global user.name "${{ github.actor }}"
@@ -39,9 +36,10 @@ jobs:
 
       - name: Bootstrap lerna
         run: yarn bootstrap
-
-      - run: npm config set '//npm.pkg.github.com/:_authToken' "${NODE_AUTH_TOKEN}"
-      - run: npm config set 'registry' "https://npm.pkg.github.com"
+      - name: npm config
+          run: |
+           npm config set 'registry' "https://npm.pkg.github.com"
+           npm config set '//npm.pkg.github.com/:_authToken' "${GITHUB_TOKEN}"
 
       - name: publish
         run: lerna publish --conventional-commits --yes
