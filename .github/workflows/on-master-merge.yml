@@ -37,7 +37,7 @@ jobs:
       - name: Bootstrap lerna
         run: yarn bootstrap
       - name: npm config
-          run: | 
+        run: | 
             npm config set 'registry' "https://npm.pkg.github.com"
             npm config set '//npm.pkg.github.com/:_authToken' "${GITHUB_TOKEN}"
 
