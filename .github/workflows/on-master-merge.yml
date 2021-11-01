@@ -31,8 +31,6 @@ jobs:
           git config --global user.name "${{ github.actor }}"
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
 
-      - run: npm config set '//npm.pkg.github.com/:_authToken' "${GITHUB_TOKEN}"
-      - run: npm config set 'registry' "https://npm.pkg.github.com"
       - name: install yarn
         run: npm i -g yarn
 
@@ -41,6 +39,9 @@ jobs:
 
       - name: Bootstrap lerna
         run: yarn bootstrap
+
+      - run: npm config set '//npm.pkg.github.com/:_authToken' "${GITHUB_TOKEN}"
+      - run: npm config set 'registry' "https://npm.pkg.github.com"
 
       - name: publish
         run: lerna publish --conventional-commits --yes
