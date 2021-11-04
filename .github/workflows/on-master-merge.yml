@@ -3,7 +3,7 @@ name: Release
 on:
   pull_request:
     branches:
-      - main
+      - master
     types: [closed]
 env:
   BEFORE_SHA: ${{ github.event.before }}
@@ -36,9 +36,9 @@ jobs:
       - name: Bootstrap lerna
         run: yarn bootstrap
       - name: npm config
-        run: | 
-            npm config set 'registry' "https://npm.pkg.github.com"
-            npm config set '//npm.pkg.github.com/:_authToken' "${GITHUB_TOKEN}"
+        run: |
+          npm config set 'registry' "https://npm.pkg.github.com"
+          npm config set '//npm.pkg.github.com/:_authToken' "${GITHUB_TOKEN}"
 
       - name: publish
         run: lerna publish --conventional-commits --yes
