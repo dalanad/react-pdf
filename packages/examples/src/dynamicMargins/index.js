@@ -62,7 +62,7 @@ Font.register({
 });
 
 export default () => (
-  <Document>
+  <Document pageNumberOffset={0}>
     <Page size="A4">
       <Link
         style={styles.title}

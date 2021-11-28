@@ -219,12 +219,12 @@ const splitPage = (page, pageNumber, fontStore) => {
   return [currentPage, nextPage];
 };
 
-const resolvePageIndices = fontStore => (page, pageNumber, pages) => {
-  const totalPages = pages.length;
+const resolvePageIndices = (fontStore, pageNumberOffset) => (page, pageIndex, pages) => {
+  const totalPages = pages.length + pageNumberOffset;
 
   const props = {
     totalPages,
-    pageNumber: pageNumber + 1,
+    pageNumber: pageIndex + pageNumberOffset + 1,
     subPageNumber: page.subPageNumber + 1,
     subPageTotalPages: page.subPageTotalPages,
   };
@@ -239,8 +239,8 @@ const resolvePageIndices = fontStore => (page, pageNumber, pages) => {
  * @param {Object} page Page
  * @param {number} pageIndex Page index
  */
-const applyInsideOutsideMargins = (page, pageIndex) => {
-  if (pageIndex % 2 === 0) {
+const applyInsideOutsideMargins = (pageNumberOffset) => (page, pageIndex) => {
+  if ((pageIndex + pageNumberOffset) % 2 === 0) {
     return page;
   }
 
@@ -333,8 +333,9 @@ const paginate = (page, pageNumber, fontStore) => {
  * @returns {Object} layout node
  */
 const resolvePagination = (doc, fontStore) => {
+  const pageNumberOffset = (doc.props?.pageNumberOffset || 0);
   let pages = [];
-  let pageNumber = 1;
+  let pageNumber = 1 + pageNumberOffset;
 
   for (let i = 0; i < doc.children.length; i += 1) {
     const page = doc.children[i];
@@ -346,10 +347,10 @@ const resolvePagination = (doc, fontStore) => {
   }
 
   pages = pages.map(
-    R.compose(dissocSubPageData, resolvePageIndices(fontStore)),
+    R.compose(dissocSubPageData, resolvePageIndices(fontStore, pageNumberOffset)),
   );
 
-  pages = pages.map(applyInsideOutsideMargins);
+  pages = pages.map(applyInsideOutsideMargins(pageNumberOffset));
 
   return assingChildren(pages, doc);
 };
