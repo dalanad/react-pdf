@@ -1,0 +1,27 @@
+name: on push
+on:
+  push:
+    branches-ignore:
+      - master
+env:
+  BEFORE_SHA: ${{ github.event.before }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+jobs:
+  test:
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+
+      - name: install yarn
+        run: npm i -g yarn
+
+      - name: install deps.
+        run: yarn
+
+      - name: yarn bootstrap
+        run: yarn bootstrap

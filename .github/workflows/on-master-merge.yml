@@ -1,0 +1,44 @@
+name: Release
+
+on:
+  pull_request:
+    branches:
+      - master
+    types: [closed]
+env:
+  BEFORE_SHA: ${{ github.event.before }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+jobs:
+  publish:
+    name: publish to github
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+          registry-url: 'https://npm.pkg.github.com/'
+
+      - name: Config git user
+        run: |
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+
+      - name: install yarn
+        run: npm i -g yarn
+
+      - name: install deps.
+        run: yarn
+
+      - name: Bootstrap lerna
+        run: yarn bootstrap
+      - name: npm config
+        run: |
+          npm config set 'registry' "https://npm.pkg.github.com"
+          npm config set '//npm.pkg.github.com/:_authToken' "${GITHUB_TOKEN}"
+
+      - name: publish
+        run: lerna publish --conventional-commits --yes

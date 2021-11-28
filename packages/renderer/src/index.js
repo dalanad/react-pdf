@@ -8,7 +8,6 @@ import createRenderer from './renderer';
 import { version } from '../package.json';
 
 const fontStore = new FontStore();
-
 // We must keep a single renderer instance, otherwise React will complain
 let renderer;
 
