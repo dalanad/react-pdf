@@ -27,6 +27,7 @@ declare namespace ReactPDF {
     producer?: string;
     language?: string;
     pdfVersion?: PDFVersion;
+    pageNumberOffset?: number;
     onRender?: (props: OnRenderProps) => any;
   }
 
