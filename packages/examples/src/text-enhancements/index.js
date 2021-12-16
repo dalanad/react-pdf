@@ -57,13 +57,13 @@ export default ({ fontFamily }) => {
           <Text style={[styles.textSC, { fontFamily: 'Benne' }]}>
             SmAll CaPs : Benne
           </Text>
-          {/* <View style={{ margin: 10 }}>
+          <View style={{ margin: 10 }}>
             <Text style={[styles.textSC]}>SmAll CaPs</Text>
             <Text>
               <Text style={[styles.textSC]}>SmAlL CApS</Text>
             </Text>
-          </View> */}
-          {/* {fonts.map((font, i) => (
+          </View>
+          {fonts.map((font, i) => (
             <View key={i} style={{ marginBottom: 10 }}>
               <Text style={{ marginBottom: 5 }}>{font.family}</Text>
               <Text style={{ fontSize: 12, color: 'green' }}>Superscript</Text>
@@ -103,7 +103,7 @@ export default ({ fontFamily }) => {
                 eiusmod tempor incididunt UteLaBore et dolore magna aliqua.
               </Text>
             </View>
-          ))} */}
+          ))}
           {/* <View style={styles.titleContainer}>
             <Text style={styles.titleText}>Superscript</Text>
           </View>
