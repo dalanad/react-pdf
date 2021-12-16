@@ -36,7 +36,7 @@ const EXAMPLES = {
 };
 
 const Viewer = () => {
-  const [example, setExample] = useState('text');
+  const [example, setExample] = useState('textEnhancements');
   const [fontFamily, setFontFamily] = useState('Poppins');
   const fontList = editorFonts.map(f => f.family);
 
