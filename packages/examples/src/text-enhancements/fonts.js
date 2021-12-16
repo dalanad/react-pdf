@@ -371,6 +371,10 @@ const editorFonts = [
       },
     ],
   },
+  {
+    family: 'Benne',
+    fonts: [{ src: 'https://atticus-content.s3.amazonaws.com/fonts/Benne-Regular.ttf', fontWeight: 400 }],
+  },
 ];
 
 export default editorFonts;

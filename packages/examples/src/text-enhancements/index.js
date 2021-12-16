@@ -1,7 +1,12 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-
 import React from 'react';
-import { Document, Page, View, Text, StyleSheet } from '@paladin-analytics/rpdf-renderer';
+import {
+  Document,
+  Page,
+  View,
+  Text,
+  StyleSheet,
+} from '@paladin-analytics/rpdf-renderer';
 import fonts from './fonts';
 
 const styles = StyleSheet.create({
@@ -29,9 +34,9 @@ const styles = StyleSheet.create({
   container: {
     margin: 20,
   },
-  test:{
-    marginBottom:5
-  }
+  test: {
+    marginBottom: 5,
+  },
 });
 
 // Font.register({
@@ -49,39 +54,51 @@ export default ({ fontFamily }) => {
     <Document>
       <Page size="A4">
         <View style={styles.container}>
+          <Text style={[styles.textSC, { fontFamily: 'Benne' }]}>
+            SmAll CaPs : Benne
+          </Text>
+          <View style={{ margin: 10 }}>
+            <Text style={[styles.textSC]}>SmAll CaPs</Text>
+            <Text>
+              <Text style={[styles.textSC]}>SmAlL CApS</Text>
+            </Text>
+          </View>
           {fonts.map((font, i) => (
             <View key={i} style={{ marginBottom: 10 }}>
-              <Text style={{marginBottom:5}}>{font.family}</Text>
-              <Text style={{fontSize:12,color:'green'}}>Superscript</Text>
-              <Text style={[styles.text,styles.test, { fontFamily: font.family }]}>
+              <Text style={{ marginBottom: 5 }}>{font.family}</Text>
+              <Text style={{ fontSize: 12, color: 'green' }}>Superscript</Text>
+              <Text
+                style={[styles.text, styles.test, { fontFamily: font.family }]}
+              >
                 Both low and high superscripts can be used to indicate the
                 presence of a footnote in a document, like this Both low and
                 high superscripts can be used to indicate the presence of a
                 footnote in a document, like this
-                <Text style={[styles.text, styles.textSuper]}>5</Text> 
-                {' '}
-                or this
+                <Text style={[styles.text, styles.textSuper]}>5</Text> or this
                 <Text style={[styles.text, styles.textSuper]}>xi</Text>
               </Text>
-              <Text style={{fontSize:12,color:'green'}}>Subscript</Text>
-              <Text style={[styles.text,styles.test,{ fontFamily: font.family }]}>
+              <Text style={{ fontSize: 12, color: 'green' }}>Subscript</Text>
+              <Text
+                style={[styles.text, styles.test, { fontFamily: font.family }]}
+              >
                 The molecular formula for glucose is C
-                <Text style={[styles.text, styles.textSub]}>6</Text>
-                H
-                <Text style={[styles.text, styles.textSub]}>12</Text>
-                O
-                <Text style={[styles.text, styles.textSub]}>6</Text>
-                {' '}
-                (meaning that
-                it is a molecule with 6 carbon atoms, 12 hydrogen atoms and 6
-                oxygen atoms). Or the most famous molecule in the world, water,
-                known almost universally by its chemical formula, H
-                <Text style={[styles.text, styles.textSub]}>2</Text>
-                O (meaning it
-                has 2 hydrogen atoms and 1 oxygen atom.)
+                <Text style={[styles.text, styles.textSub]}>6</Text>H
+                <Text style={[styles.text, styles.textSub]}>12</Text>O
+                <Text style={[styles.text, styles.textSub]}>6</Text> (meaning
+                that it is a molecule with 6 carbon atoms, 12 hydrogen atoms and
+                6 oxygen atoms). Or the most famous molecule in the world,
+                water, known almost universally by its chemical formula, H
+                <Text style={[styles.text, styles.textSub]}>2</Text>O (meaning
+                it has 2 hydrogen atoms and 1 oxygen atom.)
               </Text>
-              <Text style={{fontSize:12,color:'green'}}>Small Caps</Text>
-              <Text style={[styles.textSC, styles.text, { fontFamily: font.family }]}>
+              <Text style={{ fontSize: 12, color: 'green' }}>Small Caps</Text>
+              <Text
+                style={[
+                  styles.textSC,
+                  styles.text,
+                  { fontFamily: font.family },
+                ]}
+              >
                 Lorem ipsum dolor ameted, consectetur adipiscing elit, sed do
                 eiusmod tempor incididunt UteLaBore et dolore magna aliqua.
               </Text>

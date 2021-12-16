@@ -27,56 +27,36 @@ const processSmallCaps = fragments => {
         processedFragments.push({ string, attributes });
         return;
       }
-      const words = string.split(' ');
+
+      const words = string.split(/(?=[A-Z][a-z])|(?=[A-Z])/) || [];
+
       const processedWordsFragments = words
         .map(word => {
-          const hasCaps = hasCapitals(word);
-          if (hasCaps) {
-            const chars = word.split('');
-
-            let tempStr = '';
-            const substrings = [];
-            chars.map(char => {
-              if (hasCapitals(char)) {
-                substrings.push(tempStr);
-                substrings.push(char);
-                tempStr = '';
-                return char;
-              }
-              tempStr += char;
-              return char;
+          const chars = word.split('') || [];
+          let uprecaseString = '';
+          let lowercaseString = '';
+          const stringFragments = [];
+          chars.forEach(char => {
+            const hasCaps = hasCapitals(char);
+            if (hasCaps) {
+              uprecaseString += char;
+              return;
+            }
+            lowercaseString += char;
+          });
+          if (uprecaseString !== '') {
+            stringFragments.push({
+              string: uprecaseString,
+              attributes: { ...attributes, fontVariant: 'normal' },
             });
-            substrings.push(tempStr);
-
-            const validatedSubstrings = substrings.filter(str => str !== '');
-
-            const wordFragments = validatedSubstrings.map((str, index) => {
-              const uppercaseStr = str.toUpperCase();
-              if (hasCapitals(str)) {
-                return {
-                  string:
-                    index === validatedSubstrings.length - 1
-                      ? `${uppercaseStr} `
-                      : uppercaseStr,
-                  attributes: { ...attributes, fontVariant: 'normal' },
-                };
-              }
-              return {
-                string:
-                  index === validatedSubstrings.length - 1
-                    ? `${uppercaseStr} `
-                    : uppercaseStr,
-                attributes,
-              };
-            });
-            return [...wordFragments];
           }
-          return [
-            {
-              string: `${word} `.toUpperCase(),
-              attributes,
-            },
-          ];
+          if (lowercaseString !== '') {
+            stringFragments.push({
+              string: lowercaseString,
+              attributes: { ...attributes },
+            });
+          }
+          return stringFragments;
         })
         .reduce((acc, next) => {
           acc.push(...next);
