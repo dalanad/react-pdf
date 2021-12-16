@@ -40,6 +40,18 @@ const getFontFeatures = (run, fontVariant) => {
   return [fontFeatureTag];
 };
 
+const transformString = (runString, fontVariant, fontFeatures) => {
+  switch (fontVariant) {
+    case 'small-caps':
+      if (fontFeatures.length === 0) {
+        return runString.toUpperCase();
+      }
+      return runString;
+    default:
+      return runString;
+  }
+};
+
 /**
  * Scale run positions
  *
@@ -81,8 +93,16 @@ const layoutRun = string => run => {
 
   if (!font) return { ...run, glyphs: [], glyphIndices: [], positions: [] };
 
-  const runString = string.slice(start, end);
+  let runString = string.slice(start, end);
   const fontFeatures = getFontFeatures(run, fontVariant);
+
+  /**
+   * Transform string when needed
+   * ex: when font do not have font features for fontVarients like `small-caps`
+   *     transform text into uppercase
+   */
+  runString = transformString(runString, fontVariant, fontFeatures);
+
   const glyphRun = font.layout(runString, fontFeatures);
   const positions = scalePositions(run, glyphRun.positions);
   const glyphIndices = resolveGlyphIndices(glyphRun.glyphs);
