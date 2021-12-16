@@ -36,15 +36,13 @@ const processSmallCaps = fragments => {
           let uprecaseString = '';
           let lowercaseString = '';
           const stringFragments = [];
-          chars.map(char => {
+          chars.forEach(char => {
             const hasCaps = hasCapitals(char);
             if (hasCaps) {
               uprecaseString += char;
               return;
             }
             lowercaseString += char;
-            // eslint-disable-next-line no-useless-return
-            return;
           });
           if (uprecaseString !== '') {
             stringFragments.push({
