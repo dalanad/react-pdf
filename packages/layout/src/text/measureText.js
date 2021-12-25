@@ -31,10 +31,8 @@ const measureText = (
   height,
 ) => {
   if (widthMode === Yoga.MEASURE_MODE_EXACTLY) {
-    const assumedDimensions = `${width||0}:${height||0}`;
-    if (!node.lines || maskRects.length || node.assumedDimensions !== assumedDimensions) {
+    if (!node.lines || maskRects.length) {
       node.lines = layoutText(node, maskRects, width, height, fontStore);
-      node.assumedDimensions = assumedDimensions;
     }
     return { height: linesHeight(node) };
   }
