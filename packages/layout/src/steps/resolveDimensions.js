@@ -238,7 +238,7 @@ const createYogaNodes = (
         });
 
         if (fillNeeded) {
-          console.log('Fill needed', fillNeeded);
+          // console.log('Fill needed', fillNeeded);
           yogaNode.setMeasureFunc(measureSpaceFillingView(fillNeeded));
           yogaNode.markDirty();
           rootNode.calculateLayout();
@@ -349,7 +349,6 @@ export const resolvePageDimensions = (page, fontStore) =>
     R.isNil,
     R.always(null),
     R.compose(
-      R.tap(() => console.warn('Destroyed nodes')),
       destroyYogaNodes,
       freeYogaNodes,
       persistDimensions,
