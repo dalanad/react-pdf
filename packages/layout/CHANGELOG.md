@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.3](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-layout@2.1.2...@paladin-analytics/rpdf-layout@2.1.3) (2021-12-28)
+
+
+### Reverts
+
+* Revert "fix(text-overflow): re-layoutText in yogakit measureText" ([53ccd6e](https://github.com/Paladin-Analytics/react-pdf/commit/53ccd6ef19c3c58c9f5e935d69cabf45b71a4332))
+
+
+
+
+
 ## [2.1.2](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-layout@2.1.1...@paladin-analytics/rpdf-layout@2.1.2) (2021-12-25)
 
 
