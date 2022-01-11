@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.4](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-layout@2.1.3...@paladin-analytics/rpdf-layout@2.1.4) (2022-01-11)
+
+
+### Bug Fixes
+
+* **layout:** add missing parameter ([b516f3e](https://github.com/Paladin-Analytics/react-pdf/commit/b516f3e190e37555c801acb324a974858fc507d6))
+
+
+
+
+
 ## [2.1.3](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-layout@2.1.2...@paladin-analytics/rpdf-layout@2.1.3) (2021-12-28)
 
 

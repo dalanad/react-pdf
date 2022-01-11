@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.4](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-examples@2.1.3...@paladin-analytics/rpdf-examples@2.1.4) (2022-01-11)
+
+**Note:** Version bump only for package @paladin-analytics/rpdf-examples
+
+
+
+
+
 ## [2.1.3](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-examples@2.1.2...@paladin-analytics/rpdf-examples@2.1.3) (2021-12-28)
 
 **Note:** Version bump only for package @paladin-analytics/rpdf-examples
