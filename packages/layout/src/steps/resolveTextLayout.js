@@ -38,6 +38,7 @@ const resolveTextLayout = (node, fontStore) => {
         R.converge(R.assoc('lines'), [
           R.converge(layoutText, [
             R.identity,
+            R.always([]),
             R.path(['box', 'width']),
             R.path(['box', 'height']),
             R.always(fontStore),
