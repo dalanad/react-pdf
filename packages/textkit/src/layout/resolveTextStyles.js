@@ -1,10 +1,9 @@
 import * as R from 'ramda';
+import processSmallCaps from './processSmallCaps';
 
 const getFontUnitsPerEm = R.path(['font', 'unitsPerEm']);
 const getFontDescent = R.path(['font', 'descent']);
-// const getFontXHeight = R.path(['font', 'xHeight']);
 const getFontAscent = R.path(['font', 'ascent']);
-// const getFontCapHeight = R.path(['font', 'capHeight']);
 const getAvailableFontFeatures = R.path(['availableFeatures']);
 const isFontFeatureExist = (font, feature) => {
   const availableFontFeatures = getAvailableFontFeatures(font);
@@ -73,8 +72,9 @@ const calculateSizeAndScale = run => {
  * @return {Array}    attributed string with resolved font sizes and scales
  */
 const resolveTextStyles = () => attributedString =>
-  R.evolve({
-    runs: R.map(calculateSizeAndScale),
-  })(attributedString);
+  R.compose(
+    R.evolve({ runs: R.map(calculateSizeAndScale) }),
+    processSmallCaps,
+  )(attributedString);
 
 export default resolveTextStyles;

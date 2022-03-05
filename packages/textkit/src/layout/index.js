@@ -29,8 +29,8 @@ const layoutEngine = (engines, attributedString, container, options = {}) => {
     resolveYOffset(engines, options),
     resolveAttachments(engines, options),
     generateGlyphs(engines, options),
+    resolveTextStyles(engines),
     wrapWords(engines, options), // detects where the words can be broken from
-    resolveTextStyles(engines)
   );
 
   return R.compose(
