@@ -5,9 +5,8 @@ import AttributedString from '@paladin-analytics/rpdf-textkit/lib/attributedStri
 import { embedEmojis } from './emoji';
 import ignoreChars from './ignoreChars';
 import transformText from './transformText';
-import processSmallCaps from './processSmallCaps';
 
-const PREPROCESSORS = [ignoreChars, embedEmojis, processSmallCaps];
+const PREPROCESSORS = [ignoreChars, embedEmojis];
 
 const isType = R.propEq('type');
 
