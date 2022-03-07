@@ -15,7 +15,32 @@ const getFontFeatureTag = feature => {
   }
 };
 
-const hasCapitals = word => word.search(/[A-Z]/g) !== -1;
+const hasSimpleLetters = word => word.search(/[a-z\s]/g) !== -1;
+
+const groupWordCharactors = word => {
+  const charactors = word.split('');
+  let uprecaseString = '';
+  let lowercaseString = '';
+  const letterGroups = [];
+  charactors.forEach((char, index) => {
+    if (hasSimpleLetters(char)) {
+      lowercaseString += char;
+      if (!charactors[index + 1] || !hasSimpleLetters(charactors[index + 1])) {
+        letterGroups.push(lowercaseString);
+        lowercaseString = '';
+      }
+      return;
+    }
+    if (!hasSimpleLetters(char)) {
+      uprecaseString += char;
+      if (!charactors[index + 1] || hasSimpleLetters(charactors[index + 1])) {
+        letterGroups.push(uprecaseString);
+        uprecaseString = '';
+      }
+    }
+  });
+  return letterGroups;
+};
 
 const processSmallCaps = attributedString => {
   const { string, runs } = attributedString;
@@ -41,35 +66,25 @@ const processSmallCaps = attributedString => {
     let stringStartIndex = start;
 
     const processWords = word => {
-      const charactors = word.split('');
-      let uprecaseString = '';
-      let lowercaseString = '';
       const stringFragments = [];
-      charactors.forEach(char => {
-        const hasCaps = hasCapitals(char);
-        if (hasCaps) {
-          uprecaseString += char;
+      const letterGroups = groupWordCharactors(word);
+      letterGroups.forEach(chars => {
+        if (hasSimpleLetters(chars)) {
+          stringFragments.push({
+            start: stringStartIndex,
+            end: stringStartIndex + chars.length,
+            attributes,
+          });
+          stringStartIndex += chars.length;
           return;
         }
-        lowercaseString += char;
-      });
-      if (uprecaseString !== '') {
         stringFragments.push({
           start: stringStartIndex,
-          end: stringStartIndex + uprecaseString.length,
+          end: stringStartIndex + chars.length,
           attributes: { ...attributes, fontVariant: 'normal' },
         });
-        stringStartIndex += uprecaseString.length;
-      }
-      if (lowercaseString !== '') {
-        stringFragments.push({
-          start: stringStartIndex,
-          end: stringStartIndex + lowercaseString.length,
-          attributes: { ...attributes },
-        });
-        stringStartIndex += lowercaseString.length;
-      }
-
+        stringStartIndex += chars.length;
+      });
       return stringFragments;
     };
 
