@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.5](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-layout@2.1.4...@paladin-analytics/rpdf-layout@2.1.5) (2022-03-07)
+
+
+### Bug Fixes
+
+* **font-variant-smallcaps:** Remove `processSmallcaps` preprocessor ([1029f07](https://github.com/Paladin-Analytics/react-pdf/commit/1029f0764fc0dd3e7f9d6305392cb13875d866d7))
+
+
+
+
+
 ## [2.1.4](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-layout@2.1.3...@paladin-analytics/rpdf-layout@2.1.4) (2022-01-11)
 
 
