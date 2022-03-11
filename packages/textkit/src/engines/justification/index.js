@@ -40,7 +40,7 @@ const justifyLine = (distances, line) => {
 const justification = (options, line) => {
   const gap = line.box.width - advanceWidth(line);
 
-  if (gap === 0) return; // Exact fit
+  if (gap === 0) return line; // Exact fit
 
   const factors = getFactors(gap, line, options);
   const distances = getDistances(gap, factors);
