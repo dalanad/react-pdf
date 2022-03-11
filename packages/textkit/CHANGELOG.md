@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.15](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-textkit@2.0.14...@paladin-analytics/rpdf-textkit@2.0.15) (2022-03-11)
+
+
+### Bug Fixes
+
+* **justification-engine:** return valid value ([d9181b9](https://github.com/Paladin-Analytics/react-pdf/commit/d9181b974cfe7ece9d9337c4afd13d8bf0312bc4))
+
+
+
+
+
 ## [2.0.14](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-textkit@2.0.13...@paladin-analytics/rpdf-textkit@2.0.14) (2022-03-07)
 
 
