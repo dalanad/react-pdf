@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.16](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-textkit@2.0.15...@paladin-analytics/rpdf-textkit@2.0.16) (2022-03-14)
+
+
+### Bug Fixes
+
+* **small-caps:** Fix small-caps preprocessor function ([12b8dff](https://github.com/Paladin-Analytics/react-pdf/commit/12b8dff08308f67b93c71ec3e67607fe647b7212))
+
+
+
+
+
 ## [2.0.15](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-textkit@2.0.14...@paladin-analytics/rpdf-textkit@2.0.15) (2022-03-11)
 
 
