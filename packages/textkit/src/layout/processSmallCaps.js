@@ -59,7 +59,7 @@ const processSmallCaps = attributedString => {
       return [run];
     }
 
-    const stringChunck = string.substr(start, end);
+    const stringChunck = string.substring(start, end);
 
     const words = stringChunck.split(/(?=[A-Z][a-z])|(?=[A-Z])/) || [];
 
