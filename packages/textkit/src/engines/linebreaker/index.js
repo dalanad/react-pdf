@@ -7,7 +7,6 @@ import insertGlyph from '../../attributedString/insertGlyph';
 import advanceWidthBetween from '../../attributedString/advanceWidthBetween';
 
 const HYPHEN = 0x002d;
-const SPACE = 0x00020;
 const TOLERANCE_STEPS = 5;
 const TOLERANCE_LIMIT = 50;
 
