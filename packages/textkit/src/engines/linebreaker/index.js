@@ -7,6 +7,7 @@ import insertGlyph from '../../attributedString/insertGlyph';
 import advanceWidthBetween from '../../attributedString/advanceWidthBetween';
 
 const HYPHEN = 0x002d;
+const SPACE = 0x00020;
 const TOLERANCE_STEPS = 5;
 const TOLERANCE_LIMIT = 50;
 
@@ -40,7 +41,12 @@ const breakLines = (string, nodes, breaks) => {
       end = prevNode.value.end;
 
       line = slice(start, end, string);
-      line = insertGlyph(line.length, HYPHEN, line);
+      // If the line is a URL Space character will be inserted (Inserting a hyphen will change the URL)
+      if (!line.isUrl) {
+        line = insertGlyph(line.length, HYPHEN, line);
+      } else {
+        line = insertGlyph(line.length, SPACE, line);
+      }
     } else {
       end = node.value.end;
       line = slice(start, end, string);
