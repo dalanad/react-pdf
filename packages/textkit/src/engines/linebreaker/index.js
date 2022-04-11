@@ -41,11 +41,9 @@ const breakLines = (string, nodes, breaks) => {
       end = prevNode.value.end;
 
       line = slice(start, end, string);
-      // If the line is a URL Space character will be inserted (Inserting a hyphen will change the URL)
+      // If the line is a URL Hyphen character will not be inserted (Inserting a hyphen will change the URL)
       if (!line.isUrl) {
         line = insertGlyph(line.length, HYPHEN, line);
-      } else {
-        line = insertGlyph(line.length, SPACE, line);
       }
     } else {
       end = node.value.end;
