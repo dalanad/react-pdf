@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.17](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-textkit@2.0.16...@paladin-analytics/rpdf-textkit@2.0.17) (2022-04-14)
+
+
+### Bug Fixes
+
+* **hyphens:** Fix nodes generation logic for line breaker ([78a56d7](https://github.com/Paladin-Analytics/react-pdf/commit/78a56d7db4f4b68f8e5bf673f2bb4e195892944b))
+
+
+
+
+
 ## [2.0.16](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-textkit@2.0.15...@paladin-analytics/rpdf-textkit@2.0.16) (2022-03-14)
 
 
