@@ -5,6 +5,7 @@ import linebreak from './linebreak';
 import slice from '../../attributedString/slice';
 import insertGlyph from '../../attributedString/insertGlyph';
 import advanceWidthBetween from '../../attributedString/advanceWidthBetween';
+import hasOnlySpaces from '../../utils/hasOnlySpaces';
 
 const HYPHEN = 0x002d;
 const TOLERANCE_STEPS = 5;
@@ -86,7 +87,7 @@ const getNodes = (attributedString, { align }, options) => {
 
       acc.push(linebreak.glue(width, value, stretch, shrink));
     } else {
-      const hyphenated = syllables[index + 1] !== ' ';
+      const hyphenated = !hasOnlySpaces(syllables[index + 1]);
 
       const value = { start, end: start + s.length };
       acc.push(linebreak.box(width, value, hyphenated));
