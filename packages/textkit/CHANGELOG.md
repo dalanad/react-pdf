@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.18](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-textkit@2.0.17...@paladin-analytics/rpdf-textkit@2.0.18) (2022-04-15)
+
+
+### Bug Fixes
+
+* **hyphens:** Updated for safe space check ([aeb7340](https://github.com/Paladin-Analytics/react-pdf/commit/aeb734036b6ae44c2882a94f745ce72c2fa1c192))
+* **hyphens:** Updated for safe space check ([ca51412](https://github.com/Paladin-Analytics/react-pdf/commit/ca5141297d10a3fa8f780962098a7c99b213199c))
+
+
+
+
+
 ## [2.0.17](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-textkit@2.0.16...@paladin-analytics/rpdf-textkit@2.0.17) (2022-04-14)
 
 
