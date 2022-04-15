@@ -6,6 +6,7 @@
  */
 const hasOnlySpaces = value => {
   if(typeof value !== 'string') return false;
+  if(!value) return false;
   const trimedValue = value.trim();
   if(!trimedValue) return true;
   return false;
