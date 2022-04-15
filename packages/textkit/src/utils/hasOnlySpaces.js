@@ -5,9 +5,10 @@
  * @returns {Boolean} value has spaces
  */
 const hasOnlySpaces = value => {
-  if(!value) return false;
-  const regx = /^[\s]+$/;
-  return regx.test(value);
+  if(typeof value !== 'string') return false;
+  const trimedValue = value.trim();
+  if(!trimedValue) return true;
+  return false;
 };
 
 export default hasOnlySpaces;
