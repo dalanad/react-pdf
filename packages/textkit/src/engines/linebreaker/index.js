@@ -41,7 +41,10 @@ const breakLines = (string, nodes, breaks) => {
       end = prevNode.value.end;
 
       line = slice(start, end, string);
-      line = insertGlyph(line.length, HYPHEN, line);
+      // If the line is a URL Hyphen character will not be inserted (Inserting a hyphen will change the URL)
+      if (!line.isUrl) {
+        line = insertGlyph(line.length, HYPHEN, line);
+      }
     } else {
       end = node.value.end;
       line = slice(start, end, string);

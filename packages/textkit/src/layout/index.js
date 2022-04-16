@@ -9,7 +9,7 @@ import splitParagraphs from './splitParagraphs';
 import finalizeFragments from './finalizeFragments';
 import resolveAttachments from './resolveAttachments';
 import applyDefaultStyles from './applyDefaultStyles';
-import resolveTextStyles from './resolveTextStyles'
+import resolveTextStyles from './resolveTextStyles';
 
 /**
  * A LayoutEngine is the main object that performs text layout.
