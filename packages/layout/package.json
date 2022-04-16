@@ -1,6 +1,6 @@
 {
   "name": "@paladin-analytics/rpdf-layout",
-  "version": "2.1.9",
+  "version": "2.1.10",
   "license": "MIT",
   "author": "Diego Muracciole <diegomuracciole@gmail.com>",
   "homepage": "https://github.com/diegomura/react-pdf#readme",
@@ -17,7 +17,7 @@
     "@paladin-analytics/rpdf-pdfkit": "^2.0.16",
     "@paladin-analytics/rpdf-primitives": "^2.0.5",
     "@paladin-analytics/rpdf-stylesheet": "^2.0.17",
-    "@paladin-analytics/rpdf-textkit": "^2.0.18",
+    "@paladin-analytics/rpdf-textkit": "^2.0.19",
     "@paladin-analytics/rpdf-types": "^2.0.11",
     "@paladin-analytics/rpdf-yoga": "^2.0.7",
     "cross-fetch": "^3.0.4",

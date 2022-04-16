@@ -1,7 +1,7 @@
 {
   "name": "@paladin-analytics/rpdf-textkit",
   "license": "MIT",
-  "version": "2.0.18",
+  "version": "2.0.19",
   "description": "An advanced text layout framework",
   "repository": "git@github.com:Paladin-Analytics/react-pdf.git",
   "main": "./lib/index.js",
