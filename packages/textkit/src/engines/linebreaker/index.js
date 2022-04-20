@@ -6,6 +6,7 @@ import slice from '../../attributedString/slice';
 import insertGlyph from '../../attributedString/insertGlyph';
 import advanceWidthBetween from '../../attributedString/advanceWidthBetween';
 import hasOnlySpaces from '../../utils/hasOnlySpaces';
+import isUrl from '../../utils/isUrl';
 
 const HYPHEN = 0x002d;
 const TOLERANCE_STEPS = 5;
@@ -15,6 +16,48 @@ const opts = {
   width: 3,
   stretch: 6,
   shrink: 9,
+};
+
+/**
+ * Get regions of urls in the attributed string
+ *
+ * @param {Object} attributedString attributed string
+ * @returns {Array} regions of urls
+ */
+const getUrlRegions = attributedString => {
+  const urlRegions = [];
+
+  for (let index = 0; index < attributedString.runs.length; index += 1) {
+    const { start, end } = attributedString.runs[index];
+    const strPart = attributedString.string.slice(start, end);
+    if (isUrl(strPart)) {
+      urlRegions.push({ start, end });
+    }
+  }
+
+  return urlRegions;
+};
+
+/**
+ * Check whether the line is in the URL region
+ *
+ * @param {Object[]} urlRegions URL Regions
+ * @param {Number} attributedStringLineStartPosition attributed string line start position
+ * @returns {Boolean} if the line is in the URL region return true otherwise false
+ */
+const isInUrlRegion = (urlRegions, attributedStringLineStartPosition) => {
+  // last url region end position before the start of the line region
+  let lastUrlRegionEnd = null;
+  for (let index = 0; index < urlRegions.length; index += 1) {
+    const { start, end } = urlRegions[index];
+    if (start <= attributedStringLineStartPosition) {
+      lastUrlRegionEnd = end;
+    }
+  }
+
+  if (!lastUrlRegionEnd) return false;
+
+  return attributedStringLineStartPosition < lastUrlRegionEnd;
 };
 
 /**
@@ -29,6 +72,8 @@ const breakLines = (string, nodes, breaks) => {
   let start = 0;
   let end = null;
 
+  const urlRegions = getUrlRegions(string);
+
   const lines = breaks.reduce((acc, breakPoint) => {
     const node = nodes[breakPoint.position];
     const prevNode = nodes[breakPoint.position - 1];
@@ -41,8 +86,8 @@ const breakLines = (string, nodes, breaks) => {
       end = prevNode.value.end;
 
       line = slice(start, end, string);
-      // If the line is a URL Hyphen character will not be inserted (Inserting a hyphen will change the URL)
-      if (!line.isUrl) {
+      // If the line is a part of a URL Hyphen character will not be inserted (Inserting a hyphen will change the URL)
+      if (!isInUrlRegion(urlRegions, start)) {
         line = insertGlyph(line.length, HYPHEN, line);
       }
     } else {
