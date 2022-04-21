@@ -27,12 +27,14 @@ const opts = {
 const getUrlRegions = attributedString => {
   const urlRegions = [];
 
-  for (let index = 0; index < attributedString.runs.length; index += 1) {
-    const { start, end } = attributedString.runs[index];
-    const strPart = attributedString.string.slice(start, end);
-    if (isUrl(strPart)) {
-      urlRegions.push({ start, end });
+  const words = attributedString.string.split(/([ ]+)/g).filter(Boolean);
+  let start = 0;
+  for (let index = 0; index < words.length; index += 1) {
+    const word = words[index];
+    if (isUrl(word)) {
+      urlRegions.push({ start, end: start + word.length });
     }
+    start += word.length;
   }
 
   return urlRegions;
@@ -42,22 +44,22 @@ const getUrlRegions = attributedString => {
  * Check whether the line is in the URL region
  *
  * @param {Object[]} urlRegions URL Regions
- * @param {Number} attributedStringLineStartPosition attributed string line start position
+ * @param {Number} attributedStringLineEndPosition attributed string line end position
  * @returns {Boolean} if the line is in the URL region return true otherwise false
  */
-const isInUrlRegion = (urlRegions, attributedStringLineStartPosition) => {
+const isInUrlRegion = (urlRegions, attributedStringLineEndPosition) => {
   // last url region end position before the start of the line region
   let lastUrlRegionEnd = null;
   for (let index = 0; index < urlRegions.length; index += 1) {
     const { start, end } = urlRegions[index];
-    if (start <= attributedStringLineStartPosition) {
+    if (start <= attributedStringLineEndPosition) {
       lastUrlRegionEnd = end;
     }
   }
 
   if (!lastUrlRegionEnd) return false;
 
-  return attributedStringLineStartPosition < lastUrlRegionEnd;
+  return attributedStringLineEndPosition < lastUrlRegionEnd;
 };
 
 /**
@@ -87,7 +89,7 @@ const breakLines = (string, nodes, breaks) => {
 
       line = slice(start, end, string);
       // If the line is a part of a URL Hyphen character will not be inserted (Inserting a hyphen will change the URL)
-      if (!isInUrlRegion(urlRegions, start)) {
+      if (!isInUrlRegion(urlRegions, end)) {
         line = insertGlyph(line.length, HYPHEN, line);
       }
     } else {
