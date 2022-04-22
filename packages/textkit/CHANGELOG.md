@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.20](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-textkit@2.0.19...@paladin-analytics/rpdf-textkit@2.0.20) (2022-04-22)
+
+
+### Bug Fixes
+
+* **line-breaking:** Remove isURL flag ([5bc8739](https://github.com/Paladin-Analytics/react-pdf/commit/5bc8739d5e7170e8ad9317940afea50c88cecfbe))
+* **line-breaking:** Update breakLines process for URLs ([fd7fd23](https://github.com/Paladin-Analytics/react-pdf/commit/fd7fd23e4dc8ba15e27ce56c05d2bcc8354d1136))
+* **line-breaking):Fix brfix(line-breaking:** Fix breakLines process for URLseakLines process for URLs ([0fa6528](https://github.com/Paladin-Analytics/react-pdf/commit/0fa652829ada1d4483cf9d15cbbbe9a4a29e5fc1))
+
+
+
+
+
 ## [2.0.19](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-textkit@2.0.18...@paladin-analytics/rpdf-textkit@2.0.19) (2022-04-16)
 
 
