@@ -44,15 +44,27 @@ const getFragments = (fontStore, instance, parentLink, level = 0) => {
     fontVariant = 'normal',
   } = instance.style;
 
-  const opts = { fontFamily, fontWeight, fontStyle };
-  const obj = fontStore ? fontStore.getFont(opts) : null;
-  const font = obj ? obj.data : fontFamily;
+  const fontFamilies = [fontFamily, ...fontStore.getFallbackFontFamilies()];
+
+  let font;
+  const fonts = [];
+  
+  for(let i=0; i<fontFamilies.length; i+=1) {
+    const opts = { fontFamily: fontFamilies[i], fontWeight, fontStyle };
+    const obj = fontStore ? fontStore.getFont(opts) : null;
+    font = obj ? obj.data : fontFamilies[i];
+    fonts.push(font);
+  }
+  
+  [font] = fonts;
+  const fallbackFonts = fonts.slice(1);
 
   // Don't pass main background color to textkit. Will be rendered by the render package instead
   const backgroundColor = level === 0 ? null : instance.style.backgroundColor;
 
   const attributes = {
     font,
+    fallbackFonts,
     color,
     opacity,
     fontSize,
