@@ -17,27 +17,13 @@ const getOrCreateFont = name => {
   return font;
 };
 
-const getDefaultFallbackFont = () => getOrCreateFont('Helvetica');
+const getFallbackFont = () => getOrCreateFont('Helvetica');
 
-const isGlyphAvailable = (codePoint, font) => font.hasGlyphForCodePoint(codePoint);
-
-/**
- * Determines the font that can render a specific character
- * 
- * Priority Order: (desired font family) > (first feasible of the specified fallback font families) > Helvetica
- * @returns Font
- */
-const determineFont = (codePoint, defaultFont, fallbackFonts) => {
-  const possibleFonts = [...fallbackFonts];
-  if(defaultFont) possibleFonts.unshift(defaultFont);
-
-  for(let i=0; i<possibleFonts.length; i+= 1) {
-    if(IGNORED_CODE_POINTS.includes(codePoint)) return possibleFonts[i];
-    if(isGlyphAvailable(codePoint, possibleFonts[i])) return possibleFonts[i];
-  }
-
-  return getDefaultFallbackFont();
-}
+const shouldFallbackToFont = (codePoint, font) =>
+  !font ||
+  (!IGNORED_CODE_POINTS.includes(codePoint) &&
+    !font.hasGlyphForCodePoint(codePoint) &&
+    getFallbackFont().hasGlyphForCodePoint(codePoint));
 
 const fontSubstitution = () => ({ string, runs }) => {
   let lastFont = null;
@@ -55,8 +41,6 @@ const fontSubstitution = () => ({ string, runs }) => {
         ? getOrCreateFont(run.attributes.font)
         : run.attributes.font;
 
-    const fallbackFonts = [...(run.attributes.fallbackFonts || []).map((font) => typeof font === 'string' ? getOrCreateFont(font) : font), getDefaultFallbackFont()];
-
     if (string.length === 0) {
       res.push({ start: 0, end: 0, attributes: { font: defaultFont } });
       break;
@@ -67,9 +51,9 @@ const fontSubstitution = () => ({ string, runs }) => {
     for (let j = 0; j < chars.length; j += 1) {
       const char = chars[j];
       const codePoint = char.codePointAt();
-
-      // Determine which font can be used to render a character into the PDF
-      const font = determineFont(codePoint, defaultFont, fallbackFonts);
+      const shouldFallback = shouldFallbackToFont(codePoint, defaultFont);
+      // If the default font does not have a glyph and the fallback font does, we use it
+      const font = shouldFallback ? getFallbackFont() : defaultFont;
       const fontSize = getFontSize(run);
 
       // If anything that would impact res has changed, update it
