@@ -82,6 +82,28 @@ function FontStore() {
   this.getHyphenationCallback = () => hyphenationCallback;
 
   this.getRegisteredFontFamilies = () => Object.keys(fonts);
+
+  this.setFallbackFontFamilies = fontFamilies => {
+    if(!Array.isArray(fontFamilies)){
+      throw new Error('Fallback font families must be an array of strings');
+    }
+
+    for(let i=0; i< fontFamilies.length; i+= 1) {
+      const fontFamily = fontFamilies[i];
+      const isStandard = standard.includes(fontFamily);
+      const isRegistered = fonts[fontFamily];
+
+      if(!isStandard && !isRegistered){
+        throw new Error(
+          `Fallback font family not registered: ${fontFamily}. Please register it calling Font.register() method.`,
+        );
+      }
+    }
+
+    this.fallbackFontFamilies = fontFamilies;
+  };
+
+  this.getFallbackFontFamilies = () => this.fallbackFontFamilies || [];
 }
 
 export default FontStore;

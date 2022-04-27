@@ -81,4 +81,6 @@ export interface FontStore {
   registerEmojiSource: (emojiSource: EmojiSource) => void;
   getFont: (descriptor: FontDescriptor) => RegisteredFont | undefined;
   registerHyphenationCallback: (callback: HyphenationCallback) => void;
+  setFallbackFontFamilies: (fontFamilies: string[]) => void;
+  getFallbackFontFamilies: () => string[];
 }
