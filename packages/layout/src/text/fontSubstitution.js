@@ -36,7 +36,11 @@ const determineFont = (codePoint, defaultFont, fallbackFonts) => {
     if(isGlyphAvailable(codePoint, possibleFonts[i])) return possibleFonts[i];
   }
 
-  return getDefaultFallbackFont();
+  if(!possibleFonts[0]){
+    throw new Error('Default font is null')
+  }
+
+  return possibleFonts[0];
 }
 
 const fontSubstitution = () => ({ string, runs }) => {
