@@ -40,7 +40,7 @@ const determineFont = (codePoint, defaultFont, fallbackFonts) => {
     throw new Error('Default font is null')
   }
 
-  return possibleFonts[0];
+  return possibleFonts[0] || getDefaultFallbackFont();
 }
 
 const fontSubstitution = () => ({ string, runs }) => {
