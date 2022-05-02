@@ -3,7 +3,7 @@
  */
 /* eslint-disable no-useless-escape */
 const protocolAndDomainRE = /^(?:\w+:)?\/\/(\S+)$/;
-const localhostDomainRE = /^localhost[\:?\d]*(?:[^\:?\d]\S*)?$/
+const localhostDomainRE = /^localhost[\:?\d]*(?:[^\:?\d]\S*)?$/;
 const nonLocalhostDomainRE = /^[^\s\.]+\.\S{2,}$/;
 
 /**
@@ -19,6 +19,10 @@ const isUrl = value => {
 
   const match = value.match(protocolAndDomainRE);
   if (!match) {
+    if (localhostDomainRE.test(value) || nonLocalhostDomainRE.test(value)) {
+      return true;
+    }
+
     return false;
   }
 
@@ -27,8 +31,10 @@ const isUrl = value => {
     return false;
   }
 
-  if (localhostDomainRE.test(everythingAfterProtocol) ||
-      nonLocalhostDomainRE.test(everythingAfterProtocol)) {
+  if (
+    localhostDomainRE.test(everythingAfterProtocol) ||
+    nonLocalhostDomainRE.test(everythingAfterProtocol)
+  ) {
     return true;
   }
 
