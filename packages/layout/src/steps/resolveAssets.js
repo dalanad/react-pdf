@@ -43,6 +43,11 @@ const fetchAssets = (fontStore, node) => {
     }
   }
 
+  // fetch the fallback font families
+  fontStore.getFallbackFontFamilies().forEach((fontFamily) => {
+    promises.push(fontStore.load({ fontFamily }));
+  });
+
   return promises;
 };
 
