@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-types@2.1.1...@paladin-analytics/rpdf-types@2.2.0) (2022-05-27)
+
+
+### Features
+
+* **fallback-font:** allow specifying universal fallback fonts ([43d040d](https://github.com/Paladin-Analytics/react-pdf/commit/43d040dd70677fd871bd4b94bba0527cd18e5d77))
+
+
+
+
+
 ## [2.1.1](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-types@2.1.0...@paladin-analytics/rpdf-types@2.1.1) (2022-04-28)
 
 

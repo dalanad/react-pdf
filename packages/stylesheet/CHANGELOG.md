@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.20](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-stylesheet@2.0.19...@paladin-analytics/rpdf-stylesheet@2.0.20) (2022-05-27)
+
+**Note:** Version bump only for package @paladin-analytics/rpdf-stylesheet
+
+
+
+
+
 ## [2.0.19](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-stylesheet@2.0.18...@paladin-analytics/rpdf-stylesheet@2.0.19) (2022-04-28)
 
 **Note:** Version bump only for package @paladin-analytics/rpdf-stylesheet
