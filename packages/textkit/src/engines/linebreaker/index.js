@@ -117,7 +117,6 @@ const breakLines = (string, nodes, breaks) => {
  */
 const getNodes = (attributedString, { align }, options) => {
   let start = 0;
-  console.log('get nodes', { attributedString, options });
   const hyphenWidth = 5;
   const { syllables } = attributedString;
   const hyphenPenalty =
