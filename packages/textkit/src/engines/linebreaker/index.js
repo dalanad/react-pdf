@@ -117,7 +117,7 @@ const breakLines = (string, nodes, breaks) => {
  */
 const getNodes = (attributedString, { align }, options) => {
   let start = 0;
-
+  console.log('get nodes', { attributedString, options });
   const hyphenWidth = 5;
   const { syllables } = attributedString;
   const hyphenPenalty =
@@ -137,7 +137,8 @@ const getNodes = (attributedString, { align }, options) => {
 
       acc.push(linebreak.glue(width, value, stretch, shrink));
     } else {
-      const hyphenated = !hasOnlySpaces(syllables[index + 1]);
+      let hyphenated = !hasOnlySpaces(syllables[index + 1]);
+      hyphenated = options.hyphenationCallback === null ? hyphenated : false;
 
       const value = { start, end: start + s.length };
       acc.push(linebreak.box(width, value, hyphenated));
