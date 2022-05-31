@@ -53,7 +53,8 @@ const getFragments = (fontStore, instance, parentLink, level = 0) => {
     const opts = { fontFamily: fontFamilies[i], fontWeight, fontStyle };
     const obj = fontStore ? fontStore.getFont(opts) : null;
     font = obj ? obj.data : fontFamilies[i];
-    fonts.push(font);
+    if(font) fonts.push(font);
+    else console.warn("Expected font not found for configuration", opts);
   }
   
   [font] = fonts;
