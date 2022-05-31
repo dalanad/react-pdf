@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-textkit@2.1.2...@paladin-analytics/rpdf-textkit@2.2.0) (2022-05-27)
+
+
+### Features
+
+* **fallback-font:** allow specifying universal fallback fonts ([43d040d](https://github.com/Paladin-Analytics/react-pdf/commit/43d040dd70677fd871bd4b94bba0527cd18e5d77))
+
+
+
+
+
+## [2.1.2](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-textkit@2.1.1...@paladin-analytics/rpdf-textkit@2.1.2) (2022-05-02)
+
+
+### Bug Fixes
+
+* **line-breaking:** Update isUrl util function ([3403c42](https://github.com/Paladin-Analytics/react-pdf/commit/3403c42fc94b136a7cad51f3dde06a0644769e7e))
+
+
+
+
+
 ## [2.1.1](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-textkit@2.1.0...@paladin-analytics/rpdf-textkit@2.1.1) (2022-04-28)
 
 
