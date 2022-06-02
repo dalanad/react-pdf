@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.16](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-renderer@2.1.15...@paladin-analytics/rpdf-renderer@2.1.16) (2022-05-31)
+
+**Note:** Version bump only for package @paladin-analytics/rpdf-renderer
+
+
+
+
+
 ## [2.1.15](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-renderer@2.1.14...@paladin-analytics/rpdf-renderer@2.1.15) (2022-05-27)
 
 **Note:** Version bump only for package @paladin-analytics/rpdf-renderer
