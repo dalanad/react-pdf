@@ -26,6 +26,10 @@ const fetchAssets = (fontStore, node) => {
 
     if (fontStore && n.style?.fontFamily) {
       promises.push(fontStore.load(n.style));
+      // fetch the fallback font families
+      fontStore.getFallbackFontFamilies().forEach((fontFamily) => {
+        promises.push(fontStore.load({ ...n.style, fontFamily }));
+      });
     }
 
     if (typeof n === 'string') {
@@ -42,11 +46,6 @@ const fetchAssets = (fontStore, node) => {
       });
     }
   }
-
-  // fetch the fallback font families
-  fontStore.getFallbackFontFamilies().forEach((fontFamily) => {
-    promises.push(fontStore.load({ fontFamily }));
-  });
 
   return promises;
 };
