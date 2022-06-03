@@ -15,6 +15,7 @@ import DynamicMargins from './dynamicMargins';
 import TextWrap from './textWrap';
 import TextEnhancements from './text-enhancements';
 import editorFonts from './text-enhancements/fonts';
+import footNotes from './footnotes';
 
 editorFonts.forEach(el => {
   Font.register(el);
@@ -33,10 +34,11 @@ const EXAMPLES = {
   dynamicMargins: DynamicMargins,
   textEnhancements: TextEnhancements,
   textWrap: TextWrap,
+  footNotes: footNotes,
 };
 
 const Viewer = () => {
-  const [example, setExample] = useState('textEnhancements');
+  const [example, setExample] = useState('footNotes');
   const [fontFamily, setFontFamily] = useState('Poppins');
   const fontList = editorFonts.map(f => f.family);
 
@@ -50,29 +52,31 @@ const Viewer = () => {
 
   return (
     <div className="wrapper">
-      <ul>
-        {Object.keys(EXAMPLES).map(value => (
-          <li
-            key={value}
-            data-name={value}
-            role="presentation"
-            onClick={handleExampleChange}
-          >
-            {value}
-          </li>
-        ))}
-      </ul>
-
-      <div style={{ padding: 10 }}>
-        <select
-          value={fontFamily}
-          onChange={event => setFontFamily(event.currentTarget.value)}
-        >
-          {fontList.map(ff => (
-            // eslint-disable-next-line react/no-array-index-key
-            <option key={Math.random() * 1000}>{ff}</option>
+      <div>
+        <ul>
+          {Object.keys(EXAMPLES).map(value => (
+            <li
+              key={value}
+              data-name={value}
+              role="presentation"
+              onClick={handleExampleChange}
+            >
+              {value}
+            </li>
           ))}
-        </select>
+        </ul>
+
+        <div style={{ padding: 10 }}>
+          <select
+            value={fontFamily}
+            onChange={event => setFontFamily(event.currentTarget.value)}
+          >
+            {fontList.map(ff => (
+              // eslint-disable-next-line react/no-array-index-key
+              <option key={Math.random() * 1000}>{ff}</option>
+            ))}
+          </select>
+        </div>
       </div>
 
       <PDFViewer style={{ flex: 1 }}>

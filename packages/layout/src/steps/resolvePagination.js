@@ -59,6 +59,102 @@ const warnUnavailableSpace = node => {
   );
 };
 
+function sumUp(array) {
+  let foot_notes = [];
+  let str = '';
+  for (const item of array) {
+    if (item.props && item.props.footNote) {
+      foot_notes.push({ loc: str.length, el: item });
+    }
+    if (item.type == 'TEXT_INSTANCE') {
+      str += item.value;
+    }
+  }
+
+  return foot_notes;
+}
+
+function getFootNotes(node, top = 0) {
+  let foot_notes = [];
+
+  if (!node.children) return [];
+
+  if (node.lines) {
+    let sumUpRes = sumUp(node.children);
+    let notes = [];
+    let lengthUpto = 0;
+    let topUpto = top;
+
+    for (const line of node.lines) {
+      lengthUpto = lengthUpto + line.string.length;
+      topUpto = topUpto + line.box.height;
+
+      notes.push(
+        ...sumUpRes
+          .filter(e => e.loc < lengthUpto)
+          .filter(e => e.loc > lengthUpto - line.string.length)
+          .map(r => ({ ...r, approxTop: topUpto })),
+      );
+    }
+
+    return notes;
+  }
+
+  for (const child of node.children) {
+    foot_notes.push(...getFootNotes(child, (node.box?.top || 0) + top));
+  }
+  return foot_notes;
+}
+
+function mapFootNotesToView(footNoteQueue) {
+  let processed = [
+    createInstance({
+      type: 'SVG',
+      props: {
+        style: {
+          height: 5,
+        },
+        children: [],
+      },
+    }),
+  ];
+
+  let line = createInstance({
+    type: 'LINE',
+    props: {
+      x1: 0,
+      x2: 1000,
+      y1: 0,
+      y2: 0,
+      strokeWidth: 1,
+      stroke: '#000000',
+    },
+  });
+
+  processed[0].children = [line];
+
+  let j = 0;
+
+  for (const note of footNoteQueue) {
+    let txt = createInstance(note.el.props.footNote(j + 1));
+    processed.push(txt);
+    j++;
+  }
+
+  let it = createInstance({
+    type: 'VIEW',
+    props: {
+      style: {
+        paddingTop: 10,
+      },
+      children: [],
+    },
+  });
+
+  it.children = processed;
+  return it;
+}
+
 const splitNodes = (height, contentArea, nodes) => {
   const currentChildren = [];
   const nextChildren = [];
@@ -194,13 +290,60 @@ const splitPage = (page, pageNumber, fontStore) => {
   const height = R.path(['style', 'height'], page);
   const dynamicPage = resolveDynamicPage({ pageNumber }, page, fontStore);
 
+  const relayout = node => relayoutPage(node, fontStore);
+
+  let pageFootNotes = R.compose(
+    R.filter(e => e.approxTop < wrapArea),
+    getFootNotes,
+  )(dynamicPage);
+
+  let foot_notes_height = 0;
+
+  const getFootNotesView = footNotes =>
+    R.compose(
+      relayout,
+      assingChildren([mapFootNotesToView(footNotes)]),
+      R.assocPath(['box', 'height'], height),
+    )(page).children[0];
+
+  console.log({ page });
+
+  if (pageFootNotes.length > 0) {
+    let nd = getFootNotesView(pageFootNotes);
+
+    let height = getHeight(nd);
+
+    console.log(1, { nd, height: getHeight(nd) });
+
+    pageFootNotes = pageFootNotes.filter(e => e.approxTop < wrapArea - height);
+
+    nd = getFootNotesView(pageFootNotes);
+
+    console.log(2, { nd, height: getHeight(nd) });
+
+    foot_notes_height = getHeight(nd);
+  }
+
+  // page break inside
+
   const [currentChilds, nextChilds] = splitNodes(
-    wrapArea,
+    wrapArea - foot_notes_height - 10,
     contentArea,
     dynamicPage.children,
   );
 
-  const relayout = node => relayoutPage(node, fontStore);
+  if (pageFootNotes.length > 0) {
+    let foot_nt = getFootNotes({ children: currentChilds });
+    let footNoteView = mapFootNotesToView(foot_nt);
+
+    if (nextChilds.length == 0) {
+      let lastChild = currentChilds.at(-1);
+      footNoteView.style.marginTop =
+        contentArea - lastChild.box.height - foot_notes_height;
+    }
+
+    currentChilds.push(footNoteView);
+  }
 
   const currentPage = R.compose(
     relayout,
