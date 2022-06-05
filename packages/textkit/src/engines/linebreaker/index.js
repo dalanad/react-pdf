@@ -137,7 +137,14 @@ const getNodes = (attributedString, { align }, options) => {
 
       acc.push(linebreak.glue(width, value, stretch, shrink));
     } else {
-      const hyphenated = !hasOnlySpaces(syllables[index + 1]);
+      /**
+       * hyphenationCallback = null --> have used the default hyphenation mechanism (simply,hyphenation is enabled)
+       * hyphenationCallback != null --> hyphenation is disabled (assumed that custom hyphenation callback is only used to disable the hyphenation 👉🏻 (word)=>[word])
+       * */
+      const hyphenated =
+        options.hyphenationCallback === null
+          ? !hasOnlySpaces(syllables[index + 1])
+          : false;
 
       const value = { start, end: start + s.length };
       acc.push(linebreak.box(width, value, hyphenated));
