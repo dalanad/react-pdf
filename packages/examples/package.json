@@ -9,7 +9,7 @@
   "main": "lib",
   "scripts": {
     "test": "echo jest",
-    "start": "parcel serve ./src/index.html -p 3000"
+    "start": "parcel ./src/index.html -p 3000"
   },
   "dependencies": {
     "@paladin-analytics/rpdf-renderer": "^2.1.18",
@@ -21,6 +21,11 @@
     "react-dom": "^16.8.6 || ^17.0.0"
   },
   "devDependencies": {
-    "parcel-bundler": "^1.12.5"
+    "parcel-bundler": "^1.12.5",
+    "parcel-plugin-static-files-copy": "^2.6.0"
+  },
+  "staticFiles": {
+    "staticPath": "public",
+    "watcherGlob": "**"
   }
 }
