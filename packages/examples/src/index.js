@@ -14,6 +14,7 @@ import PageWrap from './pageWrap';
 import DynamicMargins from './dynamicMargins';
 import TextWrap from './textWrap';
 import TextEnhancements from './text-enhancements';
+import Unicode from './unicode';
 import editorFonts from './text-enhancements/fonts';
 
 editorFonts.forEach(el => {
@@ -33,10 +34,11 @@ const EXAMPLES = {
   dynamicMargins: DynamicMargins,
   textEnhancements: TextEnhancements,
   textWrap: TextWrap,
+  unicode: Unicode,
 };
 
 const Viewer = () => {
-  const [example, setExample] = useState('textEnhancements');
+  const [example, setExample] = useState('unicode');
   const [fontFamily, setFontFamily] = useState('Poppins');
   const fontList = editorFonts.map(f => f.family);
 
