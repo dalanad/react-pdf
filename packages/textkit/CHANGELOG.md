@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.3.0](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-textkit@2.2.1...@paladin-analytics/rpdf-textkit@2.3.0) (2022-06-09)
+
+
+### Bug Fixes
+
+* **textkit:** replace bitwise operation with standard function ([a61cf57](https://github.com/Paladin-Analytics/react-pdf/commit/a61cf57427a90a5c1f446e2dcebc772b1cbbc713))
+
+
+### Features
+
+* **textkit:** optimize runIndexAt function ([90786e3](https://github.com/Paladin-Analytics/react-pdf/commit/90786e30d14c1e784316c911c7ac41d72030b1bd))
+
+
+
+
+
 ## [2.2.1](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-textkit@2.2.0...@paladin-analytics/rpdf-textkit@2.2.1) (2022-06-05)
 
 **Note:** Version bump only for package @paladin-analytics/rpdf-textkit
