@@ -49,8 +49,31 @@ const styles = StyleSheet.create({
 export default () => (
   <Document>
     <Page size="A5" style={styles.body} debug={false}>
-      <View style={styles.section}>
+      <View style={styles.text}>
         <View>
+          <Text>Footnote outside Text : </Text>
+          <Text
+            footNote={r => (
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                }}
+              >
+                <View>
+                  <Text style={{ fontSize: 10 }}>{`100. `}</Text>
+                </View>
+                <View style={{ fontSize: 10 }}>
+                  <Text style={{ fontSize: 10 }}>
+                    {`ipsum dolor sit amet, consectetur adipisicing elit`}
+                  </Text>
+                </View>
+              </View>
+            )}
+            style={styles.superscript}
+          >
+            100
+          </Text>
           <Text>
             ipsum dolor sit amet, consectetur adipisicing elit. Velit quibusdam
             animi vero incidunt doloribus, suscipit aperiam, nostrum nulla rem
@@ -78,7 +101,6 @@ export default () => (
               <View
                 style={{
                   textAlign: 'justify',
-                  fontSize: 14,
                 }}
                 debug={false}
                 key={e}
@@ -94,6 +116,7 @@ export default () => (
                         style={{
                           display: 'flex',
                           flexDirection: 'row',
+                          
                         }}
                       >
                         <View>
