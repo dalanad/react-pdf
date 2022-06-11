@@ -296,12 +296,11 @@ const splitPage = (page, pageNumber, fontStore) => {
 
   const relayout = node => relayoutPage(node, fontStore);
 
-  let pageFootNotes = R.compose(
-    R.filter(e => e.approxTop < wrapArea),
-    getFootNotes,
-  )(dynamicPage);
-
-  let foot_notes_height = 0;
+  let [currentChilds, nextChilds] = splitNodes(
+    wrapArea,
+    contentArea,
+    dynamicPage.children,
+  );
 
   const getFootNotesView = footNotes =>
     R.compose(
@@ -310,43 +309,27 @@ const splitPage = (page, pageNumber, fontStore) => {
       R.assocPath(['box', 'height'], height),
     )(page).children[0];
 
-  console.log({ page });
+  let pageFootNotes = getFootNotes({ children: currentChilds });
+  let footNotesView = getFootNotesView(pageFootNotes);
 
   if (pageFootNotes.length > 0) {
-    let nd = getFootNotesView(pageFootNotes);
+    [currentChilds, nextChilds] = splitNodes(
+      wrapArea - 25 - getHeight(footNotesView),
+      contentArea,
+      dynamicPage.children,
+    );
 
-    let height = getHeight(nd);
+    let splittedPageFootNotes = getFootNotes({ children: currentChilds });
 
-    console.log(1, { nd, height: getHeight(nd) });
+    let footNoteView = getFootNotesView(splittedPageFootNotes);
 
-    pageFootNotes = pageFootNotes.filter(e => e.approxTop < wrapArea - height);
-
-    nd = getFootNotesView(pageFootNotes);
-
-    console.log(2, { nd, height: getHeight(nd) });
-
-    foot_notes_height = getHeight(nd);
-  }
-
-  // page break inside
-
-  const [currentChilds, nextChilds] = splitNodes(
-    wrapArea - foot_notes_height - 10,
-    contentArea,
-    dynamicPage.children,
-  );
-
-  if (pageFootNotes.length > 0) {
-    let foot_nt = getFootNotes({ children: currentChilds });
-    let footNoteView = mapFootNotesToView(foot_nt);
 
     if (nextChilds.length == 0) {
       let lastChild = currentChilds.at(-1);
       footNoteView.style.marginTop =
-        contentArea - lastChild.box.height - foot_notes_height;
+        contentArea - lastChild.box.height - getHeight(footNoteView);
     }
-
-    currentChilds.push(footNoteView);
+    currentChilds.push(getFootNotesView(pageFootNotes));
   }
 
   const currentPage = R.compose(

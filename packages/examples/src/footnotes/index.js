@@ -146,6 +146,7 @@ export default () => (
             );
           })}
           <Text break={true}>Force break</Text>
+          <Text break={true}>Force break</Text>
           {Array.from(Array(10).keys()).map(e => {
             return (
               <View
