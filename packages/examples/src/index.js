@@ -15,6 +15,7 @@ import DynamicMargins from './dynamicMargins';
 import TextWrap from './textWrap';
 import TextEnhancements from './text-enhancements';
 import editorFonts from './text-enhancements/fonts';
+import DynamicPageBreaks from './dynamicPageBreaks';
 
 editorFonts.forEach(el => {
   Font.register(el);
@@ -33,10 +34,11 @@ const EXAMPLES = {
   dynamicMargins: DynamicMargins,
   textEnhancements: TextEnhancements,
   textWrap: TextWrap,
+  dynamicPageBreaks: DynamicPageBreaks,
 };
 
 const Viewer = () => {
-  const [example, setExample] = useState('textEnhancements');
+  const [example, setExample] = useState('dynamicPageBreaks');
   const [fontFamily, setFontFamily] = useState('Poppins');
   const fontList = editorFonts.map(f => f.family);
 

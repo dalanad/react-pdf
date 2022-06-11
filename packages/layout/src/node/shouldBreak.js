@@ -6,8 +6,11 @@ import getWrap from './getWrap';
 import getNodesHeight from './getNodesHeight';
 
 const getBreak = R.pathOr(false, ['props', 'break']);
+const getTop = R.pathOr(0, ['box', 'top']);
+const getHeight = R.path(['box', 'height']);
 
 const getMinPresenceAhead = R.path(['props', 'minPresenceAhead']);
+const getMinSpaceAhead = R.path(['props', 'minSpaceAhead']);
 
 const defaultPresenceAhead = element => height =>
   Math.min(element.box.height, height);
@@ -55,8 +58,21 @@ const getWrapTextAroundChildrenHeight = node => {
   return height;
 };
 
+const hasMinSpaceAhead = (child, height, minSpaceAhead) => {
+  if (!minSpaceAhead) return true;
+
+  const nodeTop = getTop(child);
+  const nodeHeight = getHeight(child);
+  console.log(child);
+  const hasSpaceInPage = height < nodeTop + nodeHeight + minSpaceAhead;
+  const notLargerThanPage = height > nodeHeight + minSpaceAhead;
+
+  return hasSpaceInPage && notLargerThanPage;
+};
+
 const shouldBreak = (child, futureElements, height) => {
   const minPresenceAhead = getMinPresenceAhead(child);
+  const minSpaceAhead = getMinSpaceAhead(child);
   const presenceAhead = getPresenceAhead(futureElements, height);
   const futureHeight = getNodesHeight(futureElements);
   const wrapTextAroundChildrenHeight = getWrapTextAroundChildrenHeight(child);
@@ -66,6 +82,7 @@ const shouldBreak = (child, futureElements, height) => {
 
   return (
     getBreak(child) ||
+    !hasMinSpaceAhead(child, height, minSpaceAhead) ||
     (!shouldWrap && shouldSplit) ||
     (wrapTextAroundChildrenHeight && shouldSplit) ||
     (minPresenceAhead < futureHeight && presenceAhead < minPresenceAhead)
