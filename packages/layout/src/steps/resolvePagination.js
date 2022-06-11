@@ -75,6 +75,10 @@ function sumUp(array) {
 }
 
 function getFootNotes(node, top = 0) {
+  if (node.props?.footNote) {
+    return [{ el: node, loc: 0, approxTop: 0 }];
+  }
+
   let foot_notes = [];
 
   if (!node.children) return [];
@@ -362,7 +366,11 @@ const splitPage = (page, pageNumber, fontStore) => {
   return [currentPage, nextPage];
 };
 
-const resolvePageIndices = (fontStore, pageNumberOffset) => (page, pageIndex, pages) => {
+const resolvePageIndices = (fontStore, pageNumberOffset) => (
+  page,
+  pageIndex,
+  pages,
+) => {
   const totalPages = pages.length + pageNumberOffset;
 
   const props = {
@@ -382,7 +390,7 @@ const resolvePageIndices = (fontStore, pageNumberOffset) => (page, pageIndex, pa
  * @param {Object} page Page
  * @param {number} pageIndex Page index
  */
-const applyInsideOutsideMargins = (pageNumberOffset) => (page, pageIndex) => {
+const applyInsideOutsideMargins = pageNumberOffset => (page, pageIndex) => {
   if ((pageIndex + pageNumberOffset) % 2 === 0) {
     return page;
   }
@@ -476,7 +484,7 @@ const paginate = (page, pageNumber, fontStore) => {
  * @returns {Object} layout node
  */
 const resolvePagination = (doc, fontStore) => {
-  const pageNumberOffset = (doc.props?.pageNumberOffset || 0);
+  const pageNumberOffset = doc.props?.pageNumberOffset || 0;
   let pages = [];
   let pageNumber = 1 + pageNumberOffset;
 
@@ -490,7 +498,10 @@ const resolvePagination = (doc, fontStore) => {
   }
 
   pages = pages.map(
-    R.compose(dissocSubPageData, resolvePageIndices(fontStore, pageNumberOffset)),
+    R.compose(
+      dissocSubPageData,
+      resolvePageIndices(fontStore, pageNumberOffset),
+    ),
   );
 
   pages = pages.map(applyInsideOutsideMargins(pageNumberOffset));
