@@ -16,6 +16,9 @@ const runIndexAt = (x, runs) => {
   for (let b = n; b >= 1; b = Math.floor(b / 2)) {
     while (!ok(k + b)) k += b;
   }
+  // no results found
+  if(k+1 === runs.length) return -1;
+
   return k + 1;
 };
 
