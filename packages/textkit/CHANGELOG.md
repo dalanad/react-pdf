@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.1](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-textkit@2.3.0...@paladin-analytics/rpdf-textkit@2.3.1) (2022-06-14)
+
+
+### Bug Fixes
+
+* **run-index:** return -1 when no matching result ([abc14a2](https://github.com/Paladin-Analytics/react-pdf/commit/abc14a2ce6f390e253a539370c870d6a234a0e38))
+
+
+
+
+
 # [2.3.0](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-textkit@2.2.1...@paladin-analytics/rpdf-textkit@2.3.0) (2022-06-09)
 
 
