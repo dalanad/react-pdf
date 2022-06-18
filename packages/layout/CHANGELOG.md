@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.6](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-layout@2.3.5...@paladin-analytics/rpdf-layout@2.3.6) (2022-06-18)
+
+**Note:** Version bump only for package @paladin-analytics/rpdf-layout
+
+
+
+
+
 ## [2.3.5](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-layout@2.3.4...@paladin-analytics/rpdf-layout@2.3.5) (2022-06-14)
 
 **Note:** Version bump only for package @paladin-analytics/rpdf-layout

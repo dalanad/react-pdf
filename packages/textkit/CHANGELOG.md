@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.2](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-textkit@2.3.1...@paladin-analytics/rpdf-textkit@2.3.2) (2022-06-18)
+
+
+### Bug Fixes
+
+* **wrapWords:** hyphenation across multiple text runs ([e7ca035](https://github.com/Paladin-Analytics/react-pdf/commit/e7ca035f09546c39d192e1500efbd44b3279aceb))
+
+
+
+
+
 ## [2.3.1](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-textkit@2.3.0...@paladin-analytics/rpdf-textkit@2.3.1) (2022-06-14)
 
 
