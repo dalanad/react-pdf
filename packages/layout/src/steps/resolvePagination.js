@@ -15,6 +15,8 @@ import shouldNodeBreak from '../node/shouldBreak';
 import resolveTextLayout from './resolveTextLayout';
 import resolveInheritance from './resolveInheritance';
 import { resolvePageDimensions } from './resolveDimensions';
+import getFootNotes from '../footnotes/getFootNotes';
+import mapFootNotesToView from '../footnotes/mapFootNotesToView';
 
 const isText = R.propEq('type', P.Text);
 
@@ -58,106 +60,6 @@ const warnUnavailableSpace = node => {
     `Node of type ${node.type} can't wrap between pages and it's bigger than available page height`,
   );
 };
-
-function sumUp(array) {
-  let foot_notes = [];
-  let str = '';
-  for (const item of array) {
-    if (item.props && item.props.footNote) {
-      foot_notes.push({ loc: str.length, el: item });
-    }
-    if (item.type == 'TEXT_INSTANCE') {
-      str += item.value;
-    }
-  }
-
-  return foot_notes;
-}
-
-function getFootNotes(node, top = 0) {
-  if (node.props?.footNote) {
-    return [{ el: node, loc: 0, approxTop: 0 }];
-  }
-
-  let foot_notes = [];
-
-  if (!node.children) return [];
-
-  if (node.lines) {
-    let sumUpRes = sumUp(node.children);
-    let notes = [];
-    let lengthUpto = 0;
-    let topUpto = top;
-
-    for (const line of node.lines) {
-      lengthUpto = lengthUpto + line.string.length;
-      topUpto = topUpto + line.box.height;
-
-      notes.push(
-        ...sumUpRes
-          .filter(e => e.loc < lengthUpto)
-          .filter(e => e.loc > lengthUpto - line.string.length)
-          .map(r => ({ ...r, approxTop: topUpto })),
-      );
-    }
-
-    return notes;
-  }
-
-  for (const child of node.children) {
-    foot_notes.push(...getFootNotes(child, (node.box?.top || 0) + top));
-  }
-  return foot_notes;
-}
-
-function mapFootNotesToView(footNoteQueue) {
-  let processed = [
-    createInstance({
-      type: 'SVG',
-      props: {
-        style: {
-          height: 5,
-        },
-        children: [],
-      },
-    }),
-  ];
-
-  let line = createInstance({
-    type: 'LINE',
-    props: {
-      x1: 0,
-      x2: 1000,
-      y1: 0,
-      y2: 0,
-      strokeWidth: 1,
-      stroke: '#000000',
-    },
-  });
-
-  processed[0].children = [line];
-
-  let j = 0;
-
-  for (const note of footNoteQueue) {
-    let txt = createInstance(note.el.props.footNote(j + 1));
-    processed.push(txt);
-    j++;
-  }
-
-  let it = createInstance({
-    type: 'VIEW',
-    props: {
-      style: {
-        paddingTop: 10,
-      },
-      children: [],
-    },
-  });
-
-  it.children = processed;
-  return it;
-}
 
 const splitNodes = (height, contentArea, nodes) => {
   const currentChildren = [];
@@ -288,7 +190,7 @@ const resolveDynamicPage = (props, page, fontStore) => {
   return page;
 };
 
-const splitPage = (page, pageNumber, fontStore) => {
+const splitPage = (page, pageNumber, fontStore) => { 
   const wrapArea = getWrapArea(page);
   const contentArea = getContentArea(page);
   const height = R.path(['style', 'height'], page);
@@ -322,7 +224,6 @@ const splitPage = (page, pageNumber, fontStore) => {
     let splittedPageFootNotes = getFootNotes({ children: currentChilds });
 
     let footNoteView = getFootNotesView(splittedPageFootNotes);
-
 
     if (nextChilds.length == 0) {
       let lastChild = currentChilds.at(-1);
