@@ -190,7 +190,7 @@ const resolveDynamicPage = (props, page, fontStore) => {
   return page;
 };
 
-const splitPage = (page, pageNumber, fontStore) => { 
+const splitPage = (page, pageNumber, fontStore) => {
   const wrapArea = getWrapArea(page);
   const contentArea = getContentArea(page);
   const height = R.path(['style', 'height'], page);
@@ -227,10 +227,12 @@ const splitPage = (page, pageNumber, fontStore) => {
 
     if (nextChilds.length == 0) {
       let lastChild = currentChilds.at(-1);
-      footNoteView.style.marginTop =
+      let fillNeeded =
         contentArea - lastChild.box.height - getHeight(footNoteView);
+      footNoteView.style.marginTop = fillNeeded;
     }
-    currentChilds.push(getFootNotesView(pageFootNotes));
+
+    currentChilds.push(footNoteView);
   }
 
   const currentPage = R.compose(

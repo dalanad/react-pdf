@@ -50,6 +50,35 @@ export default () => (
   <Document>
     <Page size="A5" style={styles.body} debug={false}>
       <View style={styles.text}>
+        <Text>
+          Footnote{' '}
+          <Text
+            footNote={r => (
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                }}
+              >
+                <View>
+                  <Text style={{ fontSize: 10 }}>{`101. `}</Text>
+                </View>
+                <View style={{ fontSize: 10 }}>
+                  <Text style={{ fontSize: 10 }}>
+                    {`ipsum dolor sit amet, consectetur adipisicing elit`}
+                  </Text>
+                </View>
+              </View>
+            )}
+            style={styles.superscript}
+          >
+            101
+          </Text>
+        </Text>
+      </View>
+    </Page>
+    <Page size="A5" style={styles.body} debug={false}>
+      <View style={styles.text}>
         <View>
           <Text>Footnote outside Text : </Text>
           <Text
@@ -116,7 +145,6 @@ export default () => (
                         style={{
                           display: 'flex',
                           flexDirection: 'row',
-                          
                         }}
                       >
                         <View>
