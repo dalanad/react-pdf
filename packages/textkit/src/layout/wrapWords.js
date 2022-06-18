@@ -1,6 +1,5 @@
 import * as R from 'ramda';
 
-import fromFragments from '../attributedString/fromFragments';
 import isUrl from '../utils/isUrl';
 
 /**
@@ -39,32 +38,20 @@ const hyphenateWordWrapper = (hyphenator, word) => {
  */
 const wrapWords = (engines = {}, options = {}, attributedString) => {
   const syllables = [];
-  const fragments = [];
 
   const hyphenateWord =
     options.hyphenationCallback ||
     (engines.wordHyphenation && engines.wordHyphenation(options)) ||
     defaultHyphenationEngine;
 
-  for (let i = 0; i < attributedString.runs.length; i += 1) {
-    let string = '';
-    const run = attributedString.runs[i];
-    const words = attributedString.string
-      .slice(run.start, run.end)
-      .split(/([ ]+)/g)
-      .filter(Boolean);
+  const words = attributedString.string.split(/([ ]+)/g).filter(Boolean);
 
-    for (let j = 0; j < words.length; j += 1) {
-      const word = words[j];
-      const parts = hyphenateWordWrapper(hyphenateWord, word)(word);
-      syllables.push(...parts);
-      string += parts.join('');
-    }
-
-    fragments.push({ string, attributes: run.attributes });
+  for (let j = 0; j < words.length; j += 1) {
+    const word = words[j];
+    const parts = hyphenateWordWrapper(hyphenateWord, word)(word);
+    syllables.push(...parts);
   }
-
-  return { ...fromFragments(fragments), syllables };
+  return { ...attributedString, syllables };
 };
 
 export default R.curryN(3, wrapWords);
