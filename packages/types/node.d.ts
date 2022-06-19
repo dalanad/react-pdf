@@ -22,7 +22,7 @@ interface TextProps extends BaseProps {
   orphans?: number;
   render?: DynamicRenderCallback;
   hyphenationCallback?: HyphenationCallback;
-  footNote?: (indexRelativeToPage: number) => {}
+  footnote?: (indexRelativeToPage: number) => {}
 }
 
 interface ViewProps extends BaseProps {

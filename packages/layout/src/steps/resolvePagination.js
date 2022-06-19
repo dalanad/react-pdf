@@ -15,8 +15,8 @@ import shouldNodeBreak from '../node/shouldBreak';
 import resolveTextLayout from './resolveTextLayout';
 import resolveInheritance from './resolveInheritance';
 import { resolvePageDimensions } from './resolveDimensions';
-import getFootNotes from '../footnotes/getFootNotes';
-import mapFootNotesToView from '../footnotes/mapFootNotesToView';
+import getFootnotes from '../footnotes/getFootnotes';
+import mapFootnotesToView from '../footnotes/mapFootnotesToView';
 
 const isText = R.propEq('type', P.Text);
 
@@ -198,54 +198,54 @@ const splitPage = (page, pageNumber, fontStore) => {
 
   const relayout = node => relayoutPage(node, fontStore);
 
-  let [currentChilds, nextChilds] = splitNodes(
+  let [currentChildren, nextChildren] = splitNodes(
     wrapArea,
     contentArea,
     dynamicPage.children,
   );
 
-  const getFootNotesView = footNotes =>
+  const getFootnotesView = footnotes =>
     R.compose(
       relayout,
-      assingChildren([mapFootNotesToView(footNotes)]),
+      assingChildren([mapFootnotesToView(footnotes)]),
       R.assocPath(['box', 'height'], height),
     )(page).children[0];
 
-  let pageFootNotes = getFootNotes({ children: currentChilds });
-  let footNotesView = getFootNotesView(pageFootNotes);
+  let pageFootnotes = getFootnotes({ children: currentChildren });
+  let footnotesView = getFootnotesView(pageFootnotes);
 
-  if (pageFootNotes.length > 0) {
-    [currentChilds, nextChilds] = splitNodes(
-      wrapArea - 25 - getHeight(footNotesView),
+  if (pageFootnotes.length > 0) {
+    [currentChildren, nextChildren] = splitNodes(
+      wrapArea - 25 - getHeight(footnotesView),
       contentArea,
       dynamicPage.children,
     );
 
-    let splittedPageFootNotes = getFootNotes({ children: currentChilds });
+    let splittedPageFootnotes = getFootnotes({ children: currentChildren });
 
-    let footNoteView = getFootNotesView(splittedPageFootNotes);
+    let footnoteView = getFootnotesView(splittedPageFootnotes);
 
-    if (nextChilds.length == 0) {
-      let lastChild = currentChilds.at(-1);
+    if (nextChildren.length == 0) {
+      let lastChild = currentChildren.at(-1);
       let fillNeeded =
-        contentArea - lastChild.box.height - getHeight(footNoteView);
-      footNoteView.style.marginTop = fillNeeded;
+        contentArea - lastChild.box.height - getHeight(footnoteView);
+      footnoteView.style.marginTop = fillNeeded;
     }
 
-    currentChilds.push(footNoteView);
+    currentChildren.push(footnoteView);
   }
 
   const currentPage = R.compose(
     relayout,
-    assingChildren(currentChilds),
+    assingChildren(currentChildren),
     R.assocPath(['box', 'height'], height),
   )(page);
 
-  if (R.isEmpty(nextChilds) || allFixed(nextChilds)) return [currentPage, null];
+  if (R.isEmpty(nextChildren) || allFixed(nextChildren)) return [currentPage, null];
 
   const nextPage = R.compose(
     relayout,
-    assingChildren(nextChilds),
+    assingChildren(nextChildren),
     R.dissocPath(['box', 'height']),
   )(page);
 

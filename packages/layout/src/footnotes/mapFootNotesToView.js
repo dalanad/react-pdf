@@ -7,7 +7,7 @@ import createInstance from '../node/createInstance';
  * @param {*} footnotes 
  * @returns a view node
  */
-function mapFootNotesToView(footnotes) {
+function mapFootnotesToView(footnotes) {
   let processed = [
     createInstance({
       type: 'SVG',
@@ -37,7 +37,7 @@ function mapFootNotesToView(footnotes) {
   let j = 0;
 
   for (const note of footnotes) {
-    let txt = createInstance(note.el.props.footNote(j + 1));
+    let txt = createInstance(note.el.props.footnote(j + 1));
     processed.push(txt);
     j++;
   }
@@ -56,4 +56,4 @@ function mapFootNotesToView(footnotes) {
   return it;
 }
 
-export default mapFootNotesToView;
+export default mapFootnotesToView;

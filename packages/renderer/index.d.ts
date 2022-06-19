@@ -187,7 +187,7 @@ declare namespace ReactPDF {
     /**
      * Specifies the footnote content that should be shown at the end of the page.
      */
-    footNote?: (indexRelativeToPage: number) => {}
+    footnote?: (indexRelativeToPage: number) => {}
   }
 
   interface SVGTextProps extends SVGPresentationAttributes {

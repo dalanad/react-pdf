@@ -53,7 +53,7 @@ export default () => (
         <Text>
           Footnote{' '}
           <Text
-            footNote={r => (
+            footnote={r => (
               <View
                 style={{
                   display: 'flex',
@@ -82,7 +82,7 @@ export default () => (
         <View>
           <Text>Footnote outside Text : </Text>
           <Text
-            footNote={r => (
+            footnote={r => (
               <View
                 style={{
                   display: 'flex',
@@ -140,7 +140,7 @@ export default () => (
                   nostrum nulla rem tenetur, exercitationem voluptatem
                   laudantium illqwdwdum! Dicta quaerat a
                   <Text
-                    footNote={r => (
+                    footnote={r => (
                       <View
                         style={{
                           display: 'flex',
@@ -191,7 +191,7 @@ export default () => (
                   nostrum nulla rem tenetur, exercitationem voluptatem
                   laudantium illqwdwdum! Dicta quaerat a
                   <Text
-                    footNote={r => (
+                    footnote={r => (
                       <View
                         style={{
                           display: 'flex',

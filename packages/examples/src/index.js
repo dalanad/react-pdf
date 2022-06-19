@@ -15,8 +15,9 @@ import DynamicMargins from './dynamicMargins';
 import TextWrap from './textWrap';
 import TextEnhancements from './text-enhancements';
 import Unicode from './unicode';
+import Footnotes from './footnotes';
+
 import editorFonts from './text-enhancements/fonts';
-import footNotes from './footnotes';
 
 editorFonts.forEach(el => {
   Font.register(el);
@@ -36,11 +37,11 @@ const EXAMPLES = {
   textEnhancements: TextEnhancements,
   textWrap: TextWrap,
   unicode: Unicode,
-  footNotes: footNotes,
+  footnotes: Footnotes,
 };
 
 const Viewer = () => {
-  const [example, setExample] = useState('footNotes');
+  const [example, setExample] = useState('footnotes');
   const [fontFamily, setFontFamily] = useState('Poppins');
   const fontList = editorFonts.map(f => f.family);
 

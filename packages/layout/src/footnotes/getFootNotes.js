@@ -6,10 +6,10 @@
  * @returns Array
  */
 function calculateFootnoteLocations(nodes) {
-  let foot_notes = [];
+  let footnotes = [];
   let str = '';
   for (const item of nodes) {
-    if (item.props && item.props.footNote) {
+    if (item.props && item.props.footnote) {
       foot_notes.push({ loc: str.length, el: item });
     }
     if (item.type == 'TEXT_INSTANCE') {
@@ -17,7 +17,7 @@ function calculateFootnoteLocations(nodes) {
     }
   }
 
-  return foot_notes;
+  return footnotes;
 }
 
 /**
@@ -28,12 +28,12 @@ function calculateFootnoteLocations(nodes) {
  * @param {number} top 
  * @returns 
  */
-function getFootNotes(node, top = 0) {
-  if (node.props?.footNote) {
+function getFootnotes(node, top = 0) {
+  if (node.props?.footnote) {
     return [{ el: node, loc: 0, approxTop: 0 }];
   }
 
-  let foot_notes = [];
+  let footnotes = [];
 
   if (!node.children) return [];
 
@@ -59,9 +59,9 @@ function getFootNotes(node, top = 0) {
   }
 
   for (const child of node.children) {
-    foot_notes.push(...getFootNotes(child, (node.box?.top || 0) + top));
+    footnotes.push(...getFootnotes(child, (node.box?.top || 0) + top));
   }
-  return foot_notes;
+  return footnotes;
 }
 
-export default getFootNotes;
+export default getFootnotes;
