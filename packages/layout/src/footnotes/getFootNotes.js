@@ -10,7 +10,7 @@ function calculateFootnoteLocations(nodes) {
   let str = '';
   for (const item of nodes) {
     if (item.props && item.props.footnote) {
-      foot_notes.push({ loc: str.length, el: item });
+      footnotes.push({ loc: str.length, el: item });
     }
     if (item.type == 'TEXT_INSTANCE') {
       str += item.value;
