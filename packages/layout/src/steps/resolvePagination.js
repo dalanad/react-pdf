@@ -194,6 +194,8 @@ const splitPage = (page, pageNumber, fontStore) => {
   const wrapArea = getWrapArea(page);
   const contentArea = getContentArea(page);
   const height = R.path(['style', 'height'], page);
+  const width = R.path(['style', 'width'], page);
+
   const dynamicPage = resolveDynamicPage({ pageNumber }, page, fontStore);
 
   const relayout = node => relayoutPage(node, fontStore);
@@ -207,7 +209,7 @@ const splitPage = (page, pageNumber, fontStore) => {
   const getFootnotesView = footnotes =>
     R.compose(
       relayout,
-      assingChildren([mapFootnotesToView(footnotes)]),
+      assingChildren([mapFootnotesToView(footnotes, width)]),
       R.assocPath(['box', 'height'], height),
     )(page).children[0];
 
@@ -216,7 +218,7 @@ const splitPage = (page, pageNumber, fontStore) => {
 
   if (pageFootnotes.length > 0) {
     [currentChildren, nextChildren] = splitNodes(
-      wrapArea - 25 - getHeight(footnotesView),
+      wrapArea - getHeight(footnotesView),
       contentArea,
       dynamicPage.children,
     );

@@ -1,30 +1,18 @@
-
 import createInstance from '../node/createInstance';
 
 /**
- *  maps footnote elements to a view node 
- * 
- * @param {*} footnotes 
+ *  maps footnote elements to a view node
+ *
+ * @param {*} footnotes
  * @returns a view node
  */
-function mapFootnotesToView(footnotes) {
-  let processed = [
-    createInstance({
-      type: 'SVG',
-      props: {
-        style: {
-          height: 5,
-        },
-        children: [],
-      },
-    }),
-  ];
-
-  let line = createInstance({
+function mapFootnotesToView(footnotes, width) {
+  
+  const line = createInstance({
     type: 'LINE',
     props: {
       x1: 0,
-      x2: 1000,
+      x2: width,
       y1: 0,
       y2: 0,
       strokeWidth: 1,
@@ -32,7 +20,17 @@ function mapFootnotesToView(footnotes) {
     },
   });
 
-  processed[0].children = [line];
+  const processed = [
+    createInstance({
+      type: 'SVG',
+      props: {
+        style: {
+          height: 5,
+        },
+        children: [line],
+      },
+    }),
+  ];
 
   let j = 0;
 
@@ -42,7 +40,7 @@ function mapFootnotesToView(footnotes) {
     j++;
   }
 
-  let it = createInstance({
+  const it = createInstance({
     type: 'VIEW',
     props: {
       style: {
