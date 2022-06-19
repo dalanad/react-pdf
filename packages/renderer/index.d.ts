@@ -184,6 +184,10 @@ declare namespace ReactPDF {
      * @see https://react-pdf.org/advanced#orphan-&-widow-protection
      */
     widows?: number;
+    /**
+     * Specifies the footnote content that should be shown at the end of the page.
+     */
+    footNote?: (indexRelativeToPage: number) => {}
   }
 
   interface SVGTextProps extends SVGPresentationAttributes {
