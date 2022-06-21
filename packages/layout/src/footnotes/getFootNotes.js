@@ -1,8 +1,8 @@
 /**
  * calculates the locations  of the footnotes within the given node array
  * this is used to check if a footnote is actually inside a node after line breaking and splitting
- * 
- * @param {Array} nodes 
+ *
+ * @param {Array} nodes
  * @returns Array
  */
 function calculateFootnoteLocations(nodes) {
@@ -11,6 +11,9 @@ function calculateFootnoteLocations(nodes) {
   for (const item of nodes) {
     if (item.props && item.props.footnote) {
       footnotes.push({ loc: str.length, el: item });
+    }
+    if (item.type == 'TEXT') {
+      str += item.children.map(e => e.value).reduce((a, b) => a + b, '');
     }
     if (item.type == 'TEXT_INSTANCE') {
       str += item.value;
@@ -23,10 +26,10 @@ function calculateFootnoteLocations(nodes) {
 /**
  * Finds all footnotes in a given node
  * checks if a footnote is actually present in the calculated lines of a node
- * 
- * @param {Object} node 
- * @param {number} top 
- * @returns 
+ *
+ * @param {Object} node
+ * @param {number} top
+ * @returns
  */
 function getFootnotes(node, top = 0) {
   if (node.props?.footnote) {
