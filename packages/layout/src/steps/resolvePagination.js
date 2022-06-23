@@ -171,12 +171,15 @@ const resolveDynamicNodes = (props, node) => {
         return [createInstance(res)].filter(Boolean);
       }
 
-      // render footnotes only if they are passed; otherwise make node empty
+      // render footnotes only if they are passed;
       if (node.props.renderFootnotes && props.footnotesView) {
         return [props.footnotesView].filter(Boolean);
       }
 
-      return [];
+      // if null is passed as the footnoteView; clear contents
+      if (node.props.renderFootnotes && props.footnotesView === null) {
+        return [];
+      }
     }
 
     return children.map(c => resolveDynamicNodes(props, c));
@@ -212,7 +215,11 @@ const splitPage = (page, pageNumber, fontStore) => {
   const height = R.path(['style', 'height'], page);
   const width = R.path(['style', 'width'], page);
 
-  const dynamicPage = resolveDynamicPage({ pageNumber }, page, fontStore);
+  const dynamicPage = resolveDynamicPage(
+    { pageNumber, footnotesView: null },
+    page,
+    fontStore,
+  );
 
   const relayout = node => relayoutPage(node, fontStore);
 
