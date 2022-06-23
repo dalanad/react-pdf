@@ -40,16 +40,14 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 14,
-    textAlign: 'justify',
     fontFamily: 'Times-Roman',
-    marginBottom: 10,
   },
 });
 
 export default () => (
   <Document>
-    <Page size="A5" style={styles.body} debug={false}>
-      <View style={styles.text}>
+    <Page size="A5" debug={false}>
+      <View style={{ ...styles.text, ...styles.body }}>
         <Text>
           Footnote{' '}
           <Text
@@ -77,9 +75,9 @@ export default () => (
         </Text>
       </View>
     </Page>
-    <Page size="A5" style={styles.body} debug={false}>
-      <View style={styles.text}>
-        <View>
+    <Page size="A5" debug={false} wrap>
+      <View style={{ ...styles.text, ...styles.body }}>
+        <View style={{ position: 'relative' }} debug>
           <Text>Footnote outside Text : </Text>
           <Text
             footnote={r => (
@@ -182,7 +180,7 @@ export default () => (
                   textAlign: 'justify',
                   fontSize: 14,
                 }}
-                debug={false}
+                debug={true}
                 key={e}
               >
                 <Text key={e}>
@@ -202,7 +200,10 @@ export default () => (
                           <Text style={{ fontSize: 10 }}>{`${e + 1}. `}</Text>
                         </View>
                         <View style={{ fontSize: 10 }}>
-                          <Text style={{ fontSize: 10 }}>
+                          <Text
+                            style={{ fontSize: 10 }}
+                            hyphenationCallback={e => [e]}
+                          >
                             {`ipsum dolor sit amet, consectetur adipisicing elit` +
                               'qweqweqwe '.repeat(
                                 Math.round(Math.random() * 10),
@@ -224,6 +225,15 @@ export default () => (
               </View>
             );
           })}
+          <View
+            fixed
+            style={{
+              position: 'absolute',
+              top: '100%',
+              width: '100%',
+            }}
+            renderFootnotes
+          ></View>
         </View>
       </View>
     </Page>

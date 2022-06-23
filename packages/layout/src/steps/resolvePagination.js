@@ -37,6 +37,8 @@ const allFixed = R.all(isFixed);
 
 const isDynamic = R.hasPath(['props', 'render']);
 
+const isFootnoteView = R.hasPath(['props', 'renderFootnotes']);
+
 const compose = (...fns) => (value, ...args) => {
   let result = value;
   const reversedFns = R.reverse(fns);
@@ -150,25 +152,45 @@ const split = R.ifElse(isText, splitText, splitView);
 
 const shouldResolveDynamicNodes = node => {
   const children = node.children || [];
-  return isDynamic(node) || children.some(shouldResolveDynamicNodes);
+  return (
+    isDynamic(node) ||
+    isFootnoteView(node) ||
+    children.some(shouldResolveDynamicNodes)
+  );
 };
 
+function getFootnotePlaceholder(node) {
+  if (node.props?.renderFootnotes) {
+    return node;
+  }
+  if (node.children)
+    for (const child of node.children) {
+      let x = getFootnotePlaceholder(child);
+      if (x) return x;
+    }
+}
+
 const resolveDynamicNodes = (props, node) => {
-  const isNodeDynamic = isDynamic(node);
+  const isNodeDynamic = isDynamic(node) || isFootnoteView(node);
 
   // Call render prop on dynamic nodes and append result to children
   const resolveChildren = (children = []) => {
     if (isNodeDynamic) {
-      const res = node.props.render(props);
-      return [createInstance(res)].filter(Boolean);
+      if (node.props.render) {
+        const res = node.props.render(props);
+        return [createInstance(res)].filter(Boolean);
+        // render footnotes only if they are passed; otherwise make node empty
+      } else if (node.props.renderFootnotes && props.footnotesView) {
+        return [props.footnotesView].filter(Boolean);
+      } else [];
     }
 
     return children.map(c => resolveDynamicNodes(props, c));
   };
 
-  // We reset dynamic text box so it can be computed again later on
+  // We reset dynamic node box so it can be computed again later on
   const resolveBox = box => {
-    return isNodeDynamic && isText(node) ? { ...box, height: 0 } : box;
+    return isNodeDynamic ? { ...box, height: 0 } : box;
   };
 
   return R.evolve(
@@ -206,35 +228,49 @@ const splitPage = (page, pageNumber, fontStore) => {
     dynamicPage.children,
   );
 
-  const getFootnotesView = footnotes =>
-    R.compose(
-      relayout,
-      assingChildren([mapFootnotesToView(footnotes, width)]),
-      R.assocPath(['box', 'height'], height),
-    )(page).children[0];
-
-  let pageFootnotes = getFootnotes({ children: currentChildren });
-  let footnotesView = getFootnotesView(pageFootnotes);
-
-  if (pageFootnotes.length > 0) {
-    [currentChildren, nextChildren] = splitNodes(
-      wrapArea - getHeight(footnotesView),
-      contentArea,
-      dynamicPage.children,
+  const resolvePageWithFootNotes = footnotes =>
+    resolveDynamicPage(
+      {
+        pageNumber,
+        footnotesView: mapFootnotesToView(footnotes, width),
+      },
+      page,
+      fontStore,
     );
 
-    let splittedPageFootnotes = getFootnotes({ children: currentChildren });
+  const pageFootnotes = getFootnotes({ children: currentChildren });
 
-    let footnoteView = getFootnotesView(splittedPageFootnotes);
+  let resolvedPage = resolvePageWithFootNotes(pageFootnotes);
+  let footnotesPlaceholder = getFootnotePlaceholder(resolvedPage);
 
-    if (nextChildren.length == 0) {
-      let lastChild = currentChildren.at(-1);
-      let fillNeeded =
-        contentArea - lastChild.box.height - getHeight(footnoteView);
-      footnoteView.style.marginTop = fillNeeded;
+  if (pageFootnotes.length > 0 && footnotesPlaceholder) {
+    [currentChildren, nextChildren] = splitNodes(
+      wrapArea - getHeight(footnotesPlaceholder),
+      contentArea,
+      resolvedPage.children,
+    );
+
+    const splittedPageFootnotes = getFootnotes({ children: currentChildren });
+
+    resolvedPage = resolvePageWithFootNotes(splittedPageFootnotes);
+    footnotesPlaceholder = getFootnotePlaceholder(resolvedPage);
+
+    if (footnotesPlaceholder) {
+      // we are reducing a extra line to avoid line shifts
+      const approxLineHeight = footnotesPlaceholder.style.fontSize;
+
+      [currentChildren, nextChildren] = splitNodes(
+        wrapArea - getHeight(footnotesPlaceholder) - approxLineHeight,
+        contentArea,
+        resolvedPage.children,
+      );
+
+      if (R.isEmpty(nextChildren) || allFixed(nextChildren)) {
+        const locationAfterFill =
+          contentArea - getHeight(footnotesPlaceholder) - approxLineHeight;
+        footnotesPlaceholder.style.top = locationAfterFill;
+      }
     }
-
-    currentChildren.push(footnoteView);
   }
 
   const currentPage = R.compose(
@@ -243,7 +279,8 @@ const splitPage = (page, pageNumber, fontStore) => {
     R.assocPath(['box', 'height'], height),
   )(page);
 
-  if (R.isEmpty(nextChildren) || allFixed(nextChildren)) return [currentPage, null];
+  if (R.isEmpty(nextChildren) || allFixed(nextChildren))
+    return [currentPage, null];
 
   const nextPage = R.compose(
     relayout,
