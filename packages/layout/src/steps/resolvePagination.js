@@ -17,6 +17,7 @@ import resolveInheritance from './resolveInheritance';
 import { resolvePageDimensions } from './resolveDimensions';
 import getFootnotes from '../footnotes/getFootnotes';
 import mapFootnotesToView from '../footnotes/mapFootnotesToView';
+import getFootnotePlaceholder from './getFootnotePlaceholder';
 
 const isText = R.propEq('type', P.Text);
 
@@ -159,17 +160,6 @@ const shouldResolveDynamicNodes = node => {
   );
 };
 
-function getFootnotePlaceholder(node) {
-  if (node.props?.renderFootnotes) {
-    return node;
-  }
-  if (node.children)
-    for (const child of node.children) {
-      let x = getFootnotePlaceholder(child);
-      if (x) return x;
-    }
-}
-
 const resolveDynamicNodes = (props, node) => {
   const isNodeDynamic = isDynamic(node) || isFootnoteView(node);
 
@@ -179,10 +169,14 @@ const resolveDynamicNodes = (props, node) => {
       if (node.props.render) {
         const res = node.props.render(props);
         return [createInstance(res)].filter(Boolean);
-        // render footnotes only if they are passed; otherwise make node empty
-      } else if (node.props.renderFootnotes && props.footnotesView) {
+      }
+
+      // render footnotes only if they are passed; otherwise make node empty
+      if (node.props.renderFootnotes && props.footnotesView) {
         return [props.footnotesView].filter(Boolean);
-      } else [];
+      }
+
+      return [];
     }
 
     return children.map(c => resolveDynamicNodes(props, c));

@@ -1,13 +1,9 @@
 import React from 'react';
 import {
   Document,
-  Font,
   Page,
   Text,
-  Image,
   StyleSheet,
-  Svg,
-  Line,
   View,
 } from '@paladin-analytics/rpdf-renderer';
 
@@ -49,9 +45,9 @@ export default () => (
     <Page size="A5" debug={false}>
       <View style={{ ...styles.text, ...styles.body }}>
         <Text>
-          Footnote{' '}
+          Footnote&nbsp;
           <Text
-            footnote={r => (
+            footnote={() => (
               <View
                 style={{
                   display: 'flex',
@@ -63,7 +59,7 @@ export default () => (
                 </View>
                 <View style={{ fontSize: 10 }}>
                   <Text style={{ fontSize: 10 }}>
-                    {`ipsum dolor sit amet, consectetur adipisicing elit`}
+                    ipsum dolor sit amet, consectetur adipisicing elit
                   </Text>
                 </View>
               </View>
@@ -80,7 +76,7 @@ export default () => (
         <View style={{ position: 'relative' }} debug>
           <Text>Footnote outside Text : </Text>
           <Text
-            footnote={r => (
+            footnote={() => (
               <View
                 style={{
                   display: 'flex',
@@ -92,7 +88,7 @@ export default () => (
                 </View>
                 <View style={{ fontSize: 10 }}>
                   <Text style={{ fontSize: 10 }}>
-                    {`ipsum dolor sit amet, consectetur adipisicing elit`}
+                    ipsum dolor sit amet, consectetur adipisicing elit
                   </Text>
                 </View>
               </View>
@@ -133,12 +129,14 @@ export default () => (
                 key={e}
               >
                 <Text key={e}>
-                  #{e} ipsum dolor sit amet, consectetur adipisicing elit. Velit
+                  #
+                  {e}
+                  ipsum dolor sit amet, consectetur adipisicing elit. Velit
                   quibusdam animi vero incidunt doloribus, suscipit aperiam,
                   nostrum nulla rem tenetur, exercitationem voluptatem
                   laudantium illqwdwdum! Dicta quaerat a
                   <Text
-                    footnote={r => (
+                    footnote={() => (
                       <View
                         style={{
                           display: 'flex',
@@ -150,10 +148,10 @@ export default () => (
                         </View>
                         <View style={{ fontSize: 10 }}>
                           <Text style={{ fontSize: 10 }}>
-                            {`ipsum dolor sit amet, consectetur adipisicing elit` +
+                            {`ipsum dolor sit amet, consectetur adipisicing elit${ 
                               'qweqweqwe '.repeat(
                                 Math.round(Math.random() * 10),
-                              )}
+                              )}`}
                           </Text>
                         </View>
                       </View>
@@ -171,8 +169,8 @@ export default () => (
               </View>
             );
           })}
-          <Text break={true}>Force break</Text>
-          <Text break={true}>Force break</Text>
+          <Text break>Force break</Text>
+          <Text break>Force break</Text>
           {Array.from(Array(10).keys()).map(e => {
             return (
               <View
@@ -180,16 +178,18 @@ export default () => (
                   textAlign: 'justify',
                   fontSize: 14,
                 }}
-                debug={true}
+                debug
                 key={e}
               >
                 <Text key={e}>
-                  #{e} ipsum dolor sit amet, consectetur adipisicing elit. Velit
+                  #
+                  {e}
+                  ipsum dolor sit amet, consectetur adipisicing elit. Velit
                   quibusdam animi vero incidunt doloribus, suscipit aperiam,
                   nostrum nulla rem tenetur, exercitationem voluptatem
                   laudantium illqwdwdum! Dicta quaerat a
                   <Text
-                    footnote={r => (
+                    footnote={() => (
                       <View
                         style={{
                           display: 'flex',
@@ -202,12 +202,12 @@ export default () => (
                         <View style={{ fontSize: 10 }}>
                           <Text
                             style={{ fontSize: 10 }}
-                            hyphenationCallback={e => [e]}
+                            hyphenationCallback={cb => [cb]}
                           >
-                            {`ipsum dolor sit amet, consectetur adipisicing elit` +
+                            {`ipsum dolor sit amet, consectetur adipisicing elit${ 
                               'qweqweqwe '.repeat(
                                 Math.round(Math.random() * 10),
-                              )}
+                              )}`}
                           </Text>
                         </View>
                       </View>
@@ -233,7 +233,7 @@ export default () => (
               width: '100%',
             }}
             renderFootnotes
-          ></View>
+          />
         </View>
       </View>
     </Page>

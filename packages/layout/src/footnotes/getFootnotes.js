@@ -1,3 +1,6 @@
+/* eslint-disable no-loop-func */
+/* eslint-disable no-restricted-syntax */
+
 /**
  * calculates the locations  of the footnotes within the given node array
  * this is used to check if a footnote is actually inside a node after line breaking and splitting
@@ -6,16 +9,19 @@
  * @returns Array
  */
 function calculateFootnoteLocations(nodes) {
-  let footnotes = [];
+  const footnotes = [];
   let str = '';
+
   for (const item of nodes) {
     if (item.props && item.props.footnote) {
       footnotes.push({ loc: str.length, el: item });
     }
-    if (item.type == 'TEXT') {
+
+    if (item.type === 'TEXT') {
       str += item.children.map(e => e.value).reduce((a, b) => a + b, '');
     }
-    if (item.type == 'TEXT_INSTANCE') {
+
+    if (item.type === 'TEXT_INSTANCE') {
       str += item.value;
     }
   }
@@ -36,19 +42,19 @@ function getFootnotes(node, top = 0) {
     return [{ el: node, loc: 0, approxTop: 0 }];
   }
 
-  let footnotes = [];
+  const footnotes = [];
 
   if (!node.children) return [];
 
   if (node.lines) {
-    let footnoteLocations = calculateFootnoteLocations(node.children);
-    let notes = [];
+    const footnoteLocations = calculateFootnoteLocations(node.children);
+    const notes = [];
     let lengthUpto = 0;
     let topUpto = top;
 
     for (const line of node.lines) {
-      lengthUpto = lengthUpto + line.string.length;
-      topUpto = topUpto + line.box.height;
+      lengthUpto += line.string.length;
+      topUpto += line.box.height;
 
       notes.push(
         ...footnoteLocations

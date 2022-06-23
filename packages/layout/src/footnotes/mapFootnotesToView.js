@@ -7,7 +7,6 @@ import createInstance from '../node/createInstance';
  * @returns a view node
  */
 function mapFootnotesToView(footnotes, width) {
-  
   const line = createInstance({
     type: 'LINE',
     props: {
@@ -34,10 +33,11 @@ function mapFootnotesToView(footnotes, width) {
 
   let j = 0;
 
+  // eslint-disable-next-line no-restricted-syntax
   for (const note of footnotes) {
-    let txt = createInstance(note.el.props.footnote(j + 1));
+    const txt = createInstance(note.el.props.footnote(j + 1));
     processed.push(txt);
-    j++;
+    j += 1;
   }
 
   const it = createInstance({
