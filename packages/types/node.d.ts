@@ -28,6 +28,7 @@ interface TextProps extends BaseProps {
 interface ViewProps extends BaseProps {
   wrap?: boolean;
   render?: (props: { pageNumber: number }) => any;
+  renderFootnotes?: boolean;
 }
 
 interface PageProps extends BaseProps {

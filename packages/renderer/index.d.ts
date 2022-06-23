@@ -112,6 +112,11 @@ declare namespace ReactPDF {
      */
     fillPreviousWrapTextSpacing?: boolean;
 
+    /**
+     * Should acts as the placeholder to render footnotes
+     */
+     renderFootnotes?: boolean;
+
     render?: (props: {
       pageNumber: number;
       subPageNumber: number;
