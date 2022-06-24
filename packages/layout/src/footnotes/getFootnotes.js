@@ -49,17 +49,15 @@ function getFootnotes(node, top = 0) {
   if (node.lines) {
     const footnoteLocations = calculateFootnoteLocations(node.children);
     const notes = [];
-    let lengthUpto = 0;
     let topUpto = top;
 
     for (const line of node.lines) {
-      lengthUpto += line.string.length;
       topUpto += line.box.height;
 
       notes.push(
         ...footnoteLocations
-          .filter(e => e.loc < lengthUpto)
-          .filter(e => e.loc > lengthUpto - line.string.length)
+          .filter(e => e.loc < line.textBefore + line.string.length)
+          .filter(e => e.loc > line.textBefore)
           .map(r => ({ ...r, approxTop: topUpto })),
       );
     }
