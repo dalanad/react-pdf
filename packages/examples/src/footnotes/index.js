@@ -44,36 +44,93 @@ export default () => (
   <Document>
     <Page size="A5" debug={false}>
       <View style={{ ...styles.text, ...styles.body }}>
-        <Text>
-          Footnote&nbsp;
-          <Text
-            footnote={() => (
-              <View
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                }}
-              >
-                <View>
-                  <Text style={{ fontSize: 10 }}>{`101. `}</Text>
+        <View style={{ position: 'relative' }}>
+          <Text>
+            Footnote&nbsp;
+            <Text
+              footnote={() => (
+                <View
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                  }}
+                >
+                  <View>
+                    <Text style={{ fontSize: 10 }}>{`101. `}</Text>
+                  </View>
+                  <View style={{ fontSize: 10 }}>
+                    <Text style={{ fontSize: 10 }}>
+                      ipsum dolor sit amet, consectetur adipisicing elit
+                    </Text>
+                  </View>
                 </View>
-                <View style={{ fontSize: 10 }}>
-                  <Text style={{ fontSize: 10 }}>
-                    ipsum dolor sit amet, consectetur adipisicing elit
-                  </Text>
-                </View>
-              </View>
-            )}
-            style={styles.superscript}
-          >
-            101
+              )}
+              style={styles.superscript}
+            >
+              101
+            </Text>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat
+            adipisci facere alias saepe aliquam quia amet, expedita aperiam
+            dicta earum accusantium! Dicta sit facere hic itaque dolores officia
+            blanditiis vel? Lorem ipsum dolor sit amet, consectetur adipisicing
+            elit. Quaerat adipisci facere alias saepe aliquam quia amet,
+            expedita aperiam dicta earum accusantium! Dicta sit facere hic
+            itaque dolores officia blanditiis vel?Lorem ipsum dolor sit amet,
+            consectetur adipisicing elit. Quaerat adipisci facere alias saepe
+            aliquam quia amet, expedita aperiam dicta earum accusantium! Dicta
+            sit facere hic itaque dolores officia blanditiis vel?Lorem ipsum
+            dolor sit amet, consectetur adipisicing elit. Quaerat adipisci
+            facere alias saepe aliquam quia amet, expedita aperiam dicta earum
+            accusantium! Dicta sit facere hic itaque dolores officia blanditiis
+            vel?Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Quaerat adipisci facere alias saepe aliquam quia amet, expedita
+            aperiam dicta earum accusantium! Dicta sit facere hic itaque dolores
+            officia blanditiis vel?Lorem ipsum dolor sit amet, consectetur
+            adipisicing elit. Quaerat adipisci facere alias saepe aliquam quia
+            amet, expedita aperiam dicta earum accusantium! Dicta sit facere hic
+            itaque dolores officia blanditiis vel?Lorem ipsum dolor sit amet,
+            consectetur adipisicing elit. Quaerat adipisci facere alias saepe
+            aliquam quia amet, expedita aperiam dicta earum accusantium! Dicta
+            sit facere hic itaque dolores officia blanditiis vel?Lorem ipsum
+            dolor sit amet, consectetur adipisicing elit. Quaerat adipisci
+            facere alias saepe aliquam quia amet, expedita aperiam dicta earum
+            accusantium! Dicta sit facere hic itaque dolores officia blanditiis
+            vel?Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Quaerat adipisci facere alias saepe aliquam quia amet, expedita
+            aperiam dicta earum accusantium! Dicta sit facere hic itaque dolores
+            officia blanditiis vel?Lorem ipsum dolor sit amet, consectetur
+            adipisicing elit. Quaerat adipisci facere alias saepe aliquam quia
+            amet, expedita aperiam dicta earum accusantium! Dicta sit facere hic
+            itaque dolores officia blanditiis vel?Lorem ipsum dolor sit amet,
+            consectetur adipisicing elit. Quaerat adipisci facere alias saepe
+            aliquam quia amet, expedita aperiam dicta earum accusantium! Dicta
+            sit facere hic itaque dolores officia blanditiis vel?Lorem ipsum
+            dolor sit amet, consectetur adipisicing elit. Quaerat adipisci
+            facere alias saepe aliquam quia amet, expedita aperiam dicta earum
+            accusantium! Dicta sit facere hic itaque dolores officia blanditiis
+            vel?Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Quaerat adipisci facere alias saepe aliquam quia amet, expedita
+            aperiam dicta earum accusantium! Dicta sit facere hic itaque dolores
+            officia blanditiis vel?Lorem ipsum dolor sit amet, consectetur
+            adipisicing elit. Quaerat adipisci facere alias saepe aliquam quia
+            amet, expedita aperiam dicta earum accusantium! Dicta sit facere hic
+            itaque dolores officia blanditiis vel?
           </Text>
-        </Text>
+          <View
+            fixed
+            style={{
+              position: 'absolute',
+              top: '100%',
+              width: '100%',
+            }}
+            renderFootnotes
+          />
+        </View>
       </View>
     </Page>
     <Page size="A5" debug={false} wrap>
       <View style={{ ...styles.text, ...styles.body }}>
-        <View style={{ position: 'relative' }} debug>
+        <View style={{ position: 'relative' }}>
           <Text>Footnote outside Text : </Text>
           <Text
             footnote={() => (
@@ -129,8 +186,7 @@ export default () => (
                 key={e}
               >
                 <Text key={e}>
-                  #
-                  {e}
+                  #{e}
                   ipsum dolor sit amet, consectetur adipisicing elit. Velit
                   quibusdam animi vero incidunt doloribus, suscipit aperiam,
                   nostrum nulla rem tenetur, exercitationem voluptatem
@@ -148,10 +204,9 @@ export default () => (
                         </View>
                         <View style={{ fontSize: 10 }}>
                           <Text style={{ fontSize: 10 }}>
-                            {`ipsum dolor sit amet, consectetur adipisicing elit${ 
-                              'qweqweqwe '.repeat(
-                                Math.round(Math.random() * 10),
-                              )}`}
+                            {`ipsum dolor sit amet, consectetur adipisicing elit${'qweqweqwe '.repeat(
+                              Math.round(Math.random() * 10),
+                            )}`}
                           </Text>
                         </View>
                       </View>
@@ -178,12 +233,10 @@ export default () => (
                   textAlign: 'justify',
                   fontSize: 14,
                 }}
-                debug
                 key={e}
               >
                 <Text key={e}>
-                  #
-                  {e}
+                  #{e}
                   ipsum dolor sit amet, consectetur adipisicing elit. Velit
                   quibusdam animi vero incidunt doloribus, suscipit aperiam,
                   nostrum nulla rem tenetur, exercitationem voluptatem
@@ -204,10 +257,9 @@ export default () => (
                             style={{ fontSize: 10 }}
                             hyphenationCallback={cb => [cb]}
                           >
-                            {`ipsum dolor sit amet, consectetur adipisicing elit${ 
-                              'qweqweqwe '.repeat(
-                                Math.round(Math.random() * 10),
-                              )}`}
+                            {`ipsum dolor sit amet, consectetur adipisicing elit${'qweqweqwe '.repeat(
+                              Math.round(Math.random() * 10),
+                            )}`}
                           </Text>
                         </View>
                       </View>

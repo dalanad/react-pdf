@@ -17,7 +17,7 @@ import resolveInheritance from './resolveInheritance';
 import { resolvePageDimensions } from './resolveDimensions';
 import getFootnotes from '../footnotes/getFootnotes';
 import mapFootnotesToView from '../footnotes/mapFootnotesToView';
-import getFootnotePlaceholder from './getFootnotePlaceholder';
+import getFootnotePlaceholder from '../footnotes/getFootnotePlaceholder';
 
 const isText = R.propEq('type', P.Text);
 
@@ -229,7 +229,7 @@ const splitPage = (page, pageNumber, fontStore) => {
     dynamicPage.children,
   );
 
-  const resolvePageWithFootNotes = footnotes =>
+  const resolvePageWithFootnotes = footnotes =>
     resolveDynamicPage(
       {
         pageNumber,
@@ -241,7 +241,7 @@ const splitPage = (page, pageNumber, fontStore) => {
 
   const pageFootnotes = getFootnotes({ children: currentChildren });
 
-  let resolvedPage = resolvePageWithFootNotes(pageFootnotes);
+  let resolvedPage = resolvePageWithFootnotes(pageFootnotes);
   let footnotesPlaceholder = getFootnotePlaceholder(resolvedPage);
 
   if (pageFootnotes.length > 0 && footnotesPlaceholder) {
@@ -253,7 +253,7 @@ const splitPage = (page, pageNumber, fontStore) => {
 
     const splittedPageFootnotes = getFootnotes({ children: currentChildren });
 
-    resolvedPage = resolvePageWithFootNotes(splittedPageFootnotes);
+    resolvedPage = resolvePageWithFootnotes(splittedPageFootnotes);
     footnotesPlaceholder = getFootnotePlaceholder(resolvedPage);
 
     if (footnotesPlaceholder) {

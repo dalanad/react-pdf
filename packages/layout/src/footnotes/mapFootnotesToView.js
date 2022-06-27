@@ -46,11 +46,10 @@ function mapFootnotesToView(footnotes, width) {
       style: {
         paddingTop: 10,
       },
-      children: [],
+      children: [processed],
     },
   });
 
-  it.children = processed;
   return it;
 }
 

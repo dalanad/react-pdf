@@ -4,10 +4,9 @@ function getFootnotePlaceholder(node) {
   }
 
   if (node.children)
-    // eslint-disable-next-line no-restricted-syntax
     for (const child of node.children) {
-      const x = getFootnotePlaceholder(child);
-      if (x) return x;
+      const placeholder = getFootnotePlaceholder(child);
+      if (placeholder) return placeholder;
     }
 
   return null;
