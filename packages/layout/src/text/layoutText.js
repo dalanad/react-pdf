@@ -64,6 +64,23 @@ const getLayoutOptions = (fontStore, node, maskRects) => ({
 });
 
 /**
+ * transform lines to include text length upto that line
+ *
+ * @param {Array} lines
+ * @returns {Array} layout lines
+ */
+const linesWithRange = lines => {
+  let strLength = 0;
+
+  for (let i = 0; i < lines.length; i++) {
+    lines[i].textBefore = strLength;
+    strLength += lines[i].string.length;
+  }
+
+  return lines;
+};
+
+/**
  * Get text lines for given node
  *
  * @param {Object} node
@@ -77,7 +94,8 @@ const layoutText = (node, maskRects, width, height, fontStore) => {
   const attributedString = getAttributedString(fontStore, node);
   const container = getContainer(width, height, node);
   const options = getLayoutOptions(fontStore, node, maskRects);
-  const lines = engine(attributedString, container, options);
+  let lines = engine(attributedString, container, options);
+  lines = lines.map(linesWithRange);
 
   return R.reduce(R.concat, [], lines);
 };

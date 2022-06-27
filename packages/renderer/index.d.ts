@@ -112,6 +112,11 @@ declare namespace ReactPDF {
      */
     fillPreviousWrapTextSpacing?: boolean;
 
+    /**
+     * Should acts as the placeholder to render footnotes
+     */
+     renderFootnotes?: boolean;
+
     render?: (props: {
       pageNumber: number;
       subPageNumber: number;
@@ -184,6 +189,10 @@ declare namespace ReactPDF {
      * @see https://react-pdf.org/advanced#orphan-&-widow-protection
      */
     widows?: number;
+    /**
+     * Specifies the footnote content that should be shown at the end of the page.
+     */
+    footnote?: (indexRelativeToPage: number) => {}
   }
 
   interface SVGTextProps extends SVGPresentationAttributes {

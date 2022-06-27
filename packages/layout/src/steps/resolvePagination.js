@@ -15,6 +15,9 @@ import shouldNodeBreak from '../node/shouldBreak';
 import resolveTextLayout from './resolveTextLayout';
 import resolveInheritance from './resolveInheritance';
 import { resolvePageDimensions } from './resolveDimensions';
+import getFootnotes from '../footnotes/getFootnotes';
+import mapFootnotesToView from '../footnotes/mapFootnotesToView';
+import getFootnotePlaceholder from '../footnotes/getFootnotePlaceholder';
 
 const isText = R.propEq('type', P.Text);
 
@@ -34,6 +37,8 @@ const isElementOutside = R.useWith(R.lte, [R.identity, getTop]);
 const allFixed = R.all(isFixed);
 
 const isDynamic = R.hasPath(['props', 'render']);
+
+const isFootnoteView = R.hasPath(['props', 'renderFootnotes']);
 
 const compose = (...fns) => (value, ...args) => {
   let result = value;
@@ -148,25 +153,41 @@ const split = R.ifElse(isText, splitText, splitView);
 
 const shouldResolveDynamicNodes = node => {
   const children = node.children || [];
-  return isDynamic(node) || children.some(shouldResolveDynamicNodes);
+  return (
+    isDynamic(node) ||
+    isFootnoteView(node) ||
+    children.some(shouldResolveDynamicNodes)
+  );
 };
 
 const resolveDynamicNodes = (props, node) => {
-  const isNodeDynamic = isDynamic(node);
+  const isNodeDynamic = isDynamic(node) || isFootnoteView(node);
 
   // Call render prop on dynamic nodes and append result to children
   const resolveChildren = (children = []) => {
     if (isNodeDynamic) {
-      const res = node.props.render(props);
-      return [createInstance(res)].filter(Boolean);
+      if (node.props.render) {
+        const res = node.props.render(props);
+        return [createInstance(res)].filter(Boolean);
+      }
+
+      // render footnotes only if they are passed;
+      if (node.props.renderFootnotes && props.footnotesView) {
+        return [props.footnotesView].filter(Boolean);
+      }
+
+      // if null is passed as the footnoteView; clear contents
+      if (node.props.renderFootnotes && props.footnotesView === null) {
+        return [];
+      }
     }
 
     return children.map(c => resolveDynamicNodes(props, c));
   };
 
-  // We reset dynamic text box so it can be computed again later on
+  // We reset dynamic node box so it can be computed again later on
   const resolveBox = box => {
-    return isNodeDynamic && isText(node) ? { ...box, height: 0 } : box;
+    return isNodeDynamic ? { ...box, height: 0 } : box;
   };
 
   return R.evolve(
@@ -192,34 +213,90 @@ const splitPage = (page, pageNumber, fontStore) => {
   const wrapArea = getWrapArea(page);
   const contentArea = getContentArea(page);
   const height = R.path(['style', 'height'], page);
-  const dynamicPage = resolveDynamicPage({ pageNumber }, page, fontStore);
+  const width = R.path(['style', 'width'], page);
 
-  const [currentChilds, nextChilds] = splitNodes(
+  const dynamicPage = resolveDynamicPage(
+    { pageNumber, footnotesView: null },
+    page,
+    fontStore,
+  );
+
+  const relayout = node => relayoutPage(node, fontStore);
+
+  let [currentChildren, nextChildren] = splitNodes(
     wrapArea,
     contentArea,
     dynamicPage.children,
   );
 
-  const relayout = node => relayoutPage(node, fontStore);
+  const resolvePageWithFootnotes = footnotes =>
+    resolveDynamicPage(
+      {
+        pageNumber,
+        footnotesView: mapFootnotesToView(footnotes, width),
+      },
+      page,
+      fontStore,
+    );
+
+  const pageFootnotes = getFootnotes({ children: currentChildren });
+
+  let resolvedPage = resolvePageWithFootnotes(pageFootnotes);
+  let footnotesPlaceholder = getFootnotePlaceholder(resolvedPage);
+
+  if (pageFootnotes.length > 0 && footnotesPlaceholder) {
+    [currentChildren, nextChildren] = splitNodes(
+      wrapArea - getHeight(footnotesPlaceholder),
+      contentArea,
+      resolvedPage.children,
+    );
+
+    const splittedPageFootnotes = getFootnotes({ children: currentChildren });
+
+    resolvedPage = resolvePageWithFootnotes(splittedPageFootnotes);
+    footnotesPlaceholder = getFootnotePlaceholder(resolvedPage);
+
+    if (footnotesPlaceholder) {
+      // we are reducing a extra line to avoid line shifts
+      const approxLineHeight = footnotesPlaceholder.style.fontSize;
+
+      [currentChildren, nextChildren] = splitNodes(
+        wrapArea - getHeight(footnotesPlaceholder) - approxLineHeight,
+        contentArea,
+        resolvedPage.children,
+      );
+
+      if (R.isEmpty(nextChildren) || allFixed(nextChildren)) {
+        const locationAfterFill =
+          contentArea - getHeight(footnotesPlaceholder) - approxLineHeight;
+        footnotesPlaceholder.style.top = locationAfterFill;
+      }
+    }
+  }
 
   const currentPage = R.compose(
     relayout,
-    assingChildren(currentChilds),
+    assingChildren(currentChildren),
     R.assocPath(['box', 'height'], height),
   )(page);
 
-  if (R.isEmpty(nextChilds) || allFixed(nextChilds)) return [currentPage, null];
+  if (R.isEmpty(nextChildren) || allFixed(nextChildren))
+    return [currentPage, null];
 
   const nextPage = R.compose(
     relayout,
-    assingChildren(nextChilds),
+    assingChildren(nextChildren),
     R.dissocPath(['box', 'height']),
   )(page);
 
   return [currentPage, nextPage];
 };
 
-const resolvePageIndices = (fontStore, pageNumberOffset) => (page, pageIndex, pages) => {
+const resolvePageIndices = (fontStore, pageNumberOffset) => (
+  page,
+  pageIndex,
+  pages,
+) => {
   const totalPages = pages.length + pageNumberOffset;
 
   const props = {
@@ -239,7 +316,7 @@ const resolvePageIndices = (fontStore, pageNumberOffset) => (page, pageIndex, pa
  * @param {Object} page Page
  * @param {number} pageIndex Page index
  */
-const applyInsideOutsideMargins = (pageNumberOffset) => (page, pageIndex) => {
+const applyInsideOutsideMargins = pageNumberOffset => (page, pageIndex) => {
   if ((pageIndex + pageNumberOffset) % 2 === 0) {
     return page;
   }
@@ -333,7 +410,7 @@ const paginate = (page, pageNumber, fontStore) => {
  * @returns {Object} layout node
  */
 const resolvePagination = (doc, fontStore) => {
-  const pageNumberOffset = (doc.props?.pageNumberOffset || 0);
+  const pageNumberOffset = doc.props?.pageNumberOffset || 0;
   let pages = [];
   let pageNumber = 1 + pageNumberOffset;
 
@@ -347,7 +424,10 @@ const resolvePagination = (doc, fontStore) => {
   }
 
   pages = pages.map(
-    R.compose(dissocSubPageData, resolvePageIndices(fontStore, pageNumberOffset)),
+    R.compose(
+      dissocSubPageData,
+      resolvePageIndices(fontStore, pageNumberOffset),
+    ),
   );
 
   pages = pages.map(applyInsideOutsideMargins(pageNumberOffset));
