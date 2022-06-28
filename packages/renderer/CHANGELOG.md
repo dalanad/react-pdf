@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-renderer@2.1.21...@paladin-analytics/rpdf-renderer@2.2.0) (2022-06-28)
+
+
+### Features
+
+* **footnotes:** Introduce footnote placement in layout ([9b0dc14](https://github.com/Paladin-Analytics/react-pdf/commit/9b0dc147a65610b6ffe133da7f2a79095a263a83))
+
+
+
+
+
 ## [2.1.21](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-renderer@2.1.20...@paladin-analytics/rpdf-renderer@2.1.21) (2022-06-18)
 
 **Note:** Version bump only for package @paladin-analytics/rpdf-renderer

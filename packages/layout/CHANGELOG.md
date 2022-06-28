@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-layout@2.3.6...@paladin-analytics/rpdf-layout@2.4.0) (2022-06-28)
+
+
+### Bug Fixes
+
+* **footnotes:** Fix nested array issue ([23b0705](https://github.com/Paladin-Analytics/react-pdf/commit/23b07056f5630c4816a43c4b7cc62a19b7d3cd9b))
+
+
+### Features
+
+* **footnotes:** Introduce footnote placement in layout ([9b0dc14](https://github.com/Paladin-Analytics/react-pdf/commit/9b0dc147a65610b6ffe133da7f2a79095a263a83))
+
+
+
+
+
 ## [2.3.6](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-layout@2.3.5...@paladin-analytics/rpdf-layout@2.3.6) (2022-06-18)
 
 **Note:** Version bump only for package @paladin-analytics/rpdf-layout
