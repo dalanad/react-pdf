@@ -39,9 +39,117 @@ const styles = StyleSheet.create({
     fontFamily: 'Times-Roman',
   },
 });
+let footnoteNumber = 0;
 
+const FootNote = () => {
+  footnoteNumber = footnoteNumber + 1;
+  let x = footnoteNumber;
+  return (
+    <Text
+      footnote={() => (
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+          }}
+        >
+          <View>
+            <Text style={{ fontSize: 10 }}>{x} . </Text>
+          </View>
+          <View style={{ fontSize: 10 }}>
+            <Text style={{ fontSize: 10 }} hyphenationCallback={e => [e]}>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit dolor sit
+              amet, consectetur adipisicing elit consectetur adipisicing elit
+            </Text>
+          </View>
+        </View>
+      )}
+      style={styles.superscript}
+    >
+      {x}
+    </Text>
+  );
+};
 export default () => (
   <Document>
+    <Page size="A5" debug={false}>
+      <View style={{ ...styles.text, ...styles.body }}>
+        <View style={{ position: 'relative' }} debug>
+          <Text>
+            Large Number of footnotes in a single page&nbsp; & edge case
+            containing reference shifting scenario. sit amet, consectetur
+            adipisicing elit. Quaerat adipisci
+            <FootNote /> facere alias <FootNote />
+            saepe aliquam
+            <FootNote /> quia amet, <FootNote />
+            expedita aperiam dicta
+            <FootNote /> earum accusantium! <FootNote />
+            <FootNote /> Dicta sit facere hic <FootNote />
+            itaque dolores
+            <FootNote /> officia blanditiis
+            <FootNote /> vel? Lorem ipsum dolor sit amet, consectetur
+            adipisicing elit. Quaerat adipisci <FootNote /> facere
+            <FootNote /> <FootNote /> <FootNote /> alias
+            <FootNote /> saepe aliquam
+            <FootNote /> quia amet, expedita aperiam dicta earum accusantium!
+            Dicta sit facere hic itaque dolores officia blanditiis vel?Lorem
+            ipsum dolor sit amet, consectetur adipisicing elit. Quaerat
+             adipisci facere
+            <FootNote /> alias <FootNote />
+            saepe aliquam <FootNote />
+            quia amet, expedita aperiam dicta earum accusantium! Dicta sit{' '}
+            <FootNote />
+            facere hic itaque dolores officia blanditiis vel?Lorem ipsum dolor
+            sit amet, consectetur adipisicing elit. Quaerat adipisci facere
+            alias saepe aliquam quia amet, expedita aperiam dicta earum
+            accusantium! Dicta sit facere hic itaque dolores officia blanditiis
+            vel?Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Quaerat adipisci facere alias saepe aliquam quia amet, expedita
+            aperiam dicta earum accusantium! Dicta sit facere hic itaque dolores
+            officia blanditiis vel?Lorem ipsum dolor sit amet, consectetur
+            adipisicing elit. Quaerat adipisci facere alias saepe aliquam quia
+            amet, expedita aperiam dicta earum accusantium! Dicta sit facere hic
+            itaque dolores officia blanditiis vel?Lorem ipsum dolor sit amet,
+            consectetur adipisicing elit. Quaerat adipisci facere alias saepe
+            aliquam quia amet, expedita aperiam dicta earum accusantium! Dicta
+            sit facere hic itaque dolores officia blanditiis vel?Lorem ipsum
+            dolor sit amet, consectetur adipisicing elit. Quaerat adipisci
+            facere alias saepe aliquam quia amet, expedita aperiam dicta earum
+            accusantium! Dicta sit facere hic itaque dolores officia blanditiis
+            vel?Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Quaerat adipisci facere alias saepe aliquam quia amet, expedita
+            aperiam dicta earum accusantium! Dicta sit facere hic itaque dolores
+            officia blanditiis vel?Lorem ipsum dolor sit amet, consectetur
+            adipisicing elit. Quaerat adipisci facere alias saepe aliquam quia
+            amet, expedita aperiam dicta earum accusantium! Dicta sit facere hic
+            itaque dolores officia blanditiis vel?Lorem ipsum dolor sit amet,
+            consectetur adipisicing elit. Quaerat adipisci facere alias saepe
+            aliquam quia amet, expedita aperiam dicta earum accusantium! Dicta
+            sit facere hic itaque dolores officia blanditiis vel?Lorem ipsum
+            dolor sit amet, consectetur adipisicing elit. Quaerat adipisci
+            facere alias saepe aliquam quia amet, expedita aperiam dicta earum
+            accusantium! Dicta sit facere hic itaque dolores officia blanditiis
+            vel?Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Quaerat adipisci facere alias saepe aliquam quia amet, expedita
+            aperiam dicta earum accusantium! Dicta sit facere hic itaque dolores
+            officia blanditiis vel?Lorem ipsum dolor sit amet, consectetur
+            adipisicing elit. Quaerat adipisci facere alias saepe aliquam quia
+            amet, expedita aperiam dicta earum accusantium! Dicta sit facere hic
+            itaque dolores officia blanditiis vel?
+          </Text>
+          <View
+            fixed
+            debug
+            style={{
+              position: 'absolute',
+              top: '100%',
+              width: '100%',
+            }}
+            renderFootnotes
+          />
+        </View>
+      </View>
+    </Page>
     <Page size="A5" debug={false}>
       <View style={{ ...styles.text, ...styles.body }}>
         <View style={{ position: 'relative' }}>

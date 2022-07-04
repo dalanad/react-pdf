@@ -18,6 +18,7 @@ import { resolvePageDimensions } from './resolveDimensions';
 import getFootnotes from '../footnotes/getFootnotes';
 import mapFootnotesToView from '../footnotes/mapFootnotesToView';
 import getFootnotePlaceholder from '../footnotes/getFootnotePlaceholder';
+import chooseFootnotes from '../footnotes/chooseFootnotes';
 
 const isText = R.propEq('type', P.Text);
 
@@ -243,32 +244,28 @@ const splitPage = (page, pageNumber, fontStore) => {
 
   let resolvedPage = resolvePageWithFootnotes(pageFootnotes);
   let footnotesPlaceholder = getFootnotePlaceholder(resolvedPage);
+  let chosenFootnotes = chooseFootnotes(resolvedPage, pageFootnotes);
 
-  if (pageFootnotes.length > 0 && footnotesPlaceholder) {
-    [currentChildren, nextChildren] = splitNodes(
-      wrapArea - getHeight(footnotesPlaceholder),
-      contentArea,
-      resolvedPage.children,
-    );
-
-    const splittedPageFootnotes = getFootnotes({ children: currentChildren });
-
-    resolvedPage = resolvePageWithFootnotes(splittedPageFootnotes);
+  if (chosenFootnotes.footnotes.length > 0 && footnotesPlaceholder) {
+    resolvedPage = resolvePageWithFootnotes(chosenFootnotes.footnotes);
     footnotesPlaceholder = getFootnotePlaceholder(resolvedPage);
 
-    if (footnotesPlaceholder) {
-      // we are reducing a extra line to avoid line shifts
-      const approxLineHeight = footnotesPlaceholder.style.fontSize;
+    const updatedWrapArea =
+      wrapArea -
+      getHeight(footnotesPlaceholder) -
+      chosenFootnotes.spacingNeeded;
 
+    if (footnotesPlaceholder) {
       [currentChildren, nextChildren] = splitNodes(
-        wrapArea - getHeight(footnotesPlaceholder) - approxLineHeight,
+        updatedWrapArea,
         contentArea,
         resolvedPage.children,
       );
 
+      footnotesPlaceholder.style.marginTop = chosenFootnotes.spacingNeeded;
+
       if (R.isEmpty(nextChildren) || allFixed(nextChildren)) {
-        const locationAfterFill =
-          contentArea - getHeight(footnotesPlaceholder) - approxLineHeight;
+        const locationAfterFill = contentArea - getHeight(footnotesPlaceholder);
         footnotesPlaceholder.style.top = locationAfterFill;
       }
     }
