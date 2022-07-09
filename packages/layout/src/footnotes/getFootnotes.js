@@ -59,7 +59,7 @@ function getFootnotes(node, top = 0) {
       notes.push(
         ...footnoteLocations
           .filter(e => e.loc < line.textBefore + line.string.length)
-          .filter(e => e.loc > line.textBefore)
+          .filter(e => e.loc >= line.textBefore)
           .map(r => ({
             ...r,
             approxTop: topUpto,
