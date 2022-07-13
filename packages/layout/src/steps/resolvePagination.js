@@ -142,11 +142,21 @@ const splitView = (node, height, contentArea) => {
     contentArea,
     node,
   );
-
-  return [
-    assingChildren(currentChilds)(currentNode),
-    assingChildren(nextChildren)(nextNode),
-  ];
+  const next = assingChildren(nextChildren)(nextNode);
+    
+  if (next?.children.length > 0) {
+    return [
+      assingChildren(currentChilds)(currentNode),
+      next
+    ];
+  }
+  else {
+    return [
+      assingChildren(currentChilds)(currentNode),
+      null,
+    ];
+  }
+  
 };
 
 const split = R.ifElse(isText, splitText, splitView);
