@@ -244,7 +244,7 @@ const splitPage = (page, pageNumber, fontStore) => {
 
   let resolvedPage = resolvePageWithFootnotes(pageFootnotes);
   let footnotesPlaceholder = getFootnotePlaceholder(resolvedPage);
-  let chosenFootnotes = chooseFootnotes(resolvedPage, pageFootnotes);
+  const chosenFootnotes = chooseFootnotes(resolvedPage, pageFootnotes);
 
   if (chosenFootnotes.footnotes.length > 0 && footnotesPlaceholder) {
     resolvedPage = resolvePageWithFootnotes(chosenFootnotes.footnotes);

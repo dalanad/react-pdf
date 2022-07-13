@@ -9,9 +9,10 @@ const FOOTNOTES_MIN_HEIGHT = 15;
 const groupByKey = (array, key) => {
   return Object.values(
     array.reduce((r, a) => {
-      r[a[key]] = r[a[key]] || [];
-      r[a[key]].push(a);
-      return r;
+      const groups = r;
+      groups[a[key]] = groups[a[key]] || [];
+      groups[a[key]].push(a);
+      return groups;
     }, {}),
   );
 };
@@ -30,19 +31,19 @@ const groupByKey = (array, key) => {
  *
  * @returns {Object} containing footnotes array and contentHeight
  */
-export default function chooseFootnotes(page, initialFootnotes) {
+export default function chooseFootnotes(page, footnotes) {
   const pageHeight = getStyleHeight(page);
 
   let footnotesHeight = FOOTNOTES_MIN_HEIGHT;
   let spacingNeeded = 0;
 
-  let chosenFootnotes = [];
+  const chosenFootnotes = [];
   let placeholder = getFootnotePlaceholder(page);
 
   if (placeholder) {
     const getFootnoteView = a => placeholder.children[0].children[a + 1];
 
-    initialFootnotes = initialFootnotes.map((e, index) => {
+    const initialFootnotes = footnotes.map((e, index) => {
       const footnoteView = getFootnoteView(index);
       const footnoteHeight = getHeight(footnoteView);
 
@@ -58,7 +59,7 @@ export default function chooseFootnotes(page, initialFootnotes) {
       totalHeight: e.reduce((a, b) => a + b.heightNeeded, 0),
     }));
 
-    for (let i = 0; i < groupedFootnotes.length; i++) {
+    for (let i = 0; i < groupedFootnotes.length; i += 1) {
       const {
         totalHeight,
         footnotes,
@@ -69,7 +70,7 @@ export default function chooseFootnotes(page, initialFootnotes) {
       const spaceAfterAdding = pageHeight - footnotesHeight - totalHeight;
       const spaceWithoutAdding = pageHeight - footnotesHeight;
 
-      if (groupBottom < spaceAfterAdding + 5) {
+      if (groupBottom < spaceAfterAdding) {
         footnotesHeight += totalHeight;
         chosenFootnotes.push(...footnotes);
       } else {
