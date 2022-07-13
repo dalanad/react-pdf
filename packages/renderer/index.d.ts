@@ -117,6 +117,11 @@ declare namespace ReactPDF {
      */
      renderFootnotes?: boolean;
 
+    /**
+     * Should push the element to the next page if it is the last element on page
+     */
+    breakIfLastOnPage?: boolean;
+
     render?: (props: {
       pageNumber: number;
       subPageNumber: number;
@@ -193,6 +198,11 @@ declare namespace ReactPDF {
      * Specifies the footnote content that should be shown at the end of the page.
      */
     footnote?: (indexRelativeToPage: number) => {}
+
+    /**
+     * Should push the element to the next page if it is the last element on page
+     */
+    breakIfLastOnPage?: boolean;
   }
 
   interface SVGTextProps extends SVGPresentationAttributes {

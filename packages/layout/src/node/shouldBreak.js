@@ -7,6 +7,8 @@ import getNodesHeight from './getNodesHeight';
 
 const getBreak = R.pathOr(false, ['props', 'break']);
 
+const getBreakIfLastOnPage = R.pathOr(false, ['props', 'breakIfLastOnPage']);
+
 const getMinPresenceAhead = R.path(['props', 'minPresenceAhead']);
 
 const defaultPresenceAhead = element => height =>
@@ -59,6 +61,8 @@ const shouldBreak = (child, futureElements, height) => {
   const minPresenceAhead = getMinPresenceAhead(child);
   const presenceAhead = getPresenceAhead(futureElements, height);
   const futureHeight = getNodesHeight(futureElements);
+  const nextHeight = getNodesHeight(futureElements.slice(0, 1));
+
   const wrapTextAroundChildrenHeight = getWrapTextAroundChildrenHeight(child);
   const shouldSplit =
     height < child.box.top + child.box.height + wrapTextAroundChildrenHeight;
@@ -68,7 +72,8 @@ const shouldBreak = (child, futureElements, height) => {
     getBreak(child) ||
     (!shouldWrap && shouldSplit) ||
     (wrapTextAroundChildrenHeight && shouldSplit) ||
-    (minPresenceAhead < futureHeight && presenceAhead < minPresenceAhead)
+    (minPresenceAhead < futureHeight && presenceAhead < minPresenceAhead) ||
+    (getBreakIfLastOnPage(child) && presenceAhead < nextHeight)
   );
 };
 
