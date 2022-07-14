@@ -11,6 +11,7 @@ import canNodeWrap from '../node/getWrap';
 import getWrapArea from '../page/getWrapArea';
 import getContentArea from '../page/getContentArea';
 import createInstance from '../node/createInstance';
+// eslint-disable-next-line import/no-cycle
 import shouldNodeBreak from '../node/shouldBreak';
 import resolveTextLayout from './resolveTextLayout';
 import resolveInheritance from './resolveInheritance';
@@ -76,7 +77,12 @@ const splitNodes = (height, contentArea, nodes) => {
     const nodeTop = getTop(child);
     const nodeHeight = getHeight(child);
     const isOutside = isElementOutside(height, child);
-    const shouldBreak = shouldNodeBreak(child, futureNodes, height);
+    const shouldBreak = shouldNodeBreak(
+      child,
+      futureNodes,
+      height,
+      contentArea,
+    );
     const shouldSplit = height + SAFTY_THRESHOLD < nodeTop + nodeHeight;
     const canWrap = canNodeWrap(child);
     const fitsInsidePage = nodeHeight <= contentArea;
@@ -135,7 +141,7 @@ const splitChildren = (height, contentArea, node) => {
   return splitNodes(availableHeight, contentArea, children);
 };
 
-const splitView = (node, height, contentArea) => {
+export const splitView = (node, height, contentArea) => {
   const [currentNode, nextNode] = splitNode(node, height);
   const [currentChilds, nextChildren] = splitChildren(
     height,
