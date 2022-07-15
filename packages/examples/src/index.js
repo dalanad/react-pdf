@@ -16,6 +16,7 @@ import TextWrap from './textWrap';
 import TextEnhancements from './text-enhancements';
 import Unicode from './unicode';
 import Footnotes from './footnotes';
+import DynamicBreaks from './dynamicBreaks';
 
 import editorFonts from './text-enhancements/fonts';
 
@@ -38,10 +39,11 @@ const EXAMPLES = {
   textWrap: TextWrap,
   unicode: Unicode,
   footnotes: Footnotes,
+  dynamicBreaks: DynamicBreaks,
 };
 
 const Viewer = () => {
-  const [example, setExample] = useState('footnotes');
+  const [example, setExample] = useState('dynamicBreaks');
   const [fontFamily, setFontFamily] = useState('Poppins');
   const fontList = editorFonts.map(f => f.family);
 

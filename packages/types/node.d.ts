@@ -22,13 +22,15 @@ interface TextProps extends BaseProps {
   orphans?: number;
   render?: DynamicRenderCallback;
   hyphenationCallback?: HyphenationCallback;
-  footnote?: (indexRelativeToPage: number) => {}
+  footnote?: (indexRelativeToPage: number) => {};
+  breakIfLastOnPage?: boolean;
 }
 
 interface ViewProps extends BaseProps {
   wrap?: boolean;
   render?: (props: { pageNumber: number }) => any;
   renderFootnotes?: boolean;
+  breakIfLastOnPage?: boolean;
 }
 
 interface PageProps extends BaseProps {
