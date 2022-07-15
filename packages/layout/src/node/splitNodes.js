@@ -1,12 +1,13 @@
-/* eslint-disable import/no-cycle */
 /* eslint-disable no-continue */
 
 import * as R from 'ramda';
 
 import isFixed from './isFixed';
 
+// eslint-disable-next-line import/no-cycle
 import shouldNodeBreak from './shouldBreak';
 import canNodeWrap from './getWrap';
+// eslint-disable-next-line import/no-cycle
 import split from './split';
 
 // Prevent splitting elements by low decimal numbers
