@@ -2,21 +2,17 @@
 /* eslint-disable no-restricted-syntax */
 
 import * as R from 'ramda';
-import * as P from '@paladin-analytics/rpdf-primitives';
 
 import getWrap from './getWrap';
 import getNodesHeight from './getNodesHeight';
-import splitText from '../text/splitText';
 // eslint-disable-next-line import/no-cycle
-import { splitView } from '../steps/resolvePagination';
+import split from './split';
 
 const getBreak = R.pathOr(false, ['props', 'break']);
 
 const getBreakIfLastOnPage = R.pathOr(false, ['props', 'breakIfLastOnPage']);
 
 const getMinPresenceAhead = R.path(['props', 'minPresenceAhead']);
-
-const isText = R.propEq('type', P.Text);
 
 const defaultPresenceAhead = element => height =>
   Math.min(element.box.height, height);
@@ -65,19 +61,20 @@ const getWrapTextAroundChildrenHeight = node => {
 };
 
 /**
- * Returns whether the node has any drawable lines
+ * Returns whether the node or its children
+ * has any drawable lines
  *
- * @param {Array} content
+ * @param {Object} node
  * @returns boolean
  */
-const hasAnyLines = content => {
-  if (Array.isArray(content)) {
-    for (const child of content) {
-      if (child?.lines?.length) {
-        return true;
-      }
+const hasAnyLines = node => {
+  if (node?.lines?.length) {
+    return true;
+  }
 
-      return hasAnyLines(child?.children);
+  if (node?.children && Array.isArray(node.children)) {
+    for (const child of node.children) {
+      return hasAnyLines(child);
     }
   }
 
@@ -85,39 +82,26 @@ const hasAnyLines = content => {
 };
 
 /**
- * Returns whether the node should be pushed to the next page
- * by checking the behaviour of next sibling
+ * Returns whether the node can be drawn on the
+ * current page
  *
- * @param {Array} futureElements
+ * @param {Object} node
  * @param {Number} presenceAhead
  * @param {Number} height
  * @param {Number} contentArea
  * @returns boolean
  */
-const shouldPushToNextPage = (
-  futureElements,
-  presenceAhead,
-  height,
-  contentArea,
-) => {
-  if (!futureElements.length) return false;
-
-  const nextChild = futureElements[0];
-  const nextHeight = getNodesHeight([nextChild]);
+const canDrawOnPage = (node, presenceAhead, height, contentArea) => {
+  const nextHeight = getNodesHeight([node]);
 
   if (nextHeight <= presenceAhead) return false;
 
-  if (!getWrap(nextChild)) {
+  if (!getWrap(node)) {
     return true;
   }
 
-  if (isText(nextChild)) {
-    const [currentContent] = splitText(nextChild, height);
-    if (!currentContent.lines.length) return true;
-  } else {
-    const [currentContent] = splitView(nextChild, height, contentArea);
-    if (!hasAnyLines(currentContent?.children)) return true;
-  }
+  const [currentContent] = split(node, height, contentArea);
+  if (!hasAnyLines(currentContent)) return true;
 
   return false;
 };
@@ -137,7 +121,8 @@ const shouldBreak = (child, futureElements, height, contentArea) => {
     (wrapTextAroundChildrenHeight && shouldSplit) ||
     (minPresenceAhead < futureHeight && presenceAhead < minPresenceAhead) ||
     (getBreakIfLastOnPage(child) &&
-      shouldPushToNextPage(futureElements, presenceAhead, height, contentArea))
+      futureElements.length &&
+      canDrawOnPage(futureElements[0], presenceAhead, height, contentArea))
   );
 };
 
