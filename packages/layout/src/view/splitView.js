@@ -24,10 +24,13 @@ const splitView = (node, height, contentArea) => {
     node,
   );
 
-  return [
-    assingChildren(currentChilds)(currentNode),
-    assingChildren(nextChildren)(nextNode),
-  ];
+  const next = assingChildren(nextChildren)(nextNode);
+
+  if (next?.children.length) {
+    return [assingChildren(currentChilds)(currentNode), next];
+  }
+
+  return [assingChildren(currentChilds)(currentNode), null];
 };
 
 export default splitView;
