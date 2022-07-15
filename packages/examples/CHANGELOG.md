@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-examples@2.3.0...@paladin-analytics/rpdf-examples@2.4.0) (2022-07-15)
+
+
+### Features
+
+* **dynamic-breaks:** Add example ([bc2ecd8](https://github.com/Paladin-Analytics/react-pdf/commit/bc2ecd88e28ba43026c617c31076f84a13f922ee))
+
+
+
+
+
 # [2.3.0](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-examples@2.2.2...@paladin-analytics/rpdf-examples@2.3.0) (2022-06-28)
 
 

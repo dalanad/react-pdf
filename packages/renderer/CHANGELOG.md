@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.3.0](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-renderer@2.2.0...@paladin-analytics/rpdf-renderer@2.3.0) (2022-07-15)
+
+
+### Features
+
+* **dynamic-breaks:** Introduce last element break prop ([16bfe7f](https://github.com/Paladin-Analytics/react-pdf/commit/16bfe7f551a9f447637fb431be45801e77adedb3))
+
+
+
+
+
 # [2.2.0](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-renderer@2.1.21...@paladin-analytics/rpdf-renderer@2.2.0) (2022-06-28)
 
 
