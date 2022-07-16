@@ -38,7 +38,7 @@ export default function chooseFootnotes(page, footnotes) {
   let spacingNeeded = 0;
 
   const chosenFootnotes = [];
-  let placeholder = getFootnotePlaceholder(page);
+  const placeholder = getFootnotePlaceholder(page);
 
   if (placeholder) {
     const getFootnoteView = a => placeholder.children[0].children[a + 1];
@@ -53,7 +53,7 @@ export default function chooseFootnotes(page, footnotes) {
     let groupedFootnotes = groupByKey(initialFootnotes, 'approxTop');
 
     groupedFootnotes = groupedFootnotes.map(e => ({
-      footnotes: e,
+      footnoteGroup: e,
       groupTop: e[0].approxTop,
       groupBottom: e[0].approxBottom,
       totalHeight: e.reduce((a, b) => a + b.heightNeeded, 0),
@@ -62,7 +62,7 @@ export default function chooseFootnotes(page, footnotes) {
     for (let i = 0; i < groupedFootnotes.length; i += 1) {
       const {
         totalHeight,
-        footnotes,
+        footnoteGroup,
         groupBottom,
         groupTop,
       } = groupedFootnotes[i];
@@ -72,7 +72,7 @@ export default function chooseFootnotes(page, footnotes) {
 
       if (groupBottom < spaceAfterAdding) {
         footnotesHeight += totalHeight;
-        chosenFootnotes.push(...footnotes);
+        chosenFootnotes.push(...footnoteGroup);
       } else {
         if (groupTop < spaceWithoutAdding) {
           spacingNeeded = totalHeight;
