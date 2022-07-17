@@ -1,11 +1,16 @@
 /* eslint-disable no-continue */
+/* eslint-disable no-restricted-syntax */
 
 import * as R from 'ramda';
 
 import getWrap from './getWrap';
 import getNodesHeight from './getNodesHeight';
+// eslint-disable-next-line import/no-cycle
+import split from './split';
 
 const getBreak = R.pathOr(false, ['props', 'break']);
+
+const getBreakIfLastOnPage = R.pathOr(false, ['props', 'breakIfLastOnPage']);
 
 const getMinPresenceAhead = R.path(['props', 'minPresenceAhead']);
 
@@ -55,7 +60,53 @@ const getWrapTextAroundChildrenHeight = node => {
   return height;
 };
 
-const shouldBreak = (child, futureElements, height) => {
+/**
+ * Returns whether the node or its children
+ * has any drawable lines
+ *
+ * @param {Object} node
+ * @returns boolean
+ */
+const hasAnyLines = node => {
+  if (node?.lines?.length) {
+    return true;
+  }
+
+  if (node?.children && Array.isArray(node.children)) {
+    for (const child of node.children) {
+      return hasAnyLines(child);
+    }
+  }
+
+  return false;
+};
+
+/**
+ * Returns whether the node can be drawn on the
+ * current page
+ *
+ * @param {Object} node
+ * @param {Number} presenceAhead
+ * @param {Number} height
+ * @param {Number} contentArea
+ * @returns boolean
+ */
+const canDrawOnPage = (node, presenceAhead, height, contentArea) => {
+  const nextHeight = getNodesHeight([node]);
+
+  if (nextHeight <= presenceAhead) return false;
+
+  if (!getWrap(node)) {
+    return true;
+  }
+
+  const [currentContent] = split(node, height, contentArea);
+  if (!hasAnyLines(currentContent)) return true;
+
+  return false;
+};
+
+const shouldBreak = (child, futureElements, height, contentArea) => {
   const minPresenceAhead = getMinPresenceAhead(child);
   const presenceAhead = getPresenceAhead(futureElements, height);
   const futureHeight = getNodesHeight(futureElements);
@@ -68,7 +119,10 @@ const shouldBreak = (child, futureElements, height) => {
     getBreak(child) ||
     (!shouldWrap && shouldSplit) ||
     (wrapTextAroundChildrenHeight && shouldSplit) ||
-    (minPresenceAhead < futureHeight && presenceAhead < minPresenceAhead)
+    (minPresenceAhead < futureHeight && presenceAhead < minPresenceAhead) ||
+    (getBreakIfLastOnPage(child) &&
+      futureElements.length &&
+      canDrawOnPage(futureElements[0], presenceAhead, height, contentArea))
   );
 };
 

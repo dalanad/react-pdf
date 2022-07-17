@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.2](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-font@2.2.1...@paladin-analytics/rpdf-font@2.2.2) (2022-07-15)
+
+**Note:** Version bump only for package @paladin-analytics/rpdf-font
+
+
+
+
+
 ## [2.2.1](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-font@2.2.0...@paladin-analytics/rpdf-font@2.2.1) (2022-06-28)
 
 **Note:** Version bump only for package @paladin-analytics/rpdf-font

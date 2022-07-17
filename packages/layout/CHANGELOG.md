@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.5.0](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-layout@2.4.0...@paladin-analytics/rpdf-layout@2.5.0) (2022-07-15)
+
+
+### Bug Fixes
+
+* **resolvePagination:** fix splitView spilling to additional empty view ([41d079e](https://github.com/Paladin-Analytics/react-pdf/commit/41d079eb4c79293efa6db653baafe68cff23880d))
+
+
+### Features
+
+* **dynamic-breaks:** Add dynamic breaking logic based on next sibling ([a30edac](https://github.com/Paladin-Analytics/react-pdf/commit/a30edac5d40db27ea7d6713239430118a1e8178c))
+* **dynamic-breaks:** Capture [#41](https://github.com/Paladin-Analytics/react-pdf/issues/41)d079eb4c79293efa6db653baafe68cff23880d ([8ce38e8](https://github.com/Paladin-Analytics/react-pdf/commit/8ce38e8c821c8981b7379aeb44a11666b85eb76b)), closes [#41d079eb4c79293efa6db653baafe68cff23880](https://github.com/Paladin-Analytics/react-pdf/issues/41d079eb4c79293efa6db653baafe68cff23880)
+* **dynamic-breaks:** Change file level ignore ([5a742dd](https://github.com/Paladin-Analytics/react-pdf/commit/5a742dd53704d3980c9b2d43fff5abc5960c3e55))
+* **dynamic-breaks:** Introduce last element break prop ([16bfe7f](https://github.com/Paladin-Analytics/react-pdf/commit/16bfe7f551a9f447637fb431be45801e77adedb3))
+* **dynamic-breaks:** Refactor code ([2cd18e3](https://github.com/Paladin-Analytics/react-pdf/commit/2cd18e34b4ff0d9738560e4f820adcf9b92e6040))
+
+
+
+
+
 # [2.4.0](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-layout@2.3.6...@paladin-analytics/rpdf-layout@2.4.0) (2022-06-28)
 
 

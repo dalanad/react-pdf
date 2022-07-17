@@ -1,39 +1,23 @@
-/* eslint-disable no-continue */
 /* eslint-disable prefer-destructuring */
 
 import * as R from 'ramda';
-import * as P from '@paladin-analytics/rpdf-primitives';
 
-import isFixed from '../node/isFixed';
-import splitText from '../text/splitText';
-import splitNode from '../node/splitNode';
-import canNodeWrap from '../node/getWrap';
-import getWrapArea from '../page/getWrapArea';
-import getContentArea from '../page/getContentArea';
-import createInstance from '../node/createInstance';
-import shouldNodeBreak from '../node/shouldBreak';
-import resolveTextLayout from './resolveTextLayout';
-import resolveInheritance from './resolveInheritance';
-import { resolvePageDimensions } from './resolveDimensions';
+import chooseFootnotes from '../footnotes/chooseFootnotes';
+import getFootnotePlaceholder from '../footnotes/getFootnotePlaceholder';
 import getFootnotes from '../footnotes/getFootnotes';
 import mapFootnotesToView from '../footnotes/mapFootnotesToView';
-import getFootnotePlaceholder from '../footnotes/getFootnotePlaceholder';
-import chooseFootnotes from '../footnotes/chooseFootnotes';
-
-const isText = R.propEq('type', P.Text);
-
-// Prevent splitting elements by low decimal numbers
-const SAFTY_THRESHOLD = 0.001;
+import createInstance from '../node/createInstance';
+import isFixed from '../node/isFixed';
+import splitNodes from '../node/splitNodes';
+import getContentArea from '../page/getContentArea';
+import getWrapArea from '../page/getWrapArea';
+import { resolvePageDimensions } from './resolveDimensions';
+import resolveInheritance from './resolveInheritance';
+import resolveTextLayout from './resolveTextLayout';
 
 const assingChildren = R.assoc('children');
 
-const getTop = R.pathOr(0, ['box', 'top']);
-
 const getHeight = R.path(['box', 'height']);
-
-const getChildren = R.propOr([], 'children');
-
-const isElementOutside = R.useWith(R.lte, [R.identity, getTop]);
 
 const allFixed = R.all(isFixed);
 
@@ -58,99 +42,6 @@ const relayoutPage = compose(
   resolveInheritance,
   resolvePageDimensions,
 );
-
-const warnUnavailableSpace = node => {
-  console.warn(
-    `Node of type ${node.type} can't wrap between pages and it's bigger than available page height`,
-  );
-};
-
-const splitNodes = (height, contentArea, nodes) => {
-  const currentChildren = [];
-  const nextChildren = [];
-
-  for (let i = 0; i < nodes.length; i += 1) {
-    const child = nodes[i];
-    const futureNodes = nodes.slice(i + 1);
-    const futureFixedNodes = R.filter(isFixed, futureNodes);
-
-    const nodeTop = getTop(child);
-    const nodeHeight = getHeight(child);
-    const isOutside = isElementOutside(height, child);
-    const shouldBreak = shouldNodeBreak(child, futureNodes, height);
-    const shouldSplit = height + SAFTY_THRESHOLD < nodeTop + nodeHeight;
-    const canWrap = canNodeWrap(child);
-    const fitsInsidePage = nodeHeight <= contentArea;
-
-    if (isFixed(child)) {
-      nextChildren.push(child);
-      currentChildren.push(child);
-      continue;
-    }
-
-    if (isOutside) {
-      const next = R.evolve({ box: { top: R.subtract(R.__, height) } })(child);
-      nextChildren.push(next);
-      continue;
-    }
-
-    if (!fitsInsidePage && !canWrap) {
-      currentChildren.push(child);
-      nextChildren.push(...futureNodes);
-      warnUnavailableSpace(child);
-      break;
-    }
-
-    if (shouldBreak) {
-      const next = R.evolve({
-        box: { top: R.subtract(R.__, height) },
-        props: R.evolve({
-          wrap: R.always(true),
-          break: R.always(false),
-        }),
-      })(child);
-
-      currentChildren.push(...futureFixedNodes);
-      nextChildren.push(next, ...futureNodes);
-      break;
-    }
-
-    if (shouldSplit) {
-      const [currentChild, nextChild] = split(child, height, contentArea);
-
-      if (currentChild) currentChildren.push(currentChild);
-      if (nextChild) nextChildren.push(nextChild);
-
-      continue;
-    }
-
-    currentChildren.push(child);
-  }
-
-  return [currentChildren, nextChildren];
-};
-
-const splitChildren = (height, contentArea, node) => {
-  const children = getChildren(node);
-  const availableHeight = height - getTop(node);
-  return splitNodes(availableHeight, contentArea, children);
-};
-
-const splitView = (node, height, contentArea) => {
-  const [currentNode, nextNode] = splitNode(node, height);
-  const [currentChilds, nextChildren] = splitChildren(
-    height,
-    contentArea,
-    node,
-  );
-
-  return [
-    assingChildren(currentChilds)(currentNode),
-    assingChildren(nextChildren)(nextNode),
-  ];
-};
-
-const split = R.ifElse(isText, splitText, splitView);
 
 const shouldResolveDynamicNodes = node => {
   const children = node.children || [];

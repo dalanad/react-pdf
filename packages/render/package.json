@@ -1,6 +1,6 @@
 {
   "name": "@paladin-analytics/rpdf-render",
-  "version": "2.1.18",
+  "version": "2.1.19",
   "license": "MIT",
   "author": "Diego Muracciole <diegomuracciole@gmail.com>",
   "homepage": "https://github.com/diegomura/react-pdf#readme",
@@ -14,7 +14,7 @@
   "dependencies": {
     "@paladin-analytics/rpdf-primitives": "^2.0.5",
     "@paladin-analytics/rpdf-textkit": "^2.3.2",
-    "@paladin-analytics/rpdf-types": "^2.3.0",
+    "@paladin-analytics/rpdf-types": "^2.4.0",
     "abs-svg-path": "^0.1.1",
     "color-string": "^1.5.3",
     "normalize-svg-path": "^1.1.0",
