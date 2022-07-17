@@ -39,7 +39,9 @@ function calculateFootnoteLocations(nodes) {
  */
 function getFootnotes(node, top = 0) {
   if (node.props?.footnote) {
-    return [{ el: node, loc: 0, approxTop: 0 }];
+    return [
+      { el: node, loc: 0, approxTop: top, approxBottom: top + node.box.height },
+    ];
   }
 
   const footnotes = [];
@@ -57,8 +59,12 @@ function getFootnotes(node, top = 0) {
       notes.push(
         ...footnoteLocations
           .filter(e => e.loc < line.textBefore + line.string.length)
-          .filter(e => e.loc > line.textBefore)
-          .map(r => ({ ...r, approxTop: topUpto })),
+          .filter(e => e.loc >= line.textBefore)
+          .map(r => ({
+            ...r,
+            approxTop: topUpto,
+            approxBottom: topUpto + line.box.height,
+          })),
       );
     }
 

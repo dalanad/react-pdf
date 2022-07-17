@@ -2,17 +2,18 @@
 
 import * as R from 'ramda';
 
-import isFixed from '../node/isFixed';
-import getWrapArea from '../page/getWrapArea';
-import getContentArea from '../page/getContentArea';
-import createInstance from '../node/createInstance';
-import resolveTextLayout from './resolveTextLayout';
-import resolveInheritance from './resolveInheritance';
-import { resolvePageDimensions } from './resolveDimensions';
+import chooseFootnotes from '../footnotes/chooseFootnotes';
+import getFootnotePlaceholder from '../footnotes/getFootnotePlaceholder';
 import getFootnotes from '../footnotes/getFootnotes';
 import mapFootnotesToView from '../footnotes/mapFootnotesToView';
-import getFootnotePlaceholder from '../footnotes/getFootnotePlaceholder';
+import createInstance from '../node/createInstance';
+import isFixed from '../node/isFixed';
 import splitNodes from '../node/splitNodes';
+import getContentArea from '../page/getContentArea';
+import getWrapArea from '../page/getWrapArea';
+import { resolvePageDimensions } from './resolveDimensions';
+import resolveInheritance from './resolveInheritance';
+import resolveTextLayout from './resolveTextLayout';
 
 const assingChildren = R.assoc('children');
 
@@ -134,32 +135,28 @@ const splitPage = (page, pageNumber, fontStore) => {
 
   let resolvedPage = resolvePageWithFootnotes(pageFootnotes);
   let footnotesPlaceholder = getFootnotePlaceholder(resolvedPage);
+  const chosenFootnotes = chooseFootnotes(resolvedPage, pageFootnotes);
 
-  if (pageFootnotes.length > 0 && footnotesPlaceholder) {
-    [currentChildren, nextChildren] = splitNodes(
-      wrapArea - getHeight(footnotesPlaceholder),
-      contentArea,
-      resolvedPage.children,
-    );
-
-    const splittedPageFootnotes = getFootnotes({ children: currentChildren });
-
-    resolvedPage = resolvePageWithFootnotes(splittedPageFootnotes);
+  if (chosenFootnotes.footnotes.length > 0 && footnotesPlaceholder) {
+    resolvedPage = resolvePageWithFootnotes(chosenFootnotes.footnotes);
     footnotesPlaceholder = getFootnotePlaceholder(resolvedPage);
 
-    if (footnotesPlaceholder) {
-      // we are reducing a extra line to avoid line shifts
-      const approxLineHeight = footnotesPlaceholder.style.fontSize;
+    const updatedWrapArea =
+      wrapArea -
+      getHeight(footnotesPlaceholder) -
+      chosenFootnotes.spacingNeeded;
 
+    if (footnotesPlaceholder) {
       [currentChildren, nextChildren] = splitNodes(
-        wrapArea - getHeight(footnotesPlaceholder) - approxLineHeight,
+        updatedWrapArea,
         contentArea,
         resolvedPage.children,
       );
 
+      footnotesPlaceholder.style.marginTop = chosenFootnotes.spacingNeeded;
+
       if (R.isEmpty(nextChildren) || allFixed(nextChildren)) {
-        const locationAfterFill =
-          contentArea - getHeight(footnotesPlaceholder) - approxLineHeight;
+        const locationAfterFill = contentArea - getHeight(footnotesPlaceholder);
         footnotesPlaceholder.style.top = locationAfterFill;
       }
     }
