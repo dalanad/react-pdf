@@ -1,15 +1,18 @@
 name: Release
-permissions:
-  packages: write
+
 on:
   pull_request:
     branches:
       - master
     types: [closed]
+
 jobs:
   publish:
     name: publish to github
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
     steps:
       - uses: actions/checkout@v2
         with:
