@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.1](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-examples@2.4.0...@paladin-analytics/rpdf-examples@2.4.1) (2022-07-18)
+
+
+### Bug Fixes
+
+* **footnotes:** improve foonotes handling ([08ba940](https://github.com/Paladin-Analytics/react-pdf/commit/08ba94072bb528d3178c3cf1de30f07f1dca8164))
+* **footnotes:** use a component for footnotes ([488dc9d](https://github.com/Paladin-Analytics/react-pdf/commit/488dc9dd54cb6cac240c33a289159677256aedae))
+
+
+
+
+
 # [2.4.0](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-examples@2.3.0...@paladin-analytics/rpdf-examples@2.4.0) (2022-07-15)
 
 

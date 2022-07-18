@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.1](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-layout@2.5.0...@paladin-analytics/rpdf-layout@2.5.1) (2022-07-18)
+
+
+### Bug Fixes
+
+* **footnotes:** fix footnotes detection ([2311397](https://github.com/Paladin-Analytics/react-pdf/commit/2311397d25179a5ddc1334f394336e86076b3cc9))
+* **footnotes:** improve foonotes handling ([08ba940](https://github.com/Paladin-Analytics/react-pdf/commit/08ba94072bb528d3178c3cf1de30f07f1dca8164))
+* **footnotes:** use const & remove unnecessary spacing ([6e7e2e2](https://github.com/Paladin-Analytics/react-pdf/commit/6e7e2e29967cfbcfc73bd7cb01441ed8127d4b80))
+
+
+
+
+
 # [2.5.0](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-layout@2.4.0...@paladin-analytics/rpdf-layout@2.5.0) (2022-07-15)
 
 
