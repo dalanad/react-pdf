@@ -140,11 +140,12 @@ const getNodes = (attributedString, { align }, options) => {
       /**
        * hyphenationCallback = null --> have used the default hyphenation mechanism (simply,hyphenation is enabled)
        * hyphenationCallback != null --> hyphenation is disabled (assumed that custom hyphenation callback is only used to disable the hyphenation 👉🏻 (word)=>[word])
+       * s[s.length-1] !== "-"   --> to avoid having multiple hyphens at the line end
        * */
       const hyphenated =
-        options.hyphenationCallback === null
-          ? !hasOnlySpaces(syllables[index + 1])
-          : false;
+          options.hyphenationCallback === null && s[s.length-1] !== "-" 
+            ? !hasOnlySpaces(syllables[index + 1])
+            : false;
 
       const value = { start, end: start + s.length };
       acc.push(linebreak.box(width, value, hyphenated));

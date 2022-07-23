@@ -29,6 +29,46 @@ const hyphenateWordWrapper = (hyphenator, word) => {
 };
 
 /**
+ * @summary TO handle the already hyphenated parts,
+                - This will break the parts which have hyphens into smaller parts
+ * @param parts- parts array from `hyphen`
+ *                
+ */
+const handleHyphenedWords = (parts)=>{
+    /**
+
+     */
+     const newParts = [];
+
+     // eslint-disable-next-line no-plusplus
+     for (let curP=0 ; curP < parts.length;curP++) {
+       
+       const part =parts[curP];
+ 
+       if(part.includes("-")){
+         let lastSplitPoint = -1
+         // eslint-disable-next-line no-plusplus
+         for (let i = 0; i < part.length; i++) {
+           if(part[i]==="-"){
+             newParts.push(part.slice(lastSplitPoint+1,i+1))
+             lastSplitPoint=i;
+           }
+          
+          //  To handle the edge characters
+           if(i === part.length-1 && lastSplitPoint!==i){
+             newParts.push(part.slice(lastSplitPoint+1,part.length))
+           }
+         }
+ 
+       }else{
+         newParts.push(part)
+       }
+     }
+
+     return newParts;
+}
+
+/**
  * Wrap words of attribute string
  *
  * @param  {Object} layout engines
@@ -49,7 +89,7 @@ const wrapWords = (engines = {}, options = {}, attributedString) => {
   for (let j = 0; j < words.length; j += 1) {
     const word = words[j];
     const parts = hyphenateWordWrapper(hyphenateWord, word)(word);
-    syllables.push(...parts);
+    syllables.push(...handleHyphenedWords(parts));
   }
   return { ...attributedString, syllables };
 };
