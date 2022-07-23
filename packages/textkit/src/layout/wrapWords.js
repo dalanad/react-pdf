@@ -87,7 +87,6 @@ const wrapWords = (engines = {}, options = {}, attributedString) => {
     const word = words[j];
     const parts = hyphenateWordWrapper(hyphenateWord, word)(word);
     const newParts = handleHyphenedWords(parts);
-    // console.log("new Parts :",word,newParts);
     syllables.push(...newParts);
   }
   return { ...attributedString, syllables };
