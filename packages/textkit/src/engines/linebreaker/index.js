@@ -143,10 +143,9 @@ const getNodes = (attributedString, { align }, options) => {
        * s[s.length-1] !== "-"   --> to avoid having multiple hyphens at the line end
        * */
       const hyphenated =
-          options.hyphenationCallback === null && s[s.length-1] !== "-" 
+          options.hyphenationCallback === null && !(s[s.length-1] === "-" || s[s.length-1] === "—" )
             ? !hasOnlySpaces(syllables[index + 1])
             : false;
-
       const value = { start, end: start + s.length };
       acc.push(linebreak.box(width, value, hyphenated));
 

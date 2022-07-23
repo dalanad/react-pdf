@@ -35,9 +35,6 @@ const hyphenateWordWrapper = (hyphenator, word) => {
  *                
  */
 const handleHyphenedWords = (parts)=>{
-    /**
-
-     */
      const newParts = [];
 
      // eslint-disable-next-line no-plusplus
@@ -45,11 +42,11 @@ const handleHyphenedWords = (parts)=>{
        
        const part =parts[curP];
  
-       if(part.includes("-")){
+       if(part.includes("-")||part.includes("—")){
          let lastSplitPoint = -1
          // eslint-disable-next-line no-plusplus
          for (let i = 0; i < part.length; i++) {
-           if(part[i]==="-"){
+           if(part[i]==="-" || part[i]==="—"){
              newParts.push(part.slice(lastSplitPoint+1,i+1))
              lastSplitPoint=i;
            }
@@ -89,7 +86,9 @@ const wrapWords = (engines = {}, options = {}, attributedString) => {
   for (let j = 0; j < words.length; j += 1) {
     const word = words[j];
     const parts = hyphenateWordWrapper(hyphenateWord, word)(word);
-    syllables.push(...handleHyphenedWords(parts));
+    const newParts = handleHyphenedWords(parts);
+    // console.log("new Parts :",word,newParts);
+    syllables.push(...newParts);
   }
   return { ...attributedString, syllables };
 };
