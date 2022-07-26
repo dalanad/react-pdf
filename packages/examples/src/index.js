@@ -17,7 +17,7 @@ import TextEnhancements from './text-enhancements';
 import Unicode from './unicode';
 import Footnotes from './footnotes';
 import DynamicBreaks from './dynamicBreaks';
-import Hyphens from "./hyphens"
+import Hyphens from './hyphens';
 
 import editorFonts from './text-enhancements/fonts';
 
@@ -41,7 +41,7 @@ const EXAMPLES = {
   unicode: Unicode,
   footnotes: Footnotes,
   dynamicBreaks: DynamicBreaks,
-  hyphens:Hyphens,
+  hyphens: Hyphens,
 };
 
 const Viewer = () => {

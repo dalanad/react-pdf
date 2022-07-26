@@ -34,36 +34,33 @@ const hyphenateWordWrapper = (hyphenator, word) => {
  * @param parts- parts array from `hyphen`
  *                
  */
-const handleHyphenedWords = (parts)=>{
-     const newParts = [];
+const handleHyphenedWords = parts => {
+  const newParts = [];
 
-     // eslint-disable-next-line no-plusplus
-     for (let curP=0 ; curP < parts.length;curP++) {
-       
-       const part =parts[curP];
- 
-       if(part.includes("-")||part.includes("—")){
-         let lastSplitPoint = -1
-         // eslint-disable-next-line no-plusplus
-         for (let i = 0; i < part.length; i++) {
-           if(part[i]==="-" || part[i]==="—"){
-             newParts.push(part.slice(lastSplitPoint+1,i+1))
-             lastSplitPoint=i;
-           }
-          
-          //  To handle the edge characters
-           if(i === part.length-1 && lastSplitPoint!==i){
-             newParts.push(part.slice(lastSplitPoint+1,part.length))
-           }
-         }
- 
-       }else{
-         newParts.push(part)
-       }
-     }
+  for (let curP = 0; curP < parts.length; curP += 1) {
+    const part = parts[curP];
 
-     return newParts;
-}
+    if (part.includes('-') || part.includes('—')) {
+      let lastSplitPoint = -1;
+
+      for (let i = 0; i < part.length; i += 1) {
+        if (part[i] === '-' || part[i] === '—') {
+          newParts.push(part.slice(lastSplitPoint + 1, i + 1));
+          lastSplitPoint = i;
+        }
+
+        //  To handle the edge characters
+        if (i === part.length - 1 && lastSplitPoint !== i) {
+          newParts.push(part.slice(lastSplitPoint + 1, part.length));
+        }
+      }
+    } else {
+      newParts.push(part);
+    }
+  }
+
+  return newParts;
+};
 
 /**
  * Wrap words of attribute string
@@ -85,9 +82,10 @@ const wrapWords = (engines = {}, options = {}, attributedString) => {
 
   for (let j = 0; j < words.length; j += 1) {
     const word = words[j];
-    const parts = hyphenateWordWrapper(hyphenateWord, word)(word);
-    const newParts = handleHyphenedWords(parts);
-    syllables.push(...newParts);
+    const parts = handleHyphenedWords(
+      hyphenateWordWrapper(hyphenateWord, word)(word),
+    );
+    syllables.push(...parts);
   }
   return { ...attributedString, syllables };
 };
