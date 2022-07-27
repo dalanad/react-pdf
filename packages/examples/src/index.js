@@ -17,6 +17,7 @@ import TextEnhancements from './text-enhancements';
 import Unicode from './unicode';
 import Footnotes from './footnotes';
 import DynamicBreaks from './dynamicBreaks';
+import Hyphens from './hyphens';
 
 import editorFonts from './text-enhancements/fonts';
 
@@ -40,10 +41,11 @@ const EXAMPLES = {
   unicode: Unicode,
   footnotes: Footnotes,
   dynamicBreaks: DynamicBreaks,
+  hyphens: Hyphens,
 };
 
 const Viewer = () => {
-  const [example, setExample] = useState('dynamicBreaks');
+  const [example, setExample] = useState('hyphens');
   const [fontFamily, setFontFamily] = useState('Poppins');
   const fontList = editorFonts.map(f => f.family);
 

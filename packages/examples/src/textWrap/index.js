@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     margin: 12,
   },
   text: {
-    fontSize: 14,
+    fontSize: 20,
     textAlign: 'justify',
     fontFamily: 'Times-Roman',
     marginBottom: 10,
@@ -110,6 +110,7 @@ export default () => (
         </Float>
 
         <Text style={styles.text}>
+          when-i-write-sin-gle-syl-a-ble-words-here-then-att-i-cus-can-not-split
           uego volvía diciendo, como si verdaderamente fuera enamorado: —¡Oh
           princesa Dulcinea, señora deste cautivo corazón! Mucho agravio me
           habedes fecho en despedirme y reprocharme con el riguroso afincamiento
