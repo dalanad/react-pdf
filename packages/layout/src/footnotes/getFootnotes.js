@@ -9,24 +9,40 @@
  * @returns Array
  */
 function calculateFootnoteLocations(nodes) {
-  const footnotes = [];
+  const notes = [];
   let str = '';
 
   for (const item of nodes) {
-    if (item.props && item.props.footnote) {
-      footnotes.push({ loc: str.length, el: item });
-    }
+    let text = '';
 
     if (item.type === 'TEXT') {
-      str += item.children.map(e => e.value).reduce((a, b) => a + b, '');
+      text = item.children.map(e => e.value).reduce((a, b) => a + b, '');
     }
 
     if (item.type === 'TEXT_INSTANCE') {
-      str += item.value;
+      text = item.value;
+    }
+
+    str += text;
+
+    if (item.props && item.props.footnote) {
+      notes.push({ loc: str.length, el: item, ref: text });
+    }
+
+    if (item.children) {
+      const calculatedOutput = calculateFootnoteLocations(item.children);
+
+      const childNotes = calculatedOutput.notes.map(r => ({
+        ...r,
+        loc: r.loc + str.length,
+      }));
+
+      if (childNotes.length > 0) str += calculatedOutput.childString;
+      notes.push(...childNotes);
     }
   }
 
-  return footnotes;
+  return { notes, str };
 }
 
 /**
@@ -49,15 +65,15 @@ function getFootnotes(node, top = 0) {
   if (!node.children) return [];
 
   if (node.lines) {
-    const footnoteLocations = calculateFootnoteLocations(node.children);
+    const { notes: calculatedNotes } = calculateFootnoteLocations(
+      node.children,
+    );
     const notes = [];
-    let topUpto = top;
+    let topUpto = (node.box?.top || 0) + top;
 
     for (const line of node.lines) {
-      topUpto += line.box.height;
-
       notes.push(
-        ...footnoteLocations
+        ...calculatedNotes
           .filter(e => e.loc < line.textBefore + line.string.length)
           .filter(e => e.loc >= line.textBefore)
           .map(r => ({
@@ -66,13 +82,16 @@ function getFootnotes(node, top = 0) {
             approxBottom: topUpto + line.box.height,
           })),
       );
+      topUpto += line.box.height;
     }
 
     return notes;
   }
 
   for (const child of node.children) {
-    footnotes.push(...getFootnotes(child, (node.box?.top || 0) + top));
+    footnotes.push(
+      ...getFootnotes(child, node.box?.top === 0 ? top : node?.box?.top),
+    );
   }
   return footnotes;
 }
