@@ -83,7 +83,7 @@ const splitNodes = (height, contentArea, nodes) => {
     /**
      * should call split also if any child have break prop
      */
-    const anyChildHasBreak = child.children?.some(childItem => !!childItem.props.break);
+    const anyChildHasBreak = child.children?.some(childItem => !!childItem.props?.break);
 
     if (shouldSplit || anyChildHasBreak) {
       const [currentChild, nextChild] = split(child, height, contentArea);
