@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.4](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-layout@2.5.3...@paladin-analytics/rpdf-layout@2.5.4) (2022-09-13)
+
+
+### Bug Fixes
+
+* **footnotes:** improve height detection ([e5f36d4](https://github.com/Paladin-Analytics/react-pdf/commit/e5f36d4a6cfe24a6852598095b29b79f3211ec6c))
+
+
+
+
+
 ## [2.5.3](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-layout@2.5.2...@paladin-analytics/rpdf-layout@2.5.3) (2022-09-12)
 
 **Note:** Version bump only for package @paladin-analytics/rpdf-layout
