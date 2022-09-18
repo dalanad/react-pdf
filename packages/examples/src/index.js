@@ -18,7 +18,7 @@ import Unicode from './unicode';
 import Footnotes from './footnotes';
 import DynamicBreaks from './dynamicBreaks';
 import Hyphens from './hyphens';
-
+import PageBalancing from './pageBalancing'
 import editorFonts from './text-enhancements/fonts';
 
 editorFonts.forEach(el => {
@@ -42,10 +42,11 @@ const EXAMPLES = {
   footnotes: Footnotes,
   dynamicBreaks: DynamicBreaks,
   hyphens: Hyphens,
+  pageBalancing: PageBalancing,
 };
 
 const Viewer = () => {
-  const [example, setExample] = useState('hyphens');
+  const [example, setExample] = useState('pageBalancing');
   const [fontFamily, setFontFamily] = useState('Poppins');
   const fontList = editorFonts.map(f => f.family);
 

@@ -14,6 +14,7 @@ import getWrapArea from '../page/getWrapArea';
 import { resolvePageDimensions } from './resolveDimensions';
 import resolveInheritance from './resolveInheritance';
 import resolveTextLayout from './resolveTextLayout';
+import balancePages from '../pageBalancing/balancePages';
 
 const assingChildren = R.assoc('children');
 
@@ -319,6 +320,7 @@ const resolvePagination = (doc, fontStore) => {
   );
 
   pages = pages.map(applyInsideOutsideMargins(pageNumberOffset));
+  pages = balancePages(pages);
 
   return assingChildren(pages, doc);
 };
