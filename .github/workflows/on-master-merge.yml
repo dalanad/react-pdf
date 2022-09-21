@@ -23,11 +23,6 @@ jobs:
           node-version: 12
           registry-url: 'https://npm.pkg.github.com/'
 
-      - name: Config git user
-        run: |
-          git config --global user.name "${{ github.actor }}"
-          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
-
       - name: install yarn
         run: npm i -g yarn
 
