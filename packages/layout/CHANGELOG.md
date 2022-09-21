@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.6.0](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-layout@2.5.4...@paladin-analytics/rpdf-layout@2.6.0) (2022-09-21)
+
+
+### Features
+
+* **footnotes:** cutoff footnotes per line ([0edecee](https://github.com/Paladin-Analytics/react-pdf/commit/0edecee88caab2c2acb49d0f1dd55f2440224720))
+
+
+
+
+
 ## [2.5.4](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-layout@2.5.3...@paladin-analytics/rpdf-layout@2.5.4) (2022-09-13)
 
 
