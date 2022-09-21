@@ -74,7 +74,7 @@ function getFootnotes(node, top = 0) {
     for (const line of node.lines) {
       notes.push(
         ...calculatedNotes
-          .filter(e => e.loc < line.textBefore + line.string.length)
+          .filter(e => e.loc - e.ref.length < line.textBefore + line.string.length)
           .filter(e => e.loc >= line.textBefore)
           .map(r => ({
             ...r,

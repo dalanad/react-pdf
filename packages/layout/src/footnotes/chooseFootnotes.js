@@ -1,7 +1,7 @@
 import * as R from 'ramda';
+import getContentArea from '../page/getContentArea';
 import getFootnotePlaceholder from './getFootnotePlaceholder';
 
-const getStyleHeight = R.pathOr(0, ['style', 'height']);
 const getHeight = R.path(['box', 'height']);
 
 const FOOTNOTES_MIN_HEIGHT = 15;
@@ -17,6 +17,21 @@ const groupByKey = (array, key) => {
   );
 };
 
+const chooseToFitHeight = (group, height) => {
+  const chosen = [];
+  let totalHeight = 0;
+  for (let i = 0; i < group.length; i += 1) {
+    const note = group[i];
+
+    if (totalHeight + note.heightNeeded > height) {
+      break;
+    }
+
+    chosen.push(note);
+    totalHeight += note.heightNeeded;
+  }
+  return chosen;
+};
 /**
  * Given page, choose which footnotes to include in the page considering,
  *
@@ -32,7 +47,7 @@ const groupByKey = (array, key) => {
  * @returns {Object} containing footnotes array and contentHeight
  */
 export default function chooseFootnotes(page, footnotes) {
-  const pageHeight = getStyleHeight(page);
+  const contentArea = getContentArea(page);
 
   let footnotesHeight = FOOTNOTES_MIN_HEIGHT;
   let spacingNeeded = 0;
@@ -45,7 +60,10 @@ export default function chooseFootnotes(page, footnotes) {
 
     const initialFootnotes = footnotes.map((e, index) => {
       const footnoteView = getFootnoteView(index);
-      const footnoteHeight = getHeight(footnoteView);
+      const footnoteHeight =
+        getHeight(footnoteView) +
+        footnoteView.box.marginBottom +
+        footnoteView.box.marginTop;
 
       return { ...e, heightNeeded: footnoteHeight, footnoteView };
     });
@@ -54,8 +72,8 @@ export default function chooseFootnotes(page, footnotes) {
 
     groupedFootnotes = groupedFootnotes.map(e => ({
       footnoteGroup: e,
-      groupTop: e[0].approxTop,
-      groupBottom: e[0].approxBottom,
+      groupTop: e[0].approxTop - page.box.paddingTop,
+      groupBottom: e[0].approxBottom - page.box.paddingTop,
       totalHeight: e.reduce((a, b) => a + b.heightNeeded, 0),
     }));
 
@@ -67,15 +85,32 @@ export default function chooseFootnotes(page, footnotes) {
         groupTop,
       } = groupedFootnotes[i];
 
-      const spaceAfterAdding = pageHeight - footnotesHeight - totalHeight;
-      const spaceWithoutAdding = pageHeight - footnotesHeight;
+      const spaceAfterAdding =
+        contentArea - footnotesHeight - totalHeight - groupBottom;
 
-      if (groupBottom < spaceAfterAdding) {
+      // include footnotes if space is available
+      if (spaceAfterAdding > 0) {
         footnotesHeight += totalHeight;
         chosenFootnotes.push(...footnoteGroup);
-      } else {
-        if (groupTop < spaceWithoutAdding) {
-          spacingNeeded = totalHeight;
+      }
+
+      // case where space is not enough to include all the notes
+      else {
+        const lineHeight = groupBottom - groupTop;
+        const availableSpace = contentArea - groupBottom - footnotesHeight;
+        /* 
+          if the references and the footnotes height total is greater than the page,
+          show the footnotes in the available space and discard others
+        */
+        // todo: do this only if at least one footnote can be shown on current page
+        if (lineHeight * 4 + totalHeight > contentArea) {
+          const chosen = chooseToFitHeight(footnoteGroup, availableSpace);
+          chosenFootnotes.push(...chosen);
+          footnotesHeight += chosen.reduce((a, b) => a + b.heightNeeded, 0);
+          spacingNeeded = contentArea - groupBottom - footnotesHeight;
+        } else {
+          // if they can be included in a single page add a space and shift the reference to next page
+          spacingNeeded = contentArea - groupTop - footnotesHeight;
         }
         break;
       }
@@ -84,6 +119,6 @@ export default function chooseFootnotes(page, footnotes) {
 
   return {
     footnotes: chosenFootnotes,
-    spacingNeeded,
+    spacingNeeded: Math.floor(Math.max(0, spacingNeeded)),
   };
 }

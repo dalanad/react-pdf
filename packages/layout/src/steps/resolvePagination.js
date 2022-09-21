@@ -141,15 +141,13 @@ const splitPage = (page, pageNumber, fontStore) => {
     resolvedPage = resolvePageWithFootnotes(chosenFootnotes.footnotes);
     footnotesPlaceholder = getFootnotePlaceholder(resolvedPage);
 
-    const updatedWrapArea =
-      wrapArea -
-      getHeight(footnotesPlaceholder) -
-      chosenFootnotes.spacingNeeded;
+    const spacing =
+      getHeight(footnotesPlaceholder) + chosenFootnotes.spacingNeeded;
 
     if (footnotesPlaceholder) {
       [currentChildren, nextChildren] = splitNodes(
-        updatedWrapArea,
-        contentArea,
+        wrapArea - spacing,
+        contentArea - spacing,
         resolvedPage.children,
       );
 
@@ -160,6 +158,14 @@ const splitPage = (page, pageNumber, fontStore) => {
         footnotesPlaceholder.style.top = locationAfterFill;
       }
     }
+  } else {
+    const updatedWrapArea = wrapArea - chosenFootnotes.spacingNeeded;
+
+    [currentChildren, nextChildren] = splitNodes(
+      updatedWrapArea,
+      contentArea - chosenFootnotes.spacingNeeded,
+      dynamicPage.children,
+    );
   }
 
   const currentPage = R.compose(
