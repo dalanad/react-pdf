@@ -154,8 +154,13 @@ const splitPage = (page, pageNumber, fontStore) => {
       footnotesPlaceholder.style.marginTop = chosenFootnotes.spacingNeeded;
 
       if (R.isEmpty(nextChildren) || allFixed(nextChildren)) {
-        const locationAfterFill = contentArea - getHeight(footnotesPlaceholder);
-        footnotesPlaceholder.style.top = locationAfterFill;
+        const contentHeight = getHeight(page);
+        const pageHeight = page.style.height;
+        const footnotesHeight = getHeight(footnotesPlaceholder);
+
+        const lastPageSpacing = pageHeight - contentHeight - footnotesHeight;
+
+        footnotesPlaceholder.style.marginTop = lastPageSpacing;
       }
     }
   } else {

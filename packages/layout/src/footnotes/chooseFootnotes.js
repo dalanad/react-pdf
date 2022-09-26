@@ -37,6 +37,8 @@ const chooseToFitHeight = (group, height) => {
  *
  *  1. If the footnote is included, will the reference to the footnote be on the same page,
  *  2. If not, will the reference move back to the page given more space being available
+ *  3. If we can't fit the line including the references and footnotes in the same page,
+ *     we will limit the no of footnotes shown to available space
  *
  *  If case 2 is happening we need to limit he content height for that page so that,
  *  the reference won't move back to the previous page.
@@ -98,19 +100,32 @@ export default function chooseFootnotes(page, footnotes) {
       else {
         const lineHeight = groupBottom - groupTop;
         const availableSpace = contentArea - groupBottom - footnotesHeight;
+        // keep at least 3 lines to avoid triggering widow / orphan
+        // todo: access the orphan widow setting and set it here
+        const minContentSpace = lineHeight * 3;
         /* 
           if the references and the footnotes height total is greater than the page,
           show the footnotes in the available space and discard others
         */
-        // todo: do this only if at least one footnote can be shown on current page
-        if (lineHeight * 4 + totalHeight > contentArea) {
+        // todo: do this only if at least one footnote can be shown on current page 
+        if (
+          minContentSpace + totalHeight > contentArea &&
+          chosenFootnotes.length === 0
+        ) {
           const chosen = chooseToFitHeight(footnoteGroup, availableSpace);
           chosenFootnotes.push(...chosen);
           footnotesHeight += chosen.reduce((a, b) => a + b.heightNeeded, 0);
-          spacingNeeded = contentArea - groupBottom - footnotesHeight;
+
+          spacingNeeded =
+            contentArea -
+            Math.max(groupBottom, minContentSpace) -
+            footnotesHeight;
         } else {
           // if they can be included in a single page add a space and shift the reference to next page
-          spacingNeeded = contentArea - groupTop - footnotesHeight;
+          spacingNeeded =
+            contentArea -
+            groupTop -
+            (chosenFootnotes.length > 0 ? footnotesHeight : 0);
         }
         break;
       }

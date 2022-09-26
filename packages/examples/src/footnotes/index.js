@@ -94,6 +94,41 @@ export default () => (
     <Page size="A5" debug={false} style={{ ...styles.body }}>
       <View style={{ ...styles.text }}>
         <View style={{ position: 'relative' }}>
+          <Text debug>
+            Large Number of footnotes in a single page&nbsp; & edge case
+            containing reference shifting scenario. sit amet, consectetur
+            adipisicing elit. Quaerat adipisciLarge Number of footnotes in a
+            Large Number of footnotes in a single page&nbsp; & edge case
+            containing reference shifting scenario. sit amet, consectetur
+            adipisicing elit. Quaerat adipisciLarge Number of footnotes in a
+            Large Number of footnotes in a single page&nbsp; & edge case
+            containing reference shifting scenario. sit amet, consectetur Hello
+            Footnotes <Footnote />
+            <Footnote />
+            <Footnote />
+            <Footnote />
+            <Footnote />
+            <Footnote />
+            <Footnote /> Footnotes Footnotes
+            <Footnote /> Hello Footnotes <Footnote /> Hello Footnotes Hello
+            Footnotes
+          </Text>
+          <View
+            fixed
+            debug
+            style={{
+              position: 'absolute',
+              top: '100%',
+              width: '100%',
+            }}
+            renderFootnotes
+          />
+        </View>
+      </View>
+    </Page>
+    <Page size="A5" debug={false} style={{ ...styles.body }}>
+      <View style={{ ...styles.text }}>
+        <View style={{ position: 'relative' }}>
           <Text orphans={0} widows={0} debug>
             Hello Footnotes <Footnote />
           </Text>
