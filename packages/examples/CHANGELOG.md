@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.1](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-examples@2.5.0...@paladin-analytics/rpdf-examples@2.5.1) (2022-09-26)
+
+
+### Bug Fixes
+
+* **footnotes:** fix duplication on reference shift ([19337c7](https://github.com/Paladin-Analytics/react-pdf/commit/19337c726ebc51bda1ded76c165a77a69438717d))
+
+
+
+
+
 # [2.5.0](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-examples@2.4.4...@paladin-analytics/rpdf-examples@2.5.0) (2022-09-21)
 
 

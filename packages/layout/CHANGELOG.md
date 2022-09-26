@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.1](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-layout@2.6.0...@paladin-analytics/rpdf-layout@2.6.1) (2022-09-26)
+
+
+### Bug Fixes
+
+* **footnotes:** fix duplication on reference shift ([19337c7](https://github.com/Paladin-Analytics/react-pdf/commit/19337c726ebc51bda1ded76c165a77a69438717d))
+* **footnotes:** fix margin on last page ([4f4a2c3](https://github.com/Paladin-Analytics/react-pdf/commit/4f4a2c3b053a7ebcfd0e5e328ee8511f5dd625fb))
+
+
+
+
+
 # [2.6.0](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-layout@2.5.4...@paladin-analytics/rpdf-layout@2.6.0) (2022-09-21)
 
 
