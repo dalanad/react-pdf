@@ -65,21 +65,34 @@ function getFootnotes(node, top = 0) {
   if (!node.children) return [];
 
   if (node.lines) {
+    const widows = node.props?.widows || 2;
+    const orphans = node.props?.orphans || 2;
+
     const { notes: calculatedNotes } = calculateFootnoteLocations(
       node.children,
     );
     const notes = [];
     let topUpto = (node.box?.top || 0) + top;
 
-    for (const line of node.lines) {
+    for (let i = 0; i < node.lines.length; i += 1) {
+      const line = node.lines[i];
       notes.push(
         ...calculatedNotes
-          .filter(e => e.loc - e.ref.length < line.textBefore + line.string.length)
+          .filter(
+            e => e.loc - e.ref.length < line.textBefore + line.string.length,
+          )
           .filter(e => e.loc >= line.textBefore)
           .map(r => ({
             ...r,
             approxTop: topUpto,
             approxBottom: topUpto + line.box.height,
+            i,
+            // line should not become a widow or orphan if broken before or after
+            breakAfter:
+              i + 1 === node.lines.length ||
+              (node.lines.length - (i + 1) >= orphans && i + 1 >= widows),
+            breakBefore:
+              i === 0 || (node.lines.length - i >= orphans && i >= widows),
           })),
       );
       topUpto += line.box.height;
