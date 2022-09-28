@@ -86,7 +86,6 @@ function getFootnotes(node, top = 0) {
             ...r,
             approxTop: topUpto,
             approxBottom: topUpto + line.box.height,
-            i,
             // line should not become a widow or orphan if broken before or after
             breakAfter:
               i + 1 === node.lines.length ||
