@@ -54,7 +54,7 @@ export default function chooseFootnotes(page, footnotes) {
   let footnotesHeight = FOOTNOTES_MIN_HEIGHT;
   let spacingNeeded = 0;
 
-  const chosenFootnotes = [];
+  let chosenFootnotes = [];
   const placeholder = getFootnotePlaceholder(page);
 
   if (placeholder) {
@@ -77,6 +77,7 @@ export default function chooseFootnotes(page, footnotes) {
       groupTop: e[0].approxTop - page.box.paddingTop,
       groupBottom: e[0].approxBottom - page.box.paddingTop,
       totalHeight: e.reduce((a, b) => a + b.heightNeeded, 0),
+      breakAfter: e[0].breakAfter,
     }));
 
     for (let i = 0; i < groupedFootnotes.length; i += 1) {
@@ -85,23 +86,27 @@ export default function chooseFootnotes(page, footnotes) {
         footnoteGroup,
         groupBottom,
         groupTop,
+        breakAfter,
       } = groupedFootnotes[i];
+      const lineHeight = groupBottom - groupTop;
 
       const spaceAfterAdding =
         contentArea - footnotesHeight - totalHeight - groupBottom;
 
       // include footnotes if space is available
-      if (spaceAfterAdding > 0) {
+      if (
+        spaceAfterAdding > lineHeight ||
+        (spaceAfterAdding > 0 && breakAfter)
+      ) {
         footnotesHeight += totalHeight;
         chosenFootnotes.push(...footnoteGroup);
       }
 
       // case where space is not enough to include all the notes
       else {
-        const lineHeight = groupBottom - groupTop;
         const availableSpace = contentArea - groupBottom - footnotesHeight;
         // keep at least 3 lines to avoid triggering widow / orphan
-        // todo: access the orphan widow setting and set it here
+        // todo: use breakAfter/Before to calculate this
         const minContentSpace = lineHeight * 3;
         /* 
           if the references and the footnotes height total is greater than the page,
@@ -121,6 +126,16 @@ export default function chooseFootnotes(page, footnotes) {
             Math.max(groupBottom, minContentSpace) -
             footnotesHeight;
         } else {
+          // filter footnotes that will be shifted due to orphan / widow protection
+          chosenFootnotes = chosenFootnotes.filter(note => {
+            // bottom of the line containing the note reference
+            const noteBottom = note.approxBottom - page.box.paddingTop;
+            // height between current groupTop(shift point) and note bottom
+            const spaceAfter = groupTop - noteBottom;
+            // if the line is the last line, a break should be allowed after it to include it
+            return spaceAfter > lineHeight || note.breakAfter;
+          });
+
           // if they can be included in a single page add a space and shift the reference to next page
           spacingNeeded =
             contentArea -
