@@ -112,9 +112,3 @@ Thank you to all our sponsors! [[Become a sponsors](https://opencollective.com/r
 Thank you to all our backers! [[Become a backer](https://opencollective.com/react-pdf#backer)]
 
 <a href="https://opencollective.com/react-pdf#backers" target="_blank"><img src="https://opencollective.com/react-pdf/backers.svg?width=890"></a>
-
-## License
-
-MIT © [Diego Muracciole](http://github.com/diegomura)
-
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fdiegomura%2Freact-pdf.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fdiegomura%2Freact-pdf?ref=badge_large)
