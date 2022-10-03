@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.2](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-layout@2.6.1...@paladin-analytics/rpdf-layout@2.6.2) (2022-10-03)
+
+
+### Bug Fixes
+
+* **footnote:** remove unwanted var ([34f0459](https://github.com/Paladin-Analytics/react-pdf/commit/34f0459755a5cb2d55459d7f61ec9875133011e6))
+* **footnotes:** stop duplication due tp widows ([b34a013](https://github.com/Paladin-Analytics/react-pdf/commit/b34a01307a64bbf440aaf62f6f0bfb317b4caa20))
+
+
+
+
+
 ## [2.6.1](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-layout@2.6.0...@paladin-analytics/rpdf-layout@2.6.1) (2022-09-26)
 
 
