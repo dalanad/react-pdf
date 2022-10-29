@@ -12,6 +12,7 @@ import Resume from './resume';
 import Fractals from './fractals';
 import PageWrap from './pageWrap';
 import DynamicMargins from './dynamicMargins';
+import PageBalancing from './pageBalancing';
 import TextWrap from './textWrap';
 import TextEnhancements from './text-enhancements';
 import Unicode from './unicode';
@@ -42,10 +43,11 @@ const EXAMPLES = {
   footnotes: Footnotes,
   dynamicBreaks: DynamicBreaks,
   hyphens: Hyphens,
+  pageBalancing: PageBalancing,
 };
 
 const Viewer = () => {
-  const [example, setExample] = useState('pageWrap');
+  const [example, setExample] = useState('pageBalancing');
   const [fontFamily, setFontFamily] = useState('Poppins');
   const fontList = editorFonts.map(f => f.family);
 
