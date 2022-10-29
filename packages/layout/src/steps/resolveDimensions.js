@@ -183,7 +183,6 @@ const createYogaNodes = (
 
   return R.compose(
     R.tap(element => {
-      // console.log('element type', element.type);
       if (isText(element) && element.lines.length) {
         const position = getAbsolutePosition(element);
         const dimension = getDimension(element);
