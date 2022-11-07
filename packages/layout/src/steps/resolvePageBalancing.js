@@ -18,9 +18,16 @@ import resolvePagination from './resolvePagination';
  * Time taken to tune `letterSpacing` is inversely proportional to the sensitivity of `letterSpacing`.
  * Increasing the following value will result in a more sensitive `letterSpacing`, at the cost of time.
  */
-const BINARY_SEARCH_DEPTH = 3;
+const BINARY_SEARCH_DEPTH = 8;
+
+/**
+ * Max value allowed for letter spacing (coincides with `tracking` in design)
+ */
+const MAX_RELATIVE_LETTER_SPACING_VALUE = 12;
 
 const isText = R.propEq('type', P.Text);
+const isAllowDynamicLetterSpacing = node => !!node.style?.dynamicLetterSpacing;
+const isOrphanWidowProtectionArtefact = node => !!node.props?.lineSkips;
 
 const assingChildren = R.assoc('children');
 
@@ -28,9 +35,13 @@ const assingChildren = R.assoc('children');
  * Relayouts a given page, (with new letterSpacing applied to text nodes)
  * @returns Tuple where first element contains # of pages after re-layouting, second element contains the re-layouted page
  */
-const relayoutPage = async (page, doc, fontStore) => {
+const relayoutPage = async (page, pageIndex, doc, fontStore) => {
   const isolatedDoc = {
     ...doc,
+    props: {
+      ...doc.props,
+      pageNumberOffset: (doc.props?.pageNumberOffset || 0) + pageIndex,
+    },
     children: [page],
   };
 
@@ -49,19 +60,18 @@ const relayoutPage = async (page, doc, fontStore) => {
 
 const applyLetterSpacingProp = (node, letterSpacing) => {
   if (isText(node)) {
-    // we only allow to tinker around with text nodes that have been explicitly marked with `allowAutomaticTextSpaceAdjustment` attribute
-    if (node.props?.allowAutomaticTextSpaceAdjustment === true) {
-      // we don't do the transformation to the textNode where the split happened
-      // because the transformation can change the position of the last character of last line
-      if (!(node.props && typeof node.props.lineSkips !== 'undefined')) {
-        /** The absolute value is computed by following _https://helpx.adobe.com/indesign/using/kerning-tracking.html_ */
-        const absoluteSpacing =
-          letterSpacing * (1 / 1000) * (node.style?.fontSize || 1);
+    if (isOrphanWidowProtectionArtefact(node)) {
+      return node;
+    }
 
-        return R.compose(
-          R.assocPath(['style', 'letterSpacing'], absoluteSpacing),
-        )(node);
-      }
+    if (isAllowDynamicLetterSpacing(node)) {
+      /** The absolute value is computed by following _https://helpx.adobe.com/indesign/using/kerning-tracking.html_ */
+      const absoluteSpacing =
+        letterSpacing * (1 / 1000) * (node.style?.fontSize || 1);
+
+      return R.compose(
+        R.assocPath(['style', 'letterSpacing'], absoluteSpacing),
+      )(node);
     }
   }
 
@@ -82,21 +92,27 @@ const dropLayoutAttributes = node => {
       R.assocPath(['box'], {}),
       R.dissocPath(['box']),
       R.dissocPath(['lines']),
+      // drop dynamic renders, as we have already rendeerd them into the page
+      // (we still don't drop footnotes because top value is calculated dynamically)
+      R.dissocPath(['props', 'render']),
     )(node);
   }
 
   return R.compose(
     R.assocPath(['box'], {}),
     R.dissocPath(['box']),
+    // drop dynamic renders, as we have already rendered them into the page
+    // (we still don't drop footnotes because top value is calculated dynamically)
+    R.dissocPath(['props', 'render']),
     R.evolve({
       children: R.map(dropLayoutAttributes),
     }),
   )(node);
 };
 
-const relayoutPageToIncreaseLines = async (page, doc, fontStore) => {
+const relayoutPageToIncreaseLines = async (pageIndex, doc, fontStore) => {
   /** maximum relative letter space value */
-  const maxCandidateValue = 8;
+  const maxCandidateValue = MAX_RELATIVE_LETTER_SPACING_VALUE;
   /** maximum depth we expect for the binary search. The binary search will cost ~O(maxCandidateValue) */
   const maxBinarySearchDepth = BINARY_SEARCH_DEPTH;
   /** minimum offset used within the binary search, determined based on `maxCandidateValue` and `maxBinarySearchDepth` */
@@ -104,6 +120,8 @@ const relayoutPageToIncreaseLines = async (page, doc, fontStore) => {
 
   /** data structure to memoize already computed relayouting results */
   const memoizedResults = new Map();
+
+  const page = doc.children[pageIndex];
 
   /**
    * Relayouts the page and returns true if it is possible to layout the page without overflowing into multiple pages.
@@ -121,7 +139,7 @@ const relayoutPageToIncreaseLines = async (page, doc, fontStore) => {
     const preparedPage = dropLayoutAttributes(
       applyLetterSpacingProp(page, candidateValue),
     );
-    const result = await relayoutPage(preparedPage, doc, fontStore);
+    const result = await relayoutPage(preparedPage, pageIndex, doc, fontStore);
     memoizedResults.set(candidateValue, result);
     return result[0] === 1;
   };
@@ -155,7 +173,7 @@ const relayoutPageToIncreaseLines = async (page, doc, fontStore) => {
 const getLineSkipsCount = node => {
   let skipped = 0;
 
-  if (node.props && typeof node.props.lineSkips !== 'undefined') {
+  if (isOrphanWidowProtectionArtefact(node)) {
     skipped += node.props.lineSkips;
   } else if (node.children) {
     for (let index = 0; index < node.children.length; index += 1) {
@@ -167,10 +185,14 @@ const getLineSkipsCount = node => {
 };
 
 /**
- * Returns `true` if there are any text nodes with `allowAutomaticTextSpaceAdjustment` set to `true`
+ * Returns `true` if there are text nodes that we can adjust, for page balancing
  */
 const hasAdjustableTextNodes = node => {
-  if (node.props && node.props.allowAutomaticTextSpaceAdjustment === true) {
+  if (isOrphanWidowProtectionArtefact(node)) {
+    return false;
+  }
+
+  if (isAllowDynamicLetterSpacing(node)) {
     return true;
   }
 
@@ -194,13 +216,13 @@ const hasAdjustableTextNodes = node => {
 const resolvePageBalancing = async (doc, fontStore) => {
   const pages = [];
 
-  for (let i = 0; i < doc.children.length; i += 1) {
-    const page = doc.children[i];
+  for (let pageIndex = 0; pageIndex < doc.children.length; pageIndex += 1) {
+    const page = doc.children[pageIndex];
     const linesSkipped = getLineSkipsCount(page);
     const isAdjustable = hasAdjustableTextNodes(page);
     if (linesSkipped && isAdjustable) {
       const relayoutedPage = await relayoutPageToIncreaseLines(
-        page,
+        pageIndex,
         doc,
         fontStore,
       );
