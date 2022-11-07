@@ -20,7 +20,8 @@ import resolveLinkSubstitution from './steps/resolveLinkSubstitution';
 // const startTimer = name => R.tap(() => console.time(name));
 // const endTimer = name => R.tap(() => console.timeEnd(name));
 
-const DISABLE_LOGS = false;
+const DISABLE_LOGS = true;
+
 let lastStage;
 const logStatus = (stage, end) =>
   R.tap(doc => {
