@@ -59,7 +59,7 @@ const splitTextChildren = (node, splitIndex) => {
   let accumulatedLength = 0;
   for (let index = 0; index < node.children.length; index += 1) {
     const child = node.children[index];
-    const localSplitIndex = splitIndex - accumulatedLength;
+    const localSplitIndex = Math.max(0, splitIndex - accumulatedLength);
     let length = 0;
 
     if (isTextInstance(child)) {
@@ -95,10 +95,40 @@ const splitTextChildren = (node, splitIndex) => {
       );
 
       if (currentSubChildren.length) {
-        current.push({ ...child, children: currentSubChildren });
+        const currentChild = R.evolve({
+          style: R.evolve({
+            marginBottom: zero,
+            paddingBottom: zero,
+            borderBottomWidth: zero,
+            borderBottomLeftRadius: zero,
+            borderBottomRightRadius: zero,
+          }),
+          children: R.always(currentSubChildren),
+        })(child);
+        current.push(currentChild);
       }
       if (nextSubChildren.length) {
-        next.push({ ...child, children: nextSubChildren });
+        const nextChild = R.compose(
+          R.evolve({
+            style: R.when(
+              () => currentSubChildren.length,
+              R.evolve({
+                textIndent: zero, // remove any text-indent
+              }),
+            ),
+          }),
+          R.evolve({
+            style: R.evolve({
+              marginTop: zero,
+              paddingTop: zero,
+              borderTopWidth: zero,
+              borderTopLeftRadius: zero,
+              borderTopRightRadius: zero,
+            }),
+            children: R.always(nextSubChildren),
+          }),
+        )(child);
+        next.push(nextChild);
       }
     } else if (isImage(child)) {
       // an image takes up a single character in `lines`
@@ -163,8 +193,16 @@ const splitText = (node, height) => {
     }),
   )(node);
 
-  const next = R.evolve(
-    {
+  const next = R.compose(
+    R.evolve({
+      style: R.when(
+        () => currentChildren.length,
+        R.evolve({
+          textIndent: zero, // remove any text-indent
+        }),
+      ),
+    }),
+    R.evolve({
       lines: R.always(nextLines),
       style: R.evolve({
         marginTop: zero,
@@ -179,9 +217,8 @@ const splitText = (node, height) => {
         borderTopWidth: zero,
       },
       children: R.always(nextChildren),
-    },
-    node,
-  );
+    }),
+  )(node);
 
   return [current, next];
 };
