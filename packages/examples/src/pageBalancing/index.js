@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     fontSize: 12,
     lineHeight: 1.5,
+    dynamicLetterSpacing: true,
   },
   ornamental: {
     fontSize: 36,
@@ -35,7 +36,7 @@ Font.register({
 export default () => (
   <Document>
     <Page size={{ width: '12.7cm', height: '20.32cm' }} style={styles.page}>
-      <Text style={styles.text} debug allowAutomaticTextSpaceAdjustment>
+      <Text style={styles.text} debug>
         The atmosphere near the surface of Jupiter is about 88 to 92% hydrogen,
         8 to 12% helium, and 1% other gases. The lower atmosphere is so heated
         and the pressure so high that helium changes to liquid. It rains down
@@ -57,7 +58,7 @@ export default () => (
         is not large enough.
       </Text>
 
-      <Text style={styles.text} debug allowAutomaticTextSpaceAdjustment>
+      <Text style={styles.text} debug>
         Jupiter is twice as massive as all the other planets in the Solar System
         put together.[17] It gives off more heat than it gets from the sun.[30]
         Jupiter is 11 times the width of Earth and 318 times as massive. The
@@ -65,7 +66,7 @@ export default () => (
         1,317 Earth-sized objects could fit inside it.[31]
       </Text>
 
-      <Text style={styles.text} debug allowAutomaticTextSpaceAdjustment>
+      <Text style={styles.text} debug>
         Jupiter has many bands of clouds going horizontally across its surface.
         The light parts are zones and the darker are belts. The zones and belts
         often interact with each other. This causes huge storms. Wind speeds of
@@ -81,7 +82,7 @@ export default () => (
         atmosphere.
       </Text>
 
-      <Text style={styles.text} debug allowAutomaticTextSpaceAdjustment>
+      <Text style={styles.text} debug>
         One of the biggest features in Jupiter&apos;s atmosphere is the Great
         Red Spot. It is a huge storm which is bigger than the entire Earth. It
         is on record since at least 1831,[36] and as early as 1665.[37][38]
@@ -91,7 +92,7 @@ export default () => (
         Red Spot.[41][42]
       </Text>
 
-      <Text style={styles.text} debug allowAutomaticTextSpaceAdjustment>
+      <Text style={styles.text} debug>
         Jupiter has a magnetic field like Earth&apos;s but 11 times
         stronger.[43] It also has a magnetosphere much bigger and stronger than
         Earth&apos;s. The field traps radiation belts much stronger than
@@ -108,7 +109,7 @@ export default () => (
         volcanic moon Io land in its atmosphere.
       </Text>
 
-      <Text style={styles.text} debug allowAutomaticTextSpaceAdjustment>
+      <Text style={styles.text} debug>
         Jupiter also has a thin planetary ring system.[46] These rings are
         difficult to see and were not discovered until 1979 by NASA&apos;s
         Voyager 1 probe.[47] There are four parts to Jupiter&apos;s rings. The

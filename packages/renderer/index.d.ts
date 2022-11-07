@@ -202,11 +202,6 @@ declare namespace ReactPDF {
      * Should push the element to the next page if it is the last element on page
      */
     breakIfLastOnPage?: boolean;
-    /**
-     * Enabling this attribute marks the text node as available for tinkering with page balancing;
-     * where the textSpace is dynamically adjusted to fill-in the pages.
-     */
-    allowAutomaticTextSpaceAdjustment?: boolean;
   }
 
   interface SVGTextProps extends SVGPresentationAttributes {
