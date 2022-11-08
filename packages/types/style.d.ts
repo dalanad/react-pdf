@@ -95,6 +95,9 @@ export interface Style {
   textTransform?: 'capitalize' | 'lowercase' | 'uppercase';
   fontVariant?: 'superscript' | 'subscript' | 'small-caps' | 'normal',
 
+  /** Allow dynamic letter spacing, for page balancing */
+  dynamicLetterSpacing?: boolean;
+
   // Sizing/positioning
 
   objectFit?: string;

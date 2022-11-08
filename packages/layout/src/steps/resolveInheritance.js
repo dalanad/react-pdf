@@ -15,6 +15,7 @@ const INHERITED_PROPERTIES = [
   'textAlign',
   'visibility',
   'wordSpacing',
+  'dynamicLetterSpacing',
 ];
 
 const isSvg = R.propEq('type', P.Svg);

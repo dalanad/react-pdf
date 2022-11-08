@@ -114,13 +114,6 @@ const splitPage = (page, pageNumber, fontStore) => {
   );
 
   const relayout = node => relayoutPage(node, fontStore);
-
-  let [currentChildren, nextChildren] = splitNodes(
-    wrapArea,
-    contentArea,
-    dynamicPage.children,
-  );
-
   const resolvePageWithFootnotes = footnotes =>
     resolveDynamicPage(
       {
@@ -130,6 +123,12 @@ const splitPage = (page, pageNumber, fontStore) => {
       page,
       fontStore,
     );
+
+  let [currentChildren, nextChildren] = splitNodes(
+    wrapArea,
+    contentArea,
+    dynamicPage.children,
+  );
 
   const pageFootnotes = getFootnotes({ children: currentChildren });
 
