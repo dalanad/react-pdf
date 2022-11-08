@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.6.0](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-examples@2.5.2...@paladin-analytics/rpdf-examples@2.6.0) (2022-11-08)
+
+
+### Bug Fixes
+
+* **page-balancing:** update example + drop stale type ([939d8f7](https://github.com/Paladin-Analytics/react-pdf/commit/939d8f78b3f4720dc039061f060fab7e34c13918))
+
+
+### Features
+
+* **page-balancing:** implement base solution [wip] ([177dfc7](https://github.com/Paladin-Analytics/react-pdf/commit/177dfc7609a1447d4b9237cc556aed14e9b7ec6f))
+
+
+
+
+
 ## [2.5.2](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-examples@2.5.1...@paladin-analytics/rpdf-examples@2.5.2) (2022-10-03)
 
 **Note:** Version bump only for package @paladin-analytics/rpdf-examples

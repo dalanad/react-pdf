@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.5.0](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-types@2.4.0...@paladin-analytics/rpdf-types@2.5.0) (2022-11-08)
+
+
+### Features
+
+* **page-balancing:** refactor page-balancing logic ([90999f4](https://github.com/Paladin-Analytics/react-pdf/commit/90999f4d4554f42dc5c9c8a26369aa9536a844ec))
+
+
+
+
+
 # [2.4.0](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-types@2.3.0...@paladin-analytics/rpdf-types@2.4.0) (2022-07-15)
 
 
