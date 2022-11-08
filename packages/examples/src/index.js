@@ -45,7 +45,7 @@ const EXAMPLES = {
 };
 
 const Viewer = () => {
-  const [example, setExample] = useState('hyphens');
+  const [example, setExample] = useState('pageWrap');
   const [fontFamily, setFontFamily] = useState('Poppins');
   const fontList = editorFonts.map(f => f.family);
 

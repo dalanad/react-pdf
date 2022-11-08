@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: 'justify',
     fontFamily: 'Times-Roman',
+    textIndent: 50,
   },
   image: {
     marginVertical: 15,
@@ -88,7 +89,7 @@ export default () => (
         mucho tiempo que vivía un hidalgo de los de lanza en astillero, adarga
         antigua, rocín flaco y galgo corredor. Una olla de algo más vaca que
         carnero, salpicón las más noches, duelos y quebrantos los sábados,
-        lentejas los viernes, algún palomino de añadidura los domingos,
+        lentejas los viernes, {'\n'} algún palomino de añadidura {'\n'} los domingos,
         consumían las tres partes de su hacienda. El resto della concluían sayo
         de velarte, calzas de velludo para las fiestas con sus pantuflos de lo
         mismo, los días de entre semana se honraba con su vellori de lo más
