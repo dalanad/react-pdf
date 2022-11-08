@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.7.0](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-layout@2.6.2...@paladin-analytics/rpdf-layout@2.7.0) (2022-11-08)
+
+
+### Bug Fixes
+
+* **page-balancing:** disable logs ([7307166](https://github.com/Paladin-Analytics/react-pdf/commit/730716678499d85cf41193d83bc1d932da17fe6a))
+* **split-text:** rectify incorrect line split + text node props ([b0ba6c1](https://github.com/Paladin-Analytics/react-pdf/commit/b0ba6c173ddb41eaccc5248c81dfae2eea322007))
+* **splitText:** remove commented code ([88fe65f](https://github.com/Paladin-Analytics/react-pdf/commit/88fe65f396f67ef66651ff26e15e61691ea31364))
+
+
+### Features
+
+* **page-balancing:** implement base solution [wip] ([177dfc7](https://github.com/Paladin-Analytics/react-pdf/commit/177dfc7609a1447d4b9237cc556aed14e9b7ec6f))
+* **page-balancing:** refactor page-balancing logic ([90999f4](https://github.com/Paladin-Analytics/react-pdf/commit/90999f4d4554f42dc5c9c8a26369aa9536a844ec))
+
+
+
+
+
 ## [2.6.2](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-layout@2.6.1...@paladin-analytics/rpdf-layout@2.6.2) (2022-10-03)
 
 
