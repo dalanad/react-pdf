@@ -155,8 +155,6 @@ const splitText = (node, height) => {
   const currentHeight = heightAtLineIndex(node, slicedLineIndex);
   const nextHeight = node.box.height - currentHeight;
 
-  // console.log('SPLIT at', node.lines[slicedLineIndex].textBefore, node);
-
   const [currentChildren, nextChildren] = splitTextChildren(
     node,
     node.lines[slicedLineIndex].textBefore,
