@@ -60,7 +60,8 @@ const slice = (start, end, run) => {
         endGlyphs.map(g => ({ xAdvance: g.advanceWidth * runScale })),
       ]),
     glyphIndices: R.o(normalizeIndices, R.slice(start, end)),
-    attributes: R.identity,
+    // reset indent on splitted runs after first
+    attributes: start === run.start ? R.identity : r => ({ ...r, indent: 0 }),
   })(run);
 };
 
