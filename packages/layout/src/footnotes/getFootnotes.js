@@ -100,10 +100,19 @@ function getFootnotes(node, top = 0) {
     return notes;
   }
 
+  let heights = top === undefined ? node.box?.paddingTop : 0;
+
   for (const child of node.children) {
     footnotes.push(
-      ...getFootnotes(child, node.box?.top === 0 ? top : node?.box?.top),
+      ...getFootnotes(
+        child,
+        // top value is defined relative to the parent in Text nodes
+        (node.box?.top === 0 && top !== undefined) || child.type !== 'VIEW'
+          ? top + heights
+          : node?.box?.top + heights,
+      ),
     );
+    heights += child.box.height;
   }
   return footnotes;
 }
