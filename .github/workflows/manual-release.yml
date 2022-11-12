@@ -1,0 +1,42 @@
+name: Release (Manual)
+
+on:
+  workflow_dispatch
+
+jobs:
+  publish:
+    name: publish to github
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+          registry-url: 'https://npm.pkg.github.com/'
+
+      - name: Config git user
+        run: |
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+
+      - name: install yarn
+        run: npm i -g yarn
+
+      - name: install deps.
+        run: yarn
+
+      - name: Bootstrap lerna
+        run: yarn bootstrap
+      - name: npm config
+        run: |
+          npm config set 'registry' "https://npm.pkg.github.com"
+          npm config set '//npm.pkg.github.com/:_authToken' "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: publish
+        run: lerna publish --conventional-commits --yes
