@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.1](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-examples@2.6.0...@paladin-analytics/rpdf-examples@2.6.1) (2022-11-12)
+
+
+### Bug Fixes
+
+* **footnotes:** fix handling for large no of notes ([dd55408](https://github.com/Paladin-Analytics/react-pdf/commit/dd55408dd8401fddb4ab5b31a5c648f6ffc84e71))
+
+
+
+
+
 # [2.6.0](https://github.com/Paladin-Analytics/react-pdf/compare/@paladin-analytics/rpdf-examples@2.5.2...@paladin-analytics/rpdf-examples@2.6.0) (2022-11-08)
 
 
