@@ -105,26 +105,28 @@ export default function chooseFootnotes(page, footnotes) {
       // case where space is not enough to include all the notes
       else {
         const availableSpace = contentArea - groupBottom - footnotesHeight;
-        // keep at least 3 lines to avoid triggering widow / orphan
-        // todo: use breakAfter/Before to calculate this
-        const minContentSpace = lineHeight * 3;
+        // keep at least 2 lines to avoid triggering widow / orphan
+        const minContentSpace = Math.ceil(lineHeight * 2);
         /* 
           if the references and the footnotes height total is greater than the page,
           show the footnotes in the available space and discard others
         */
-        // todo: do this only if at least one footnote can be shown on current page 
-        if (
-          minContentSpace + totalHeight > contentArea &&
-          chosenFootnotes.length === 0
-        ) {
-          const chosen = chooseToFitHeight(footnoteGroup, availableSpace);
-          chosenFootnotes.push(...chosen);
-          footnotesHeight += chosen.reduce((a, b) => a + b.heightNeeded, 0);
+        if (minContentSpace + totalHeight > contentArea) {
+          if (groupBottom >= minContentSpace) {
+            // if the references are below the minimum possible content size,
+            // shift the footnotes refs to the first line of next page
+            spacingNeeded = Math.ceil(contentArea - groupTop - footnotesHeight);
+          } else {
+            // if the refs are within the minimum content size, show what is possible & cut off others.
+            const chosen = chooseToFitHeight(footnoteGroup, availableSpace);
+            chosenFootnotes.push(...chosen);
+            footnotesHeight += chosen.reduce((a, b) => a + b.heightNeeded, 0);
 
-          spacingNeeded =
-            contentArea -
-            Math.max(groupBottom, minContentSpace) -
-            footnotesHeight;
+            spacingNeeded =
+              contentArea -
+              Math.max(groupBottom, minContentSpace) -
+              footnotesHeight;
+          }
         } else {
           // filter footnotes that will be shifted due to orphan / widow protection
           chosenFootnotes = chosenFootnotes.filter(note => {
