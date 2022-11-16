@@ -205,9 +205,6 @@ export default () => (
             expedita aperiam dicta Large Number of footnotes in a single
             page&nbsp; & edge case containing reference shifting scenario. sit
             amet, consectetur adipisicing elit. Quaerat adipisciLarge Number of
-          </Text>
-          <Text break></Text>
-          <Text>
             footnotes in a single page&nbsp; & edge case containing reference
             shifting scenario. sit amet, consectetur adipisicing elit. Quaerat
             adipisci <Footnote /> earum accusantium! <Footnote /> <Footnote />{' '}

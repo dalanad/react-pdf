@@ -22,7 +22,7 @@ const getHeight = R.path(['box', 'height']);
 /* All the children are fixed */
 const onlyFixedChildren = n => R.all(isFixed)(n.children);
 
-/* Node it self is fixed of has only fixed children */
+/* Node itself is fixed OR has only fixed children */
 const isFixedOnly = R.anyPass([isFixed, onlyFixedChildren]);
 
 const allFixed = R.all(isFixedOnly);
