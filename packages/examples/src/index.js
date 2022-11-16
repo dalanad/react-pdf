@@ -47,7 +47,7 @@ const EXAMPLES = {
 };
 
 const Viewer = () => {
-  const [example, setExample] = useState('footnotes');
+  const [example, setExample] = useState('pageBalancing');
   const [fontFamily, setFontFamily] = useState('Poppins');
   const fontList = editorFonts.map(f => f.family);
 

@@ -94,6 +94,44 @@ export default () => (
     <Page size="A5" debug={false} style={{ ...styles.body }}>
       <View style={{ ...styles.text }}>
         <View style={{ position: 'relative' }}>
+          <Text orphans={0} widows={0} debug>
+            f footnotes in a single line asdasd asdasd Lorem ipsum dolor sit
+            amet, consectetur adipisicing elit dolor sit amet, consectetur
+            adipisicing elit consectetur adipisicing elit Lorem ipsum dolor sit
+            amet, consectetur adipisicing elit dolor sit amet, consectetur
+            adipisicing elit consectetur adipisicing elit line A
+            {[...Array(13)].map(() => (
+              <Footnote />
+            ))}
+            Large Number of footnotes in a single line
+            <Footnote /> Large Number of footnotes in a single line Large Number
+            of footnotes in a single line asdasd asdasd Lorem ipsum dolor sit
+            amet, consectetur adipisicing elit dolor sit amet, consectetur
+            adipisicing elit consectetur adipisicing elit Lorem ipsum dolor sit
+            amet, consectetur adipisicing elit dolor sit amet, consectetur
+            adipisicing elit consectetur adipisicing elit linef footnotes in a
+            single line asdasd asdasd Lorem ipsum dolor sit amet, consectetur
+            adipisicing elit dolor sit amet, consectetur adipisicing elit
+            consectetur adipisicing elit Lorem ipsum dolor sit amet, consectetur
+            adipisicing elit dolor sit amet, consectetur adipisicing elit
+            consectetur adipisicing elit line
+          </Text>
+          <View
+            fixed
+            debug
+            style={{
+              position: 'absolute',
+              top: '100%',
+              width: '100%',
+            }}
+            renderFootnotes
+          />
+        </View>
+      </View>
+    </Page>
+    <Page size="A5" debug={false} style={{ ...styles.body }}>
+      <View style={{ ...styles.text }}>
+        <View style={{ position: 'relative' }}>
           <Text debug>
             Large Number of footnotes in a single page&nbsp; & edge case
             containing reference shifting scenario. sit amet, consectetur
@@ -148,44 +186,6 @@ export default () => (
     <Page size="A5" debug={false} style={{ ...styles.body }}>
       <View style={{ ...styles.text }}>
         <View style={{ position: 'relative' }}>
-          <Text orphans={0} widows={0} debug>
-            f footnotes in a single line asdasd asdasd Lorem ipsum dolor sit
-            amet, consectetur adipisicing elit dolor sit amet, consectetur
-            adipisicing elit consectetur adipisicing elit Lorem ipsum dolor sit
-            amet, consectetur adipisicing elit dolor sit amet, consectetur
-            adipisicing elit consectetur adipisicing elit line A
-            {[...Array(13)].map(() => (
-              <Footnote />
-            ))}
-            Large Number of footnotes in a single line
-            <Footnote /> Large Number of footnotes in a single line Large Number
-            of footnotes in a single line asdasd asdasd Lorem ipsum dolor sit
-            amet, consectetur adipisicing elit dolor sit amet, consectetur
-            adipisicing elit consectetur adipisicing elit Lorem ipsum dolor sit
-            amet, consectetur adipisicing elit dolor sit amet, consectetur
-            adipisicing elit consectetur adipisicing elit linef footnotes in a
-            single line asdasd asdasd Lorem ipsum dolor sit amet, consectetur
-            adipisicing elit dolor sit amet, consectetur adipisicing elit
-            consectetur adipisicing elit Lorem ipsum dolor sit amet, consectetur
-            adipisicing elit dolor sit amet, consectetur adipisicing elit
-            consectetur adipisicing elit line
-          </Text>
-          <View
-            fixed
-            debug
-            style={{
-              position: 'absolute',
-              top: '100%',
-              width: '100%',
-            }}
-            renderFootnotes
-          />
-        </View>
-      </View>
-    </Page>
-    <Page size="A5" debug={false} style={{ ...styles.body }}>
-      <View style={{ ...styles.text }}>
-        <View style={{ position: 'relative' }}>
           <Text debug>
             Large Number of footnotes in a single page&nbsp; & edge case
             containing reference shifting scenario. sit amet, consectetur
@@ -205,9 +205,6 @@ export default () => (
             expedita aperiam dicta Large Number of footnotes in a single
             page&nbsp; & edge case containing reference shifting scenario. sit
             amet, consectetur adipisicing elit. Quaerat adipisciLarge Number of
-          </Text>
-          <Text break></Text>
-          <Text>
             footnotes in a single page&nbsp; & edge case containing reference
             shifting scenario. sit amet, consectetur adipisicing elit. Quaerat
             adipisci <Footnote /> earum accusantium! <Footnote /> <Footnote />{' '}

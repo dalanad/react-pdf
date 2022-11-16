@@ -9,7 +9,7 @@
   "main": "lib",
   "scripts": {
     "test": "echo jest",
-    "start": "parcel ./src/index.html -p 3000"
+    "start": "parcel ./src/index.html -p 3001"
   },
   "dependencies": {
     "@paladin-analytics/rpdf-renderer": "^2.4.1",

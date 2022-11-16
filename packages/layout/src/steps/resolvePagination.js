@@ -19,7 +19,13 @@ const assingChildren = R.assoc('children');
 
 const getHeight = R.path(['box', 'height']);
 
-const allFixed = R.all(isFixed);
+/* All the children are fixed */
+const onlyFixedChildren = n => R.all(isFixed)(n.children);
+
+/* Node it self is fixed of has only fixed children */
+const isFixedOnly = R.anyPass([isFixed, onlyFixedChildren]);
+
+const allFixed = R.all(isFixedOnly);
 
 const isDynamic = R.hasPath(['props', 'render']);
 
