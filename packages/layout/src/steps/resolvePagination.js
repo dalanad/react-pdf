@@ -20,12 +20,12 @@ const assingChildren = R.assoc('children');
 const getHeight = R.path(['box', 'height']);
 
 /* All the children are fixed */
-const onlyFixedChildren = n => R.all(isFixed)(n.children);
+const isAllChildrenFixed = n => R.all(isFixed)(n.children);
 
 /* Node itself is fixed OR has only fixed children */
-const isFixedOnly = R.anyPass([isFixed, onlyFixedChildren]);
+const isNodeOrAllChildrenFixed = R.anyPass([isFixed, isAllChildrenFixed]);
 
-const allFixed = R.all(isFixedOnly);
+const isAllFixed = R.all(isNodeOrAllChildrenFixed);
 
 const isDynamic = R.hasPath(['props', 'render']);
 
@@ -158,7 +158,7 @@ const splitPage = (page, pageNumber, fontStore) => {
 
       footnotesPlaceholder.style.marginTop = chosenFootnotes.spacingNeeded;
 
-      if (R.isEmpty(nextChildren) || allFixed(nextChildren)) {
+      if (R.isEmpty(nextChildren) || isAllFixed(nextChildren)) {
         const contentHeight = getHeight(page);
         const pageHeight = page.style.height;
         const footnotesHeight = getHeight(footnotesPlaceholder);
@@ -184,7 +184,7 @@ const splitPage = (page, pageNumber, fontStore) => {
     R.assocPath(['box', 'height'], height),
   )(page);
 
-  if (R.isEmpty(nextChildren) || allFixed(nextChildren))
+  if (R.isEmpty(nextChildren) || isAllFixed(nextChildren))
     return [currentPage, null];
 
   const nextPage = R.compose(
